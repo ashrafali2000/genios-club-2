@@ -35,7 +35,7 @@ const HomeHeader = () => {
         </Link>
 
         <div className="hidden items-center md:flex">
-          <Menu as="div" className="relative inline-block text-left">
+          {/* <Menu as="div" className="relative inline-block text-left">
             <div>
               <Menu.Button className="mr-10 inline-flex w-full items-center justify-center gap-x-1.5 text-xl  font-bold  text-white   ">
                 Download Our Plan
@@ -97,7 +97,7 @@ const HomeHeader = () => {
             >
               DASHBOARD
             </a>
-          </div>
+          </div> */}
           <div className="relative">
             <a
               href={"authgc2/login"}
