@@ -9,8 +9,8 @@ const MyUpline = ({ Ref }: { Ref: any }) => {
     GeniosClubAbi2
   );
 
-  const { data: RefData } = useContractRead(GeniosClubContract, "Users", [Ref]);
-  console.log("RefData---->", RefData);
+  // const { data: RefData } = useContractRead(GeniosClubContract, "Users", [Ref]);
+  // console.log("RefData---->", RefData);
 
   return (
     <>
@@ -18,9 +18,9 @@ const MyUpline = ({ Ref }: { Ref: any }) => {
 
       <div className="mt-2 flex items-center justify-between rounded border p-1">
         <h1 className="mr-2 truncate text-[10px]  font-medium text-[#eeeeee] hover:text-[#ffb000]">
-          {String(RefData?.Id)}
+          {Ref}
         </h1>
-        <CopyToClipboardButton text={String(RefData?.Id)} />
+        <CopyToClipboardButton text={Ref} />
       </div>
     </>
   );

@@ -13,6 +13,7 @@ import {
   GeniosClubAbi2,
   GeniosClubAddress2,
 } from "@/lib/constant";
+import { useContract, useContractRead } from "@thirdweb-dev/react";
 
 const UserCard = ({
   user,
@@ -28,7 +29,26 @@ const UserCard = ({
   const affiliateLink = `https://geniosclub.team/auth/register?ref=${String(
     user?.Id
   )}`;
+  const { contract: GeniosClubContract } = useContract(
+    GeniosClubAddress2,
+    GeniosClubAbi2
+  );
 
+  const { data: userRef, isLoading: usersRefIsLoading } = useContractRead(
+    GeniosClubContract,
+    "Users",
+    [user?.DRef]
+  );
+
+  console.log("user---------------->", user);
+  console.log("user---------------->", parseInt(user && user[0]));
+  console.log("user---------------->", parseInt(user && user[1]));
+  console.log("user---------------->", parseInt(user && user[2]));
+  console.log("user---------------->", parseInt(user && user[3]));
+  console.log(
+    "userRef---------------->",
+    parseInt(userRef && parseInt(userRef[0]))
+  );
   // const [levelStatus, setLevelStatus] = useState({});
   const [levelStatus, setLevelStatus] = useState<{
     G3X2: { [key: number]: boolean };
@@ -373,7 +393,7 @@ const UserCard = ({
               </div>
 
               <div className="relative mt-6">
-                <MyUpline Ref={user?.Ref} />
+                <MyUpline Ref={userRef && parseInt(userRef[0])} />
               </div>
             </div>
           )}

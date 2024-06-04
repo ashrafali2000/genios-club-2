@@ -6,6 +6,7 @@ import {
   MTKAbi2,
   MTKAddress2,
 } from "@/lib/constant";
+import { useRouter } from "next/navigation";
 import {
   ThirdwebSDK,
   getContract,
@@ -22,6 +23,7 @@ import { useSearchParams } from "next/navigation";
 import { useState } from "react";
 
 const Page = () => {
+  const router = useRouter();
   const address = useAddress();
   const searchParams = useSearchParams();
   const ref = searchParams.get("ref");
@@ -52,7 +54,11 @@ const Page = () => {
     "allowance",
     [address, GeniosClubAddress2]
   );
-
+  const { data: user, isLoading: usersIsLoading } = useContractRead(
+    GeniosClubContract,
+    "Users",
+    [address]
+  );
   // Read Functions
   const { data: IsUserExists, isLoading: isUserExistsILoading } =
     useContractRead(GeniosClubContract, "IsUserExists", [address]);
@@ -91,7 +97,10 @@ const Page = () => {
         args: [address, refAddr],
       });
       console.log("file: page.tsx:214  callRegister  data:", data);
-
+      if (data) {
+        const id = parseInt(user[0]);
+        router.push(`/view2/main2?uid=${id}`);
+      }
       // const response = await axios.post("/api/matrix/add/", {
       //   userAddress: address,
       //   referrerAddress: refAddr,
@@ -145,22 +154,22 @@ const Page = () => {
                         </div>
                         <div className="justify-between  xsmm:flex">
                           <p>Registration Fees :</p>
-                          <p>5 DAI</p>
+                          <p>2.5 DAI</p>
                         </div>
                         <div className="justify-between xsmm:flex">
                           <p>Your Allowance :</p>
                           <p>{formatEther(String(allowance || 0))}</p>
                         </div>
                       </div>
-                      {Number(String(balance || 0)) <= 5 ? (
+                      {Number(String(balance || 0)) <= 2.5 ? (
                         <div className="my-16 flex justify-center gap-4 text-white">
                           Not Enough Balance
                         </div>
                       ) : (
                         <div>
                           {/* Approval Conditions */}
-                          {Number(String(balance || 0)) >= 5.0 &&
-                          Number(String(allowance || 0)) <= 5.0 ? (
+                          {Number(String(balance || 0)) >= 2.5 &&
+                          Number(String(allowance || 0)) <= 2.5 ? (
                             approveIsLoading ? (
                               <button
                                 className="mt-4 inline-block h-fit  w-full cursor-pointer rounded-3xl bg-[#9064b2] p-[10px] text-[12px]  font-normal leading-[20px] text-white sm:p-[15px] sm:text-[15px] md:w-[60%]"
@@ -196,7 +205,7 @@ const Page = () => {
                           ) : null}
 
                           {/* Registration Conditions */}
-                          {Number(String(allowance || 0)) >= 5.0 ? (
+                          {Number(String(allowance || 0)) >= 2.5 ? (
                             registerIsLoading ? (
                               <button
                                 className="mt-4 inline-block h-fit  w-full cursor-pointer rounded-3xl bg-[#9064b2] p-[10px] text-[12px]  font-normal leading-[20px] text-white sm:p-[15px] sm:text-[15px] md:w-[60%]"
@@ -249,7 +258,7 @@ const Page = () => {
                     <div className="my-16 flex justify-center  gap-4">
                       <p className="text-white">YOU ARE ALREADY REGISTERED</p>
                       <Link
-                        href="/main"
+                        href="/view2/main2"
                         className="!text-blue-500 hover:underline"
                       >
                         Go to Dashboard

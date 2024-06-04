@@ -59,7 +59,7 @@ export default function PopOver2({
             >
               {matrix !== 2 ? (
                 <a className="ml-[-5px] h-[21px]  w-[21px] cursor-pointer rounded-full border  border-[#ae7ddd] bg-purple-500 text-white text-xs flex justify-center items-center">
-                  {parseInt(RefFirstLevel)}
+                  {parseInt(RefFirstLevel) > 0 && parseInt(RefFirstLevel)}
                 </a>
               ) : (
                 <span

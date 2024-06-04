@@ -1,14 +1,14 @@
-'use client';
-import { useState } from 'react';
-import { Disclosure } from '@headlessui/react';
+"use client";
+import { useState } from "react";
+import { Disclosure } from "@headlessui/react";
 import {
   Bars3Icon,
   ChevronDownIcon,
   XMarkIcon,
-} from '@heroicons/react/24/outline';
-import { classNames } from '@/lib/classNames';
-import { ConnectWallet } from '@thirdweb-dev/react';
-import Link from 'next/link';
+} from "@heroicons/react/24/outline";
+import { classNames } from "@/lib/classNames";
+import { ConnectWallet, useDisconnect } from "@thirdweb-dev/react";
+import Link from "next/link";
 
 export default function Header({
   view,
@@ -17,6 +17,7 @@ export default function Header({
   view?: boolean;
   uid?: string;
 }) {
+  const disconnect = useDisconnect();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isMenuOpenn, setIsMenuOpenn] = useState(false);
 
@@ -44,7 +45,7 @@ export default function Header({
           {!view ? <ConnectWallet /> : null}
           <div className="relative ">
             <Link
-              href={!view ? '/main' : `/view/main/?uid=${uid}`}
+              href={!view ? "/main" : `/view/main/?uid=${uid}`}
               className="ml-10 mr-5 font-san text-[15px] font-bold text-white"
             >
               MAIN
@@ -73,7 +74,7 @@ export default function Header({
                   <Link
                     href={
                       !view
-                        ? '/direct-referrals'
+                        ? "/direct-referrals"
                         : `/view/direct-referrals/?uid=${uid}`
                     }
                     className="block px-2 py-[7px] text-[12px] text-sm font-medium text-[#212529] hover:bg-gray-100"
@@ -92,7 +93,7 @@ export default function Header({
                   </Link> */}
                   <Link
                     href={
-                      !view ? '/statistics' : `/view/statistics/?uid=${uid}`
+                      !view ? "/statistics" : `/view/statistics/?uid=${uid}`
                     }
                     className="block px-2 py-[7px] text-[12px] text-sm font-medium text-[#212529] hover:bg-gray-100"
                     role="menuitem"
@@ -132,7 +133,7 @@ export default function Header({
           </div>
 
           <div>
-            <Link href="/auth/login" className="nav-a active">
+            <button onClick={disconnect} className="nav-a active">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="27"
@@ -144,7 +145,7 @@ export default function Header({
                   <path d="M78.098,13.509l0.033,0.013h0.008c2.908,1.182,5.699,2.603,8.34,4.226c2.621,1.612,5.121,3.455,7.467,5.491 c11.992,10.408,19.58,25.764,19.58,42.879v0.016h-0.006c-0.006,15.668-6.361,29.861-16.633,40.127 c-10.256,10.256-24.434,16.605-40.09,16.613v0.006h-0.033h-0.015v-0.006c-15.666-0.004-29.855-6.357-40.123-16.627l-0.005,0.004 C6.365,95.994,0.015,81.814,0.006,66.15H0v-0.033v-0.039h0.006c0.004-6.898,1.239-13.511,3.492-19.615 c0.916-2.486,2.009-4.897,3.255-7.21C13.144,27.38,23.649,18.04,36.356,13.142l2.634-1.017v2.817v18.875v1.089l-0.947,0.569 l-0.007,0.004l-0.008,0.005l-0.007,0.004c-1.438,0.881-2.809,1.865-4.101,2.925l0.004,0.004c-1.304,1.079-2.532,2.242-3.659,3.477 h-0.007c-5.831,6.375-9.393,14.881-9.393,24.22v0.016h-0.007c0.002,9.9,4.028,18.877,10.527,25.375l-0.004,0.004 c6.492,6.488,15.457,10.506,25.349,10.512v-0.006h0.033h0.015v0.006c9.907-0.002,18.883-4.025,25.374-10.518 S92.66,76.045,92.668,66.148H92.66v-0.033V66.09h0.008c-0.002-6.295-1.633-12.221-4.484-17.362 c-0.451-0.811-0.953-1.634-1.496-2.453c-2.719-4.085-6.252-7.591-10.359-10.266l-0.885-0.577v-1.042V15.303v-2.857L78.098,13.509 L78.098,13.509z M47.509,0h18.507h1.938v1.937v49.969v1.937h-1.938H47.509h-1.937v-1.937V1.937V0H47.509L47.509,0z"></path>
                 </g>
               </svg>
-            </Link>
+            </button>
           </div>
         </div>
       </div>
@@ -183,7 +184,7 @@ export default function Header({
                 <div className="items-center space-y-5 p-5 pt-2">
                   <div className="relative">
                     <Link
-                      href={!view ? '/main' : `/view/main/?uid=${uid}`}
+                      href={!view ? "/main" : `/view/main/?uid=${uid}`}
                       className="mr-10 font-san text-[15px] font-bold text-white"
                     >
                       MAIN
@@ -206,8 +207,8 @@ export default function Header({
                           OFFICE
                           <ChevronDownIcon
                             className={classNames(
-                              open ? 'rotate-180' : '',
-                              'h-5 w-5 flex-none'
+                              open ? "rotate-180" : "",
+                              "h-5 w-5 flex-none"
                             )}
                             aria-hidden="true"
                           />
@@ -222,7 +223,7 @@ export default function Header({
                             <Link
                               href={
                                 !view
-                                  ? '/direct-referrals'
+                                  ? "/direct-referrals"
                                   : `/view/direct-referrals/?uid=${uid}`
                               }
                               className="block px-4 py-2 text-[14px] text-sm font-medium text-white "
@@ -244,7 +245,7 @@ export default function Header({
                             <Link
                               href={
                                 !view
-                                  ? '/statistics'
+                                  ? "/statistics"
                                   : `/view/statistics/?uid=${uid}`
                               }
                               className="block px-4 py-2 text-[14px] text-sm font-medium text-white "
@@ -263,7 +264,7 @@ export default function Header({
                             >
                               RANKS CARD
                             </Link> */}
-{/*                             <Link
+                            {/*                             <Link
                               href={
                                 !view
                                   ? '/affiliates'
