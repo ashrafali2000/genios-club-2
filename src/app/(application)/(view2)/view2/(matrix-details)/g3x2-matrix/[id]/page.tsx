@@ -43,194 +43,200 @@ const Page = ({ params }: any) => {
     "CurrentCycleNo",
     [address, Number(params.id)]
   );
-  const [myPosition, setMyPosition] = useState("0");
+  // const [myPosition, setMyPosition] = useState("0");
   const [pagination, setPagination] = useState(1);
+  let index;
+  let data;
+  let userAddress;
+  const [array1, setArray1] = useState<any[]>([
+    {
+      index,
+      data,
+      userAddress,
+    },
+  ]);
+  // const [paginationArrData, setPaginationArrData] = useState([]);
+  // const [array3, setArray3] = useState([]);
+  // const [array4, setArray4] = useState([]);
 
-  // myCode
-  const usePosition = (
-    address: any,
-    cycleNo: any,
-    positionId: any,
-    index: any,
-    onFetch: any
-  ) => {
-    const { data, error } = useContractRead(
-      GeniosClubContract,
-      "PositionToId",
-      [address, cycleNo, positionId, index]
-    );
-
-    const { data: address1, isLoading } = useContractRead(
-      GeniosClubContract,
-      "IdToAddress",
-      [myPosition]
-    );
-    useEffect(() => {
-      if (data !== undefined) {
-        onFetch(index, data, address1);
-      } else if (error) {
-        onFetch(index, null, null);
-      }
-    }, [data, address1, error, index, onFetch, myPosition]);
-  };
-
-  const [positions, setPositions] = useState(Array(85).fill(null));
-  const [loading, setLoading] = useState(true);
-
-  const handleFetch = useCallback((index: any, position: any, address: any) => {
-    setPositions((prev) => {
-      const newPositions = [...prev];
-      setMyPosition(position);
-      newPositions[index - 1] = { position, address };
-      return newPositions;
-    });
-  }, []);
-
+  // new today code
+  const [results, setResults] = useState<any[]>([]);
+  const [errors, setErrors] = useState([]);
+  const { contract: contract1 } = useContract(GeniosClubAddress2);
   useEffect(() => {
-    const allFetched = positions.every((pos) => pos !== null);
-    if (allFetched) {
-      setLoading(false);
-    }
-  }, [positions]);
+    const fetchData = async () => {
+      if (!contract1) return;
 
-  const PositionFetcher = ({
-    address,
-    cycleNo,
-    positionId,
-    index,
-    onFetch,
-  }: {
-    address: any;
-    cycleNo: any;
-    positionId: any;
-    index: any;
-    onFetch: any;
-  }) => {
-    usePosition(address, positionId, cycleNo, index, onFetch);
-    return null;
-  };
+      const fetchPositionData = async (index: any) => {
+        try {
+          const data = await contract1.call("PositionToId", [
+            address,
+            cycleNo,
+            +params.id,
+            index,
+          ]);
+          const userAddress = await contract1.call("IdToAddress", [
+            parseInt(data),
+          ]);
+          setArray1((prev) => [...prev, { index, data, userAddress }]);
+          return { index, data, userAddress };
+        } catch (error) {
+          return { index, error };
+        }
+      };
+
+      const promises = [];
+      for (let i = 0; i <= 84; i++) {
+        promises.push(fetchPositionData(i));
+      }
+
+      const results = await Promise.all(promises);
+
+      const tempResults: any = [];
+      const tempErrors: any = [];
+
+      results.forEach((result) => {
+        if (result.data) {
+          tempResults.push(result);
+        } else if (result.error) {
+          tempErrors.push(result);
+        }
+      });
+
+      setResults(tempResults);
+      setErrors(tempErrors);
+    };
+
+    fetchData();
+  }, [contract, address, Number(params.id)]);
 
   const nextNumber = Number(params.id) + 1 === 9 ? 1 : Number(params.id) + 1;
   const previousNumber =
     Number(params.id) - 1 === 0 ? 8 : Number(params.id) - 1;
 
-  const [positionArray, setPositionArray] = useState<any[]>([
-    pagination === 1
-      ? [
-          positions?.[0],
-          positions?.[4],
-          positions?.[8],
-          positions?.[12],
-          positions?.[16],
-          positions?.[20],
-          positions?.[36],
-          positions?.[52],
-          positions?.[68],
-          positions?.[21],
-          positions?.[37],
-          positions?.[53],
-          positions?.[69],
-          positions?.[22],
-          positions?.[38],
-          positions?.[54],
-          positions?.[70],
-          positions?.[23],
-          positions?.[39],
-          positions?.[55],
-          positions?.[71],
-        ]
-      : pagination === 2
-      ? [
-          positions?.[1],
-          positions?.[5],
-          positions?.[8],
-          positions?.[9],
-          positions?.[13],
-          positions?.[17],
-          positions?.[24],
-          positions?.[40],
-          positions?.[56],
-          positions?.[25],
-          positions?.[41],
-          positions?.[57],
-          positions?.[73],
-          positions?.[26],
-          positions?.[42],
-          positions?.[58],
-          positions?.[74],
-          positions?.[27],
-          positions?.[43],
-          positions?.[59],
-          positions?.[75],
-        ]
-      : pagination === 3
-      ? [
-          positions?.[2],
-          positions?.[6],
-          positions?.[10],
-          positions?.[14],
-          positions?.[18],
-          positions?.[28],
-          positions?.[44],
-          positions?.[60],
-          positions?.[76],
-          positions?.[29],
-          positions?.[45],
-          positions?.[61],
-          positions?.[77],
-          positions?.[30],
-          positions?.[46],
-          positions?.[62],
-          positions?.[78],
-          positions?.[31],
-          positions?.[47],
-          positions?.[63],
-          positions?.[79],
-        ]
-      : pagination === 4
-      ? [
-          positions?.[3],
-          positions?.[7],
-          positions?.[11],
-          positions?.[15],
-          positions?.[19],
-          positions?.[32],
-          positions?.[48],
-          positions?.[64],
-          positions?.[80],
-          positions?.[33],
-          positions?.[49],
-          positions?.[65],
-          positions?.[81],
-          positions?.[34],
-          positions?.[50],
-          positions?.[66],
-          positions?.[82],
-          positions?.[35],
-          positions?.[51],
-          positions?.[67],
-          positions?.[84],
-        ]
-      : [],
-  ]);
+  // const [positionArray, setPositionArray] = useState(
 
+  let paginationArrData: any;
+
+  if (pagination === 1) {
+    paginationArrData = [
+      array1.length > 0 && array1[0]?.userAddress,
+      array1.length > 0 && array1[4]?.userAddress,
+      array1.length > 0 && array1[8]?.userAddress,
+      array1.length > 0 && array1[12]?.userAddress,
+      array1.length > 0 && array1[16]?.userAddress,
+      array1.length > 0 && array1[20]?.userAddress,
+      array1.length > 0 && array1[36]?.userAddress,
+      array1.length > 0 && array1[52]?.userAddress,
+      array1.length > 0 && array1[68]?.userAddress,
+      array1.length > 0 && array1[21]?.userAddress,
+      array1.length > 0 && array1[37]?.userAddress,
+      array1.length > 0 && array1[53]?.userAddress,
+      array1.length > 0 && array1[69]?.userAddress,
+      array1.length > 0 && array1[22]?.userAddress,
+      array1.length > 0 && array1[38]?.userAddress,
+      array1.length > 0 && array1[54]?.userAddress,
+      array1.length > 0 && array1[70]?.userAddress,
+      array1.length > 0 && array1[23]?.userAddress,
+      array1.length > 0 && array1[39]?.userAddress,
+      array1.length > 0 && array1[55]?.userAddress,
+      array1.length > 0 && array1[71]?.userAddress,
+    ];
+  } else if (pagination === 2)
+    paginationArrData = [
+      array1.length > 0 && array1[1]?.userAddress,
+      array1.length > 0 && array1[5]?.userAddress,
+      array1.length > 0 && array1[8]?.userAddress,
+      array1.length > 0 && array1[9]?.userAddress,
+      array1.length > 0 && array1[13]?.userAddress,
+      array1.length > 0 && array1[17]?.userAddress,
+      array1.length > 0 && array1[24]?.userAddress,
+      array1.length > 0 && array1[40]?.userAddress,
+      array1.length > 0 && array1[56]?.userAddress,
+      array1.length > 0 && array1[25]?.userAddress,
+      array1.length > 0 && array1[41]?.userAddress,
+      array1.length > 0 && array1[57]?.userAddress,
+      array1.length > 0 && array1[73]?.userAddress,
+      array1.length > 0 && array1[26]?.userAddress,
+      array1.length > 0 && array1[42]?.userAddress,
+      array1.length > 0 && array1[58]?.userAddress,
+      array1.length > 0 && array1[74]?.userAddress,
+      array1.length > 0 && array1[27]?.userAddress,
+      array1.length > 0 && array1[43]?.userAddress,
+      array1.length > 0 && array1[59]?.userAddress,
+      array1.length > 0 && array1[75]?.userAddress,
+    ];
+  else if (pagination === 3) {
+    paginationArrData = [
+      array1.length > 0 && array1[2]?.userAddress,
+      array1.length > 0 && array1[6]?.userAddress,
+      array1.length > 0 && array1[10]?.userAddress,
+      array1.length > 0 && array1[14]?.userAddress,
+      array1.length > 0 && array1[18]?.userAddress,
+      array1.length > 0 && array1[28]?.userAddress,
+      array1.length > 0 && array1[44]?.userAddress,
+      array1.length > 0 && array1[60]?.userAddress,
+      array1.length > 0 && array1[76]?.userAddress,
+      array1.length > 0 && array1[29]?.userAddress,
+      array1.length > 0 && array1[45]?.userAddress,
+      array1.length > 0 && array1[61]?.userAddress,
+      array1.length > 0 && array1[77]?.userAddress,
+      array1.length > 0 && array1[30]?.userAddress,
+      array1.length > 0 && array1[46]?.userAddress,
+      array1.length > 0 && array1[62]?.userAddress,
+      array1.length > 0 && array1[78]?.userAddress,
+      array1.length > 0 && array1[31]?.userAddress,
+      array1.length > 0 && array1[47]?.userAddress,
+      array1.length > 0 && array1[63]?.userAddress,
+      array1.length > 0 && array1[79]?.userAddress,
+    ];
+  } else if (pagination === 4) {
+    paginationArrData = [
+      array1.length > 0 && array1[3]?.userAddress,
+      array1.length > 0 && array1[7]?.userAddress,
+      array1.length > 0 && array1[11]?.userAddress,
+      array1.length > 0 && array1[15]?.userAddress,
+      array1.length > 0 && array1[19]?.userAddress,
+      array1.length > 0 && array1[32]?.userAddress,
+      array1.length > 0 && array1[48]?.userAddress,
+      array1.length > 0 && array1[64]?.userAddress,
+      array1.length > 0 && array1[80]?.userAddress,
+      array1.length > 0 && array1[33]?.userAddress,
+      array1.length > 0 && array1[49]?.userAddress,
+      array1.length > 0 && array1[65]?.userAddress,
+      array1.length > 0 && array1[81]?.userAddress,
+      array1.length > 0 && array1[34]?.userAddress,
+      array1.length > 0 && array1[50]?.userAddress,
+      array1.length > 0 && array1[66]?.userAddress,
+      array1.length > 0 && array1[82]?.userAddress,
+      array1.length > 0 && array1[35]?.userAddress,
+      array1.length > 0 && array1[51]?.userAddress,
+      array1.length > 0 && array1[67]?.userAddress,
+      array1.length > 0 && array1[84]?.userAddress,
+    ];
+  } else {
+    paginationArrData = [];
+  }
+  let allData = paginationArrData && paginationArrData.slice(1);
+  // );
+  const backHandler = () => {
+    if (pagination > 1) {
+      setPagination((prev) => prev - 1);
+    }
+  };
+  const nextHandler = () => {
+    if (pagination < 4) {
+      setPagination((prev) => prev + 1);
+    }
+  };
+
+  console.log("allData---check------>", allData);
   return (
     <div className="z-10  mt-10 lg:ml-10  lg:mt-0">
       <div className="relative rounded-[9px] border-none bg-[#2c0219] p-3 text-center font-san sm:p-6 sm:py-12">
         <h1 className="mb-10 text-[25px] font-medium text-[#9168bf]">
           G3X2 Matrix
         </h1>
-        {Array.from({ length: 85 }, (_, i) => (
-          <PositionFetcher
-            key={i + 1}
-            address={address}
-            cycleNo={cycleNo}
-            positionId={Number(params.id)}
-            index={i + 1}
-            onFetch={handleFetch}
-          />
-        ))}
-
         <h1 className="mx-auto mb-[20px] flex h-[80px] w-[200px] items-center justify-center rounded-lg border-2 border-[#ae7ddd] bg-[#1e1c2f] pl-[8px] pr-[8px] text-3xl font-bold text-[#ae7ddd] sm:w-[340px] xl:w-[440px]">
           {UseFormatNumber(user?.[0])}
         </h1>
@@ -272,17 +278,17 @@ const Page = ({ params }: any) => {
             </div>
             <div className="flex justify-between">
               <button
-                onClick={() => setPagination((prev) => prev - 1)}
+                onClick={backHandler}
                 className="rounded-full p-3 border h-14"
               >
                 {" "}
                 Prev
               </button>
               <div className="flex justify-center  sm:mt-[-10px] sm:justify-center">
-                {parseInt(positions?.[0]?.position) !== undefined ? (
+                {allData?.[0] !== undefined ? (
                   <div className="flex flex-col items-center  ">
                     <a className="ml-[-5px] flex h-[21px] w-[21px] cursor-pointer items-center justify-center rounded-full border bg-[#9168bf] text-white sm:h-[70px] sm:w-[70px] xl:h-[80px] xl:w-[80px]">
-                      <UserId2 userAddress={parseInt(positionArray?.[0])} />
+                      <UserId2 userAddress={allData?.[0]} />
                     </a>
 
                     <div className="-mt-[32px] flex  gap-x-[2px] sm:gap-x-[82px]  ">
@@ -305,7 +311,7 @@ const Page = ({ params }: any) => {
                 )}
               </div>
               <button
-                onClick={() => setPagination((prev) => prev + 1)}
+                onClick={nextHandler}
                 className="rounded-full p-3 border h-14"
               >
                 Next
@@ -314,10 +320,10 @@ const Page = ({ params }: any) => {
 
             <div className="flex justify-center  sm:justify-center ">
               <div className="flex gap-x-2 sm:mt-[-50px] sm:gap-x-2">
-                {parseInt(positionArray?.[1]) !== undefined ? (
+                {allData?.[1] !== undefined ? (
                   <div className="flex flex-col items-center">
                     <a className="ml-[-5px] flex h-[21px] w-[21px] cursor-pointer items-center justify-center rounded-full border bg-purple-500 text-white sm:h-[50px] sm:w-[50px]">
-                      <UserId2 userAddress={parseInt(positionArray?.[1])} />
+                      <UserId2 userAddress={allData?.[1]} />
                     </a>
                     <div className="  flex justify-center gap-x-[2px] sm:gap-x-[20px]  ">
                       <div className="h-[20px] w-2 rotate-[50deg] transform border-l border-dashed  border-purple-500 sm:mt-[-5px] sm:h-[60px]"></div>
@@ -326,30 +332,30 @@ const Page = ({ params }: any) => {
                       <div className="ml-[-2px] mt-[-5px] h-[20px] w-2 rotate-[-50deg] transform  border-l border-dashed border-purple-500  sm:ml-[-3px] sm:mt-[-10px] sm:h-[60px]"></div>
                     </div>
                     <div className="mt-[-10px] flex gap-x-2 sm:mt-[-12px] sm:gap-x-3">
-                      {parseInt(positionArray?.[5]) !== undefined ? (
+                      {allData?.[5] !== undefined ? (
                         <a className="ml-[-5px] flex h-[21px] w-[21px] cursor-pointer items-center justify-center rounded-full border bg-purple-500 text-white sm:h-[40px] sm:w-[40px]">
-                          <UserId2 userAddress={parseInt(positionArray?.[5])} />
+                          <UserId2 userAddress={allData?.[5]} />
                         </a>
                       ) : (
                         <a className="ml-[-5px]  h-[21px] w-[21px] cursor-pointer rounded-full border sm:h-[40px] sm:w-[40px] "></a>
                       )}
-                      {parseInt(positionArray?.[6]) !== undefined ? (
+                      {allData?.[6] !== undefined ? (
                         <a className="ml-[-5px] flex h-[21px] w-[21px] cursor-pointer items-center justify-center rounded-full border bg-purple-500 text-white sm:h-[40px] sm:w-[40px]">
-                          <UserId2 userAddress={parseInt(positionArray?.[6])} />
+                          <UserId2 userAddress={allData?.[6]} />
                         </a>
                       ) : (
                         <a className="ml-[-5px]  h-[21px] w-[21px] cursor-pointer rounded-full border sm:h-[40px] sm:w-[40px] "></a>
                       )}
-                      {parseInt(positionArray?.[7]) !== undefined ? (
+                      {allData?.[7] !== undefined ? (
                         <a className="ml-[-5px] flex h-[21px] w-[21px] cursor-pointer items-center justify-center rounded-full border bg-purple-500 text-white sm:h-[40px] sm:w-[40px]">
-                          <UserId2 userAddress={parseInt(positionArray?.[7])} />
+                          <UserId2 userAddress={allData?.[7]} />
                         </a>
                       ) : (
                         <a className="ml-[-5px]  h-[21px] w-[21px] cursor-pointer rounded-full border sm:h-[40px] sm:w-[40px] "></a>
                       )}
-                      {parseInt(positionArray?.[8]) !== undefined ? (
+                      {allData?.[8] !== undefined ? (
                         <a className="ml-[-5px] flex h-[21px] w-[21px] cursor-pointer items-center justify-center rounded-full border bg-purple-500 text-white sm:h-[40px] sm:w-[40px]">
-                          <UserId2 userAddress={parseInt(positionArray?.[8])} />
+                          <UserId2 userAddress={allData?.[8]} />
                         </a>
                       ) : (
                         <a className="ml-[-5px]  h-[21px] w-[21px] cursor-pointer rounded-full border sm:h-[40px] sm:w-[40px] "></a>
@@ -366,38 +372,30 @@ const Page = ({ params }: any) => {
                       <div className="ml-[-2px] mt-[-5px] h-[20px] w-2 rotate-[-50deg] transform  border-l border-dashed border-purple-500  sm:ml-[-3px] sm:mt-[-10px] sm:h-[60px]"></div>
                     </div>
                     <div className="mt-[-10px] flex gap-x-2 sm:mt-[-12px] sm:gap-x-3">
-                      {parseInt(positions?.[0]?.position) !== undefined ? (
+                      {parseInt(results?.[0]?.data) !== undefined ? (
                         <a className="ml-[-5px] flex h-[21px] w-[21px] cursor-pointer items-center justify-center rounded-full border bg-purple-500 text-white sm:h-[40px] sm:w-[40px]">
-                          <UserId2
-                            userAddress={parseInt(positions?.[0]?.position)}
-                          />
+                          <UserId2 userAddress={parseInt(results?.[0]?.data)} />
                         </a>
                       ) : (
                         <a className="ml-[-5px]  h-[21px] w-[21px] cursor-pointer rounded-full border sm:h-[40px] sm:w-[40px] "></a>
                       )}
-                      {parseInt(positions?.[0]?.position) !== undefined ? (
+                      {parseInt(results?.[0]?.data) !== undefined ? (
                         <a className="ml-[-5px] flex h-[21px] w-[21px] cursor-pointer items-center justify-center rounded-full border bg-purple-500 text-white sm:h-[40px] sm:w-[40px]">
-                          <UserId2
-                            userAddress={parseInt(positions?.[0]?.position)}
-                          />
+                          <UserId2 userAddress={parseInt(results?.[0]?.data)} />
                         </a>
                       ) : (
                         <a className="ml-[-5px]  h-[21px] w-[21px] cursor-pointer rounded-full border sm:h-[40px] sm:w-[40px] "></a>
                       )}
-                      {parseInt(positions?.[0]?.position) !== undefined ? (
+                      {parseInt(results?.[0]?.data) !== undefined ? (
                         <a className="ml-[-5px] flex h-[21px] w-[21px] cursor-pointer items-center justify-center rounded-full border bg-purple-500 text-white sm:h-[40px] sm:w-[40px]">
-                          <UserId2
-                            userAddress={parseInt(positions?.[0]?.position)}
-                          />
+                          <UserId2 userAddress={parseInt(results?.[0]?.data)} />
                         </a>
                       ) : (
                         <a className="ml-[-5px]  h-[21px] w-[21px] cursor-pointer rounded-full border sm:h-[40px] sm:w-[40px] "></a>
                       )}
-                      {parseInt(positions?.[0]?.position) !== undefined ? (
+                      {parseInt(results?.[0]?.data) !== undefined ? (
                         <a className="ml-[-5px] flex h-[21px] w-[21px] cursor-pointer items-center justify-center rounded-full border bg-purple-500 text-white sm:h-[40px] sm:w-[40px]">
-                          <UserId2
-                            userAddress={parseInt(positions?.[0]?.position)}
-                          />
+                          <UserId2 userAddress={parseInt(results?.[0]?.data)} />
                         </a>
                       ) : (
                         <a className="ml-[-5px]  h-[21px] w-[21px] cursor-pointer rounded-full border sm:h-[40px] sm:w-[40px] "></a>
@@ -405,10 +403,10 @@ const Page = ({ params }: any) => {
                     </div>
                   </div>
                 )}
-                {parseInt(positionArray?.[2]) !== undefined ? (
+                {allData?.[2] !== undefined ? (
                   <div className="flex flex-col items-center">
                     <a className="ml-[-5px] flex h-[21px] w-[21px] cursor-pointer items-center justify-center rounded-full border bg-purple-500 text-white sm:h-[50px] sm:w-[50px]">
-                      <UserId2 userAddress={parseInt(positionArray?.[2])} />
+                      <UserId2 userAddress={allData?.[2]} />
                     </a>
                     <div className="  flex justify-center gap-x-[2px] sm:gap-x-[20px]  ">
                       <div className="h-[20px] w-2 rotate-[50deg] transform border-l border-dashed  border-purple-500 sm:mt-[-5px] sm:h-[60px]"></div>
@@ -417,36 +415,30 @@ const Page = ({ params }: any) => {
                       <div className="ml-[-2px] mt-[-5px] h-[20px] w-2 rotate-[-50deg] transform  border-l border-dashed border-purple-500  sm:ml-[-3px] sm:mt-[-10px] sm:h-[60px]"></div>
                     </div>
                     <div className="mt-[-10px] flex gap-x-2 sm:mt-[-12px] sm:gap-x-3">
-                      {parseInt(positionArray?.[9]) !== undefined ? (
+                      {allData?.[9] !== undefined ? (
                         <a className="ml-[-5px] flex h-[21px] w-[21px] cursor-pointer items-center justify-center rounded-full border bg-purple-500 text-white sm:h-[40px] sm:w-[40px]">
-                          <UserId2 userAddress={parseInt(positionArray?.[9])} />
+                          <UserId2 userAddress={allData?.[9]} />
                         </a>
                       ) : (
                         <a className="ml-[-5px]  h-[21px] w-[21px] cursor-pointer rounded-full border sm:h-[40px] sm:w-[40px] "></a>
                       )}
-                      {parseInt(positionArray?.[10]) !== undefined ? (
+                      {allData?.[10] !== undefined ? (
                         <a className="ml-[-5px] flex h-[21px] w-[21px] cursor-pointer items-center justify-center rounded-full border bg-purple-500 text-white sm:h-[40px] sm:w-[40px]">
-                          <UserId2
-                            userAddress={parseInt(positionArray?.[10])}
-                          />
+                          <UserId2 userAddress={allData?.[10]} />
                         </a>
                       ) : (
                         <a className="ml-[-5px]  h-[21px] w-[21px] cursor-pointer rounded-full border sm:h-[40px] sm:w-[40px] "></a>
                       )}
-                      {parseInt(positionArray?.[11]) !== undefined ? (
+                      {allData?.[11] !== undefined ? (
                         <a className="ml-[-5px] flex h-[21px] w-[21px] cursor-pointer items-center justify-center rounded-full border bg-purple-500 text-white sm:h-[40px] sm:w-[40px]">
-                          <UserId2
-                            userAddress={parseInt(positionArray?.[11])}
-                          />
+                          <UserId2 userAddress={allData?.[11]} />
                         </a>
                       ) : (
                         <a className="ml-[-5px]  h-[21px] w-[21px] cursor-pointer rounded-full border sm:h-[40px] sm:w-[40px] "></a>
                       )}
-                      {parseInt(positionArray?.[12]) !== undefined ? (
+                      {allData?.[12] !== undefined ? (
                         <a className="ml-[-5px] flex h-[21px] w-[21px] cursor-pointer items-center justify-center rounded-full border bg-purple-500 text-white sm:h-[40px] sm:w-[40px]">
-                          <UserId2
-                            userAddress={parseInt(positionArray?.[12])}
-                          />
+                          <UserId2 userAddress={allData?.[12]} />
                         </a>
                       ) : (
                         <a className="ml-[-5px]  h-[21px] w-[21px] cursor-pointer rounded-full border sm:h-[40px] sm:w-[40px] "></a>
@@ -463,38 +455,30 @@ const Page = ({ params }: any) => {
                       <div className="ml-[-2px] mt-[-5px] h-[20px] w-2 rotate-[-50deg] transform  border-l border-dashed border-purple-500  sm:ml-[-3px] sm:mt-[-10px] sm:h-[60px]"></div>
                     </div>
                     <div className="mt-[-10px] flex gap-x-2 sm:mt-[-12px] sm:gap-x-3">
-                      {parseInt(positions?.[0]?.position) !== undefined ? (
+                      {parseInt(results?.[0]?.data) !== undefined ? (
                         <a className="ml-[-5px] flex h-[21px] w-[21px] cursor-pointer items-center justify-center rounded-full border bg-purple-500 text-white sm:h-[40px] sm:w-[40px]">
-                          <UserId2
-                            userAddress={parseInt(positions?.[0]?.position)}
-                          />
+                          <UserId2 userAddress={parseInt(results?.[0]?.data)} />
                         </a>
                       ) : (
                         <a className="ml-[-5px]  h-[21px] w-[21px] cursor-pointer rounded-full border sm:h-[40px] sm:w-[40px] "></a>
                       )}
-                      {parseInt(positions?.[0]?.position) !== undefined ? (
+                      {parseInt(results?.[0]?.data) !== undefined ? (
                         <a className="ml-[-5px] flex h-[21px] w-[21px] cursor-pointer items-center justify-center rounded-full border bg-purple-500 text-white sm:h-[40px] sm:w-[40px]">
-                          <UserId2
-                            userAddress={parseInt(positions?.[0]?.position)}
-                          />
+                          <UserId2 userAddress={parseInt(results?.[0]?.data)} />
                         </a>
                       ) : (
                         <a className="ml-[-5px]  h-[21px] w-[21px] cursor-pointer rounded-full border sm:h-[40px] sm:w-[40px] "></a>
                       )}
-                      {parseInt(positions?.[0]?.position) !== undefined ? (
+                      {parseInt(results?.[0]?.data) !== undefined ? (
                         <a className="ml-[-5px] flex h-[21px] w-[21px] cursor-pointer items-center justify-center rounded-full border bg-purple-500 text-white sm:h-[40px] sm:w-[40px]">
-                          <UserId2
-                            userAddress={parseInt(positions?.[0]?.position)}
-                          />
+                          <UserId2 userAddress={parseInt(results?.[0]?.data)} />
                         </a>
                       ) : (
                         <a className="ml-[-5px]  h-[21px] w-[21px] cursor-pointer rounded-full border sm:h-[40px] sm:w-[40px] "></a>
                       )}
-                      {parseInt(positions?.[0]?.position) !== undefined ? (
+                      {parseInt(results?.[0]?.data) !== undefined ? (
                         <a className="ml-[-5px] flex h-[21px] w-[21px] cursor-pointer items-center justify-center rounded-full border bg-purple-500 text-white sm:h-[40px] sm:w-[40px]">
-                          <UserId2
-                            userAddress={parseInt(positions?.[0]?.position)}
-                          />
+                          <UserId2 userAddress={parseInt(results?.[0]?.data)} />
                         </a>
                       ) : (
                         <a className="ml-[-5px]  h-[21px] w-[21px] cursor-pointer rounded-full border sm:h-[40px] sm:w-[40px] "></a>
@@ -502,10 +486,10 @@ const Page = ({ params }: any) => {
                     </div>
                   </div>
                 )}
-                {parseInt(positionArray?.[3]) !== undefined ? (
+                {allData?.[3] !== undefined ? (
                   <div className="flex flex-col items-center">
                     <a className="ml-[-5px] flex h-[21px] w-[21px] cursor-pointer items-center justify-center rounded-full border bg-purple-500 text-white sm:h-[50px] sm:w-[50px]">
-                      <UserId2 userAddress={parseInt(positionArray?.[3])} />
+                      <UserId2 userAddress={allData?.[3]} />
                     </a>
                     <div className="  flex justify-center gap-x-[2px] sm:gap-x-[20px]  ">
                       <div className="h-[20px] w-2 rotate-[50deg] transform border-l border-dashed  border-purple-500 sm:mt-[-5px] sm:h-[60px]"></div>
@@ -514,38 +498,30 @@ const Page = ({ params }: any) => {
                       <div className="ml-[-2px] mt-[-5px] h-[20px] w-2 rotate-[-50deg] transform  border-l border-dashed border-purple-500  sm:ml-[-3px] sm:mt-[-10px] sm:h-[60px]"></div>
                     </div>
                     <div className="mt-[-10px] flex gap-x-2 sm:mt-[-12px] sm:gap-x-3">
-                      {parseInt(positionArray?.[13]) !== undefined ? (
+                      {allData?.[13] !== undefined ? (
                         <a className="ml-[-5px] flex h-[21px] w-[21px] cursor-pointer items-center justify-center rounded-full border bg-purple-500 text-white sm:h-[40px] sm:w-[40px]">
-                          <UserId2
-                            userAddress={parseInt(positionArray?.[13])}
-                          />
+                          <UserId2 userAddress={allData?.[13]} />
                         </a>
                       ) : (
                         <a className="ml-[-5px]  h-[21px] w-[21px] cursor-pointer rounded-full border sm:h-[40px] sm:w-[40px] "></a>
                       )}
-                      {parseInt(positionArray?.[14]) !== undefined ? (
+                      {allData?.[14] !== undefined ? (
                         <a className="ml-[-5px] flex h-[21px] w-[21px] cursor-pointer items-center justify-center rounded-full border bg-purple-500 text-white sm:h-[40px] sm:w-[40px]">
-                          <UserId2
-                            userAddress={parseInt(positionArray?.[14])}
-                          />
+                          <UserId2 userAddress={allData?.[14]} />
                         </a>
                       ) : (
                         <a className="ml-[-5px]  h-[21px] w-[21px] cursor-pointer rounded-full border sm:h-[40px] sm:w-[40px] "></a>
                       )}
-                      {parseInt(positionArray?.[15]) !== undefined ? (
+                      {allData?.[15] !== undefined ? (
                         <a className="ml-[-5px] flex h-[21px] w-[21px] cursor-pointer items-center justify-center rounded-full border bg-purple-500 text-white sm:h-[40px] sm:w-[40px]">
-                          <UserId2
-                            userAddress={parseInt(positionArray?.[15])}
-                          />
+                          <UserId2 userAddress={allData?.[15]} />
                         </a>
                       ) : (
                         <a className="ml-[-5px]  h-[21px] w-[21px] cursor-pointer rounded-full border sm:h-[40px] sm:w-[40px] "></a>
                       )}
-                      {parseInt(positionArray?.[16]) !== undefined ? (
+                      {allData?.[16] !== undefined ? (
                         <a className="ml-[-5px] flex h-[21px] w-[21px] cursor-pointer items-center justify-center rounded-full border bg-purple-500 text-white sm:h-[40px] sm:w-[40px]">
-                          <UserId2
-                            userAddress={parseInt(positionArray?.[16])}
-                          />
+                          <UserId2 userAddress={allData?.[16]} />
                         </a>
                       ) : (
                         <a className="ml-[-5px]  h-[21px] w-[21px] cursor-pointer rounded-full border sm:h-[40px] sm:w-[40px] "></a>
@@ -562,38 +538,30 @@ const Page = ({ params }: any) => {
                       <div className="ml-[-2px] mt-[-5px] h-[20px] w-2 rotate-[-50deg] transform  border-l border-dashed border-purple-500  sm:ml-[-3px] sm:mt-[-10px] sm:h-[60px]"></div>
                     </div>
                     <div className="mt-[-10px] flex gap-x-2 sm:mt-[-12px] sm:gap-x-3">
-                      {parseInt(positions?.[0]?.position) !== undefined ? (
+                      {parseInt(results?.[0]?.data) !== undefined ? (
                         <a className="ml-[-5px] flex h-[21px] w-[21px] cursor-pointer items-center justify-center rounded-full border bg-purple-500 text-white sm:h-[40px] sm:w-[40px]">
-                          <UserId2
-                            userAddress={parseInt(positions?.[0]?.position)}
-                          />
+                          <UserId2 userAddress={parseInt(results?.[0]?.data)} />
                         </a>
                       ) : (
                         <a className="ml-[-5px]  h-[21px] w-[21px] cursor-pointer rounded-full border sm:h-[40px] sm:w-[40px] "></a>
                       )}
-                      {parseInt(positions?.[0]?.position) !== undefined ? (
+                      {parseInt(results?.[0]?.data) !== undefined ? (
                         <a className="ml-[-5px] flex h-[21px] w-[21px] cursor-pointer items-center justify-center rounded-full border bg-purple-500 text-white sm:h-[40px] sm:w-[40px]">
-                          <UserId2
-                            userAddress={parseInt(positions?.[0]?.position)}
-                          />
+                          <UserId2 userAddress={parseInt(results?.[0]?.data)} />
                         </a>
                       ) : (
                         <a className="ml-[-5px]  h-[21px] w-[21px] cursor-pointer rounded-full border sm:h-[40px] sm:w-[40px] "></a>
                       )}
-                      {parseInt(positions?.[0]?.position) !== undefined ? (
+                      {parseInt(results?.[0]?.data) !== undefined ? (
                         <a className="ml-[-5px] flex h-[21px] w-[21px] cursor-pointer items-center justify-center rounded-full border bg-purple-500 text-white sm:h-[40px] sm:w-[40px]">
-                          <UserId2
-                            userAddress={parseInt(positions?.[0]?.position)}
-                          />
+                          <UserId2 userAddress={parseInt(results?.[0]?.data)} />
                         </a>
                       ) : (
                         <a className="ml-[-5px]  h-[21px] w-[21px] cursor-pointer rounded-full border sm:h-[40px] sm:w-[40px] "></a>
                       )}
-                      {parseInt(positions?.[0]?.position) !== undefined ? (
+                      {parseInt(results?.[0]?.data) !== undefined ? (
                         <a className="ml-[-5px] flex h-[21px] w-[21px] cursor-pointer items-center justify-center rounded-full border bg-purple-500 text-white sm:h-[40px] sm:w-[40px]">
-                          <UserId2
-                            userAddress={parseInt(positions?.[0]?.position)}
-                          />
+                          <UserId2 userAddress={parseInt(results?.[0]?.data)} />
                         </a>
                       ) : (
                         <a className="ml-[-5px]  h-[21px] w-[21px] cursor-pointer rounded-full border sm:h-[40px] sm:w-[40px] "></a>
@@ -601,10 +569,10 @@ const Page = ({ params }: any) => {
                     </div>
                   </div>
                 )}
-                {parseInt(positionArray?.[4]) !== undefined ? (
+                {allData?.[4] !== undefined ? (
                   <div className="flex flex-col items-center">
                     <a className="ml-[-5px] flex h-[21px] w-[21px] cursor-pointer items-center justify-center rounded-full border bg-purple-500 text-white sm:h-[50px] sm:w-[50px]">
-                      <UserId2 userAddress={parseInt(positionArray?.[4])} />
+                      <UserId2 userAddress={allData?.[4]} />
                     </a>
                     <div className="  flex justify-center gap-x-[2px] sm:gap-x-[20px]  ">
                       <div className="h-[20px] w-2 rotate-[50deg] transform border-l border-dashed  border-purple-500 sm:mt-[-5px] sm:h-[60px]"></div>
@@ -613,38 +581,30 @@ const Page = ({ params }: any) => {
                       <div className="ml-[-2px] mt-[-5px] h-[20px] w-2 rotate-[-50deg] transform  border-l border-dashed border-purple-500  sm:ml-[-3px] sm:mt-[-10px] sm:h-[60px]"></div>
                     </div>
                     <div className="mt-[-10px] flex gap-x-2 sm:mt-[-12px] sm:gap-x-3">
-                      {parseInt(positionArray?.[17]) !== undefined ? (
+                      {allData?.[17] !== undefined ? (
                         <a className="ml-[-5px] flex h-[21px] w-[21px] cursor-pointer items-center justify-center rounded-full border bg-purple-500 text-white sm:h-[40px] sm:w-[40px]">
-                          <UserId2
-                            userAddress={parseInt(positionArray?.[17])}
-                          />
+                          <UserId2 userAddress={allData?.[17]} />
                         </a>
                       ) : (
                         <a className="ml-[-5px]  h-[21px] w-[21px] cursor-pointer rounded-full border sm:h-[40px] sm:w-[40px] "></a>
                       )}
-                      {parseInt(positionArray?.[18]) !== undefined ? (
+                      {allData?.[18] !== undefined ? (
                         <a className="ml-[-5px] flex h-[21px] w-[21px] cursor-pointer items-center justify-center rounded-full border bg-purple-500 text-white sm:h-[40px] sm:w-[40px]">
-                          <UserId2
-                            userAddress={parseInt(positionArray?.[18])}
-                          />
+                          <UserId2 userAddress={allData?.[18]} />
                         </a>
                       ) : (
                         <a className="ml-[-5px]  h-[21px] w-[21px] cursor-pointer rounded-full border sm:h-[40px] sm:w-[40px] "></a>
                       )}
-                      {parseInt(positionArray?.[19]) !== undefined ? (
+                      {allData?.[19] !== undefined ? (
                         <a className="ml-[-5px] flex h-[21px] w-[21px] cursor-pointer items-center justify-center rounded-full border bg-purple-500 text-white sm:h-[40px] sm:w-[40px]">
-                          <UserId2
-                            userAddress={parseInt(positionArray?.[19])}
-                          />
+                          <UserId2 userAddress={allData?.[19]} />
                         </a>
                       ) : (
                         <a className="ml-[-5px]  h-[21px] w-[21px] cursor-pointer rounded-full border sm:h-[40px] sm:w-[40px] "></a>
                       )}
-                      {parseInt(positionArray?.[20]) !== undefined ? (
+                      {allData?.[20] !== undefined ? (
                         <a className="ml-[-5px] flex h-[21px] w-[21px] cursor-pointer items-center justify-center rounded-full border bg-purple-500 text-white sm:h-[40px] sm:w-[40px]">
-                          <UserId2
-                            userAddress={parseInt(positionArray?.[20])}
-                          />
+                          <UserId2 userAddress={allData?.[20]} />
                         </a>
                       ) : (
                         <a className="ml-[-5px]  h-[21px] w-[21px] cursor-pointer rounded-full border sm:h-[40px] sm:w-[40px] "></a>
@@ -661,38 +621,30 @@ const Page = ({ params }: any) => {
                       <div className="ml-[-2px] mt-[-5px] h-[20px] w-2 rotate-[-50deg] transform  border-l border-dashed border-purple-500  sm:ml-[-3px] sm:mt-[-10px] sm:h-[60px]"></div>
                     </div>
                     <div className="mt-[-10px] flex gap-x-2 sm:mt-[-12px] sm:gap-x-3">
-                      {parseInt(positions?.[0]?.position) !== undefined ? (
+                      {parseInt(results?.[0]?.data) !== undefined ? (
                         <a className="ml-[-5px] flex h-[21px] w-[21px] cursor-pointer items-center justify-center rounded-full border bg-purple-500 text-white sm:h-[40px] sm:w-[40px]">
-                          <UserId2
-                            userAddress={parseInt(positions?.[0]?.position)}
-                          />
+                          <UserId2 userAddress={parseInt(results?.[0]?.data)} />
                         </a>
                       ) : (
                         <a className="ml-[-5px]  h-[21px] w-[21px] cursor-pointer rounded-full border sm:h-[40px] sm:w-[40px] "></a>
                       )}
-                      {parseInt(positions?.[0]?.position) !== undefined ? (
+                      {parseInt(results?.[0]?.data) !== undefined ? (
                         <a className="ml-[-5px] flex h-[21px] w-[21px] cursor-pointer items-center justify-center rounded-full border bg-purple-500 text-white sm:h-[40px] sm:w-[40px]">
-                          <UserId2
-                            userAddress={parseInt(positions?.[0]?.position)}
-                          />
+                          <UserId2 userAddress={parseInt(results?.[0]?.data)} />
                         </a>
                       ) : (
                         <a className="ml-[-5px]  h-[21px] w-[21px] cursor-pointer rounded-full border sm:h-[40px] sm:w-[40px] "></a>
                       )}
-                      {parseInt(positions?.[0]?.position) !== undefined ? (
+                      {parseInt(results?.[0]?.data) !== undefined ? (
                         <a className="ml-[-5px] flex h-[21px] w-[21px] cursor-pointer items-center justify-center rounded-full border bg-purple-500 text-white sm:h-[40px] sm:w-[40px]">
-                          <UserId2
-                            userAddress={parseInt(positions?.[0]?.position)}
-                          />
+                          <UserId2 userAddress={parseInt(results?.[0]?.data)} />
                         </a>
                       ) : (
                         <a className="ml-[-5px]  h-[21px] w-[21px] cursor-pointer rounded-full border sm:h-[40px] sm:w-[40px] "></a>
                       )}
-                      {parseInt(positions?.[0]?.position) !== undefined ? (
+                      {parseInt(results?.[0]?.data) !== undefined ? (
                         <a className="ml-[-5px] flex h-[21px] w-[21px] cursor-pointer items-center justify-center rounded-full border bg-purple-500 text-white sm:h-[40px] sm:w-[40px]">
-                          <UserId2
-                            userAddress={parseInt(positions?.[0]?.position)}
-                          />
+                          <UserId2 userAddress={parseInt(results?.[0]?.data)} />
                         </a>
                       ) : (
                         <a className="ml-[-5px]  h-[21px] w-[21px] cursor-pointer rounded-full border sm:h-[40px] sm:w-[40px] "></a>
@@ -703,29 +655,9 @@ const Page = ({ params }: any) => {
               </div>
             </div>
           </div>
-          {/* <div className="absolute bottom-[20%] top-[80%] z-10 grid  w-full grid-cols-2 items-center md:bottom-[40%] md:top-[60%] md:gap-x-80">
-            <div className="flex items-center justify-center text-white sm:text-[15px]">
-              <img
-                src="/reinvest.svg"
-                alt=""
-                className="h-[20px]  w-[20px] p-1 md:h-[40px] md:w-[40px]"
-              />
-
-              <h1 className="text-[10px] md:text-[15px]">00 </h1>
-            </div>
-            <div className="ml-[-100px] flex items-center justify-center text-white sm:text-[15px]">
-              <img
-                src="/partner.svg"
-                alt=""
-                className="h-[20px] w-[20px] p-1 md:h-[40px] md:w-[40px]"
-              />
-
-              <h1 className="text-[10px] md:text-[15px]">{"00"}</h1>
-            </div>
-          </div> */}
         </div>
       </div>
-      <TransactionTable matrixLevel={Number(params.id)} userAddress={address} />
+      {/* <TransactionTable matrixLevel={Number(params.id)} userAddress={address} /> */}
     </div>
   );
 };

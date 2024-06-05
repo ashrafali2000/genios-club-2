@@ -1,20 +1,9 @@
 "use client";
-
-import {
-  useContract,
-  useContractRead,
-  useContractWrite,
-} from "@thirdweb-dev/react";
-import {
-  GeniosClubAbi2,
-  GeniosClubAddress2,
-  MTKAbi2,
-  MTKAddress2,
-} from "@/lib/constant";
+import { useContract, useContractRead } from "@thirdweb-dev/react";
+import { GeniosClubAbi2, GeniosClubAddress2 } from "@/lib/constant";
 import Modal from "../../../modal";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
-import { UseFormatEther, UseFormatNumber } from "@/lib/utils/useEthers";
 import RefFirstLevelCircle from "./refFirstLevelCircle";
 
 const Matrix = ({
@@ -30,76 +19,66 @@ const Matrix = ({
 }) => {
   const [openModal, setOpenModal] = useState(false);
   const [myPosition, setMyPosition] = useState("0");
-
   const { contract: GeniosClubContract } = useContract(
     GeniosClubAddress2,
     GeniosClubAbi2
   );
-  const { contract: MTKContract } = useContract(MTKAddress2, MTKAbi2);
-
   const { data: cycleNo } = useContractRead(
     GeniosClubContract,
     "CurrentCycleNo",
     [address, Number(MatrixLevel)]
   );
 
-  const usePosition = (
-    address: any,
-    cycleNo: any,
-    MatrixLevel: any,
-    index: any,
-    onFetch: any
-  ) => {
-    const { data, error } = useContractRead(
-      GeniosClubContract,
-      "PositionToId",
-      [address, cycleNo, Number(MatrixLevel), index]
-    );
-
-    const { data: address1, isLoading } = useContractRead(
-      GeniosClubContract,
-      "IdToAddress",
-      [myPosition]
-    );
-    useEffect(() => {
-      if (data !== undefined) {
-        onFetch(index, data, address1);
-      } else if (error) {
-        onFetch(index, null, null);
-      }
-    }, [data, address1, error, index, onFetch, myPosition]);
-  };
-
-  const [positions, setPositions] = useState(Array(16).fill(null));
-  const [loading, setLoading] = useState(true);
-
-  const handleFetch = useCallback((index: any, position: any, address: any) => {
-    setPositions((prev) => {
-      const newPositions = [...prev];
-      setMyPosition(position);
-      newPositions[index - 1] = { position, address };
-      return newPositions;
-    });
-  }, []);
-
+  // new today code
+  const [results, setResults] = useState([]);
+  const [errors, setErrors] = useState([]);
+  const { contract } = useContract(GeniosClubAddress2);
   useEffect(() => {
-    const allFetched = positions.every((pos) => pos !== null);
-    if (allFetched) {
-      setLoading(false);
-    }
-  }, [positions]);
+    const fetchData = async () => {
+      if (!contract) return;
 
-  const { data: balance, isLoading: balanceIsLoading } = useContractRead(
-    MTKContract,
-    "balanceOf",
-    [address]
-  );
+      const fetchPositionData = async (index: any) => {
+        try {
+          const data = await contract.call("PositionToId", [
+            address,
+            cycleNo,
+            +MatrixLevel,
+            index,
+          ]);
+          const userAddress = await contract.call("IdToAddress", [
+            parseInt(data),
+          ]);
+          return { index, data, userAddress };
+        } catch (error) {
+          return { index, error };
+        }
+      };
 
-  const { data: allowance, isLoading: allowanceIsLoading } = useContractRead(
-    MTKContract,
-    "allowance",
-    [address, GeniosClubAddress2]
-  );
+      const promises = [];
+      for (let i = 1; i <= 84; i++) {
+        promises.push(fetchPositionData(i));
+      }
+
+      const results = await Promise.all(promises);
+
+      const tempResults: any = [];
+      const tempErrors: any = [];
+
+      results.forEach((result) => {
+        if (result.data) {
+          tempResults.push(result);
+        } else if (result.error) {
+          tempErrors.push(result);
+        }
+      });
+
+      setResults(tempResults);
+      setErrors(tempErrors);
+    };
+
+    fetchData();
+  }, [contract, address, cycleNo, MatrixLevel]);
+  // console.log("results--------->", results);
 
   const { data: user, isLoading: usersIsLoading } = useContractRead(
     GeniosClubContract,
@@ -110,22 +89,6 @@ const Matrix = ({
   const initLink = view ? `/view2/g3x2-matrix` : `/g3x2-matrix`;
   const lastLink = view ? `?uid=${parseInt(user?.[0])}` : ``;
 
-  const PositionFetcher = ({
-    address,
-    cycleNo,
-    matrixLevel,
-    index,
-    onFetch,
-  }: {
-    address: any;
-    cycleNo: any;
-    matrixLevel: any;
-    index: any;
-    onFetch: any;
-  }) => {
-    usePosition(address, cycleNo, matrixLevel, index, onFetch);
-    return null;
-  };
   return (
     <>
       <Modal open={openModal} setOpen={setOpenModal}>
@@ -151,18 +114,7 @@ const Matrix = ({
             <div className=" h-[18px] w-2 rotate-[-50deg] transform   border-l border-dashed border-purple-500"></div>
           </div>
 
-          {Array.from({ length: 85 }, (_, i) => (
-            <PositionFetcher
-              key={i + 1}
-              address={address}
-              cycleNo={cycleNo}
-              matrixLevel={MatrixLevel}
-              index={i + 1}
-              onFetch={handleFetch}
-            />
-          ))}
-
-          {loading ? (
+          {results.length === 0 ? (
             <span className="mr-2 inline-flex items-center px-5 py-2.5 text-center text-sm font-medium text-white">
               <svg
                 aria-hidden="true"
@@ -184,13 +136,13 @@ const Matrix = ({
               LOADING...
             </span>
           ) : (
-            positions
+            results
               .slice(0, 1)
               .map((i, index) => (
                 <RefFirstLevelCircle
                   key={index}
                   RefFirstLevel={i}
-                  position={positions}
+                  position={results}
                   userAddress={i}
                   MatrixLevel={MatrixLevel}
                 />

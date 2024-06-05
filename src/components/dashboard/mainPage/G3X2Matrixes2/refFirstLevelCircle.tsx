@@ -17,10 +17,10 @@ const RefFirstLevelCircle = ({
 }) => {
   return (
     <>
-      {parseInt(position[0].position) === 0 &&
-      parseInt(position[1].position) === 0 &&
-      parseInt(position[2].position) === 0 &&
-      parseInt(position[3].position) === 0 ? (
+      {parseInt(position[0].data) === 0 &&
+      parseInt(position[1].data) === 0 &&
+      parseInt(position[2].data) === 0 &&
+      parseInt(position[3].data) === 0 ? (
         <div className="bg-purple-500 text-white px-4 py-3 rounded-2xl">
           No Active Data
         </div>
@@ -32,8 +32,8 @@ const RefFirstLevelCircle = ({
                 {RefFirstLevel !== undefined ? (
                   <div className="flex flex-col items-center  ">
                     <PopOver2
-                      RefFirstLevel={position[0].position}
-                      userAddress={position[0].address}
+                      RefFirstLevel={position[0].data}
+                      userAddress={position[0].userAddress}
                     />
                     <div className="  flex justify-center gap-x-[2px] mt-[-4px]">
                       <div className=" h-[20px] w-2 rotate-[50deg] transform border-l border-dashed border-purple-500"></div>
@@ -57,8 +57,8 @@ const RefFirstLevelCircle = ({
                 {RefFirstLevel !== undefined ? (
                   <div className="flex flex-col items-center  ">
                     <PopOver2
-                      RefFirstLevel={position[1].position}
-                      userAddress={position[1].address}
+                      RefFirstLevel={position[1].data}
+                      userAddress={position[1].userAddress}
                     />
 
                     <div className="  flex justify-center gap-x-[2px]  ">
@@ -83,8 +83,8 @@ const RefFirstLevelCircle = ({
                 {RefFirstLevel !== undefined ? (
                   <div className="flex flex-col items-center  ">
                     <PopOver2
-                      RefFirstLevel={position[2].position}
-                      userAddress={position[2].address}
+                      RefFirstLevel={position[2].data}
+                      userAddress={position[2].userAddress}
                     />
 
                     <div className="  flex justify-center gap-x-[2px]  ">
@@ -108,8 +108,8 @@ const RefFirstLevelCircle = ({
                 {RefFirstLevel !== undefined ? (
                   <div className="flex flex-col items-center  ">
                     <PopOver2
-                      RefFirstLevel={position[3].position}
-                      userAddress={position[3].address}
+                      RefFirstLevel={position[3].data}
+                      userAddress={position[3].userAddress}
                     />
 
                     <div className="  flex justify-center gap-x-[2px]  ">
@@ -181,8 +181,8 @@ const RefFirstLevelCircle2 = ({
             {position2[0] ? (
               <div className="flex flex-col items-center">
                 <PopOver2
-                  userAddress={position2[0].address}
-                  RefFirstLevel={position2[0].position}
+                  userAddress={position2[0].userAddress}
+                  RefFirstLevel={position2[0].data}
                 />
               </div>
             ) : (
@@ -195,8 +195,8 @@ const RefFirstLevelCircle2 = ({
             {position2[1] ? (
               <div className="flex flex-col items-center">
                 <PopOver2
-                  userAddress={position2[1].address}
-                  RefFirstLevel={position2[1].position}
+                  userAddress={position2[1].userAddress}
+                  RefFirstLevel={position2[1].data}
                 />
               </div>
             ) : (
@@ -210,8 +210,8 @@ const RefFirstLevelCircle2 = ({
             {position2[2] ? (
               <div className="flex flex-col items-center">
                 <PopOver2
-                  userAddress={position2[2].address}
-                  RefFirstLevel={position2[2].position}
+                  userAddress={position2[2].userAddress}
+                  RefFirstLevel={position2[2].data}
                 />
               </div>
             ) : (
@@ -224,8 +224,8 @@ const RefFirstLevelCircle2 = ({
             {position2[3] ? (
               <div className="flex flex-col items-center">
                 <PopOver2
-                  userAddress={position2[3].address}
-                  RefFirstLevel={position2[3].position}
+                  userAddress={position2[3].userAddress}
+                  RefFirstLevel={position2[3].data}
                 />
               </div>
             ) : (

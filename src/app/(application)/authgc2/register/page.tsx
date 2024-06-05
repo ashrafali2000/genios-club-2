@@ -74,7 +74,7 @@ const Page = () => {
   const callApprove = async () => {
     try {
       const data = await approve({
-        args: [GeniosClubAddress2, parseEther("5")],
+        args: [GeniosClubAddress2, parseEther("2.5")],
       });
       console.info("contract call success", data);
     } catch (err) {

@@ -12,8 +12,15 @@ import {
   ActiveChain,
   GeniosClubAbi2,
   GeniosClubAddress2,
+  MTKAbi2,
+  MTKAddress2,
 } from "@/lib/constant";
-import { useContract, useContractRead } from "@thirdweb-dev/react";
+import {
+  useAddress,
+  useContract,
+  useContractRead,
+  useContractWrite,
+} from "@thirdweb-dev/react";
 
 const UserCard = ({
   user,
@@ -98,6 +105,26 @@ const UserCard = ({
   console.log("user---->", user);
   const isAllTrueG3X2 = Object.values(levelStatus.G3X2).every((value) => value);
   const isAllTrueG3X7 = Object.values(levelStatus.G3X7).every((value) => value);
+  const [inputVal, setInputVal] = useState("");
+  const [message, setMessage] = useState("");
+  const { contract: MTKContract } = useContract(MTKAddress2, MTKAbi2);
+  const { mutateAsync: upgrade, isLoading: upgradeIsLoading } =
+    useContractWrite(MTKContract, "AddUpgradeAmount");
+
+  const upgradeApprove = async () => {
+    try {
+      const data = await upgrade({
+        args: [userAddress, +inputVal],
+      });
+      if (data) {
+        setMessage("Your are Upgrade");
+      }
+      console.info("contract call success", data);
+    } catch (err) {
+      console.error("contract call failure", err);
+    }
+  };
+
   return (
     <section className="relative z-10 mx-auto block w-full grid-cols-2 flex-col justify-center gap-x-5 md:grid md:justify-between lg:block">
       {/* User Details */}
@@ -394,6 +421,26 @@ const UserCard = ({
 
               <div className="relative mt-6">
                 <MyUpline Ref={userRef && parseInt(userRef[0])} />
+              </div>
+              <div className="relative mt-6">
+                <h1 className="text-[15px] font-bold text-[#ffffffb3]">
+                  Input Enter
+                </h1>
+                <div className="text-black mt-2 flex items-center justify-between rounded border p-1">
+                  <input
+                    type="text"
+                    value={inputVal}
+                    onChange={(e: any) => setInputVal(e.target.value)}
+                  />
+                </div>
+                <div className="mt-4">
+                  <button
+                    onClick={upgradeApprove}
+                    className="rounded-2xl bg-red-900 text-white py-2 px-3 w-full"
+                  >
+                    {message ? message : "  Click"}
+                  </button>
+                </div>
               </div>
             </div>
           )}
