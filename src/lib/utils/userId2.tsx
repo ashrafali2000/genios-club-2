@@ -11,5 +11,5 @@ export default function UserId2({ userAddress }: any) {
     "Users",
     [userAddress]
   );
-  return <>{Number(user?.[0]) > 0 ? Number(user?.[0]) : null}</>;
+  return <>{Number(user?.[0]) > 1 ? Number(user?.[0]) : null}</>;
 }
