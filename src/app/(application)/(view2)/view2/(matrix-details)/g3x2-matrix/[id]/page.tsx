@@ -13,7 +13,7 @@ import { useSearchParams } from "next/navigation";
 import UserId2 from "@/lib/utils/userId2";
 import Link from "next/link";
 
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 const Page = ({ params }: any) => {
   const searchParams = useSearchParams();
   const uid = searchParams?.get("uid");
@@ -43,194 +43,464 @@ const Page = ({ params }: any) => {
     "CurrentCycleNo",
     [address, Number(params.id)]
   );
-  // const [myPosition, setMyPosition] = useState("0");
+  const [myPosition, setMyPosition] = useState(1);
   const [pagination, setPagination] = useState(1);
   let index;
   let data;
   let userAddress;
-  const [array1, setArray1] = useState<any[]>([
+  const [parentLevel, setParentLevel] = useState<any[]>([
     {
       index,
       data,
       userAddress,
     },
   ]);
-  // const [paginationArrData, setPaginationArrData] = useState([]);
-  // const [array3, setArray3] = useState([]);
-  // const [array4, setArray4] = useState([]);
+  const [secondLeveLChild1, setSecondLevelChild1] = useState<any[]>([
+    {
+      index,
+      data,
+      userAddress,
+    },
+  ]);
+  const [secondLeveLChild2, setSecondLevelChild2] = useState<any[]>([
+    {
+      index,
+      data,
+      userAddress,
+    },
+  ]);
+  const [secondLeveLChild3, setSecondLevelChild3] = useState<any[]>([
+    {
+      index,
+      data,
+      userAddress,
+    },
+  ]);
+  const [secondLeveLChild4, setSecondLevelChild4] = useState<any[]>([
+    {
+      index,
+      data,
+      userAddress,
+    },
+  ]);
+  const [thirdLeveLChildFirst, setThirdLevelChildFirst] = useState<any[]>([
+    {
+      index,
+      data,
+      userAddress,
+    },
+  ]);
+  const [thirdLeveLChildSecond, setThirdLevelChildSecond] = useState<any[]>([
+    {
+      index,
+      data,
+      userAddress,
+    },
+  ]);
+  const [thirdLeveLChildThird, setThirdLevelChildThird] = useState<any[]>([
+    {
+      index,
+      data,
+      userAddress,
+    },
+  ]);
+  const [thirdLeveLChildFourth, setThirdLevelChildFourth] = useState<any[]>([
+    {
+      index,
+      data,
+      userAddress,
+    },
+  ]);
 
   // new today code
-  const [results, setResults] = useState<any[]>([]);
-  const [errors, setErrors] = useState([]);
   const { contract: contract1 } = useContract(GeniosClubAddress2);
+
   useEffect(() => {
     const fetchData = async () => {
       if (!contract1) return;
-
-      const fetchPositionData = async (index: any) => {
-        try {
-          const data = await contract1.call("PositionToId", [
-            address,
-            cycleNo,
-            +params.id,
-            index,
-          ]);
-          const userAddress = await contract1.call("IdToAddress", [
-            parseInt(data),
-          ]);
-          setArray1((prev) => [...prev, { index, data, userAddress }]);
-          return { index, data, userAddress };
-        } catch (error) {
-          return { index, error };
+      if (myPosition === 1) {
+        const fetchPositionData = async (index: any) => {
+          try {
+            const data = await contract1.call("PositionToId", [
+              address,
+              cycleNo,
+              +params.id,
+              index,
+            ]);
+            const userAddress = await contract1.call("IdToAddress", [
+              parseInt(data),
+            ]);
+            setParentLevel((prev) => [...prev, { index, data, userAddress }]);
+          } catch (error) {
+            return { index, error };
+          }
+        };
+        for (let i = 1; i <= 4; i++) {
+          fetchPositionData(i);
         }
-      };
-
-      const promises = [];
-      for (let i = 0; i <= 84; i++) {
-        promises.push(fetchPositionData(i));
+      } else {
+        const address = await contract1.call("IdToAddress", [
+          parseInt(parentLevel?.[myPosition]?.data),
+        ]);
+        const cycleNo = await contract1.call("CurrentCycleNo", [
+          address,
+          Number(params.id),
+        ]);
+        const fetchPositionData = async (index: any) => {
+          try {
+            const data = await contract1.call("PositionToId", [
+              address,
+              cycleNo,
+              +params.id,
+              index,
+            ]);
+            const userAddress = await contract1.call("IdToAddress", [
+              parseInt(data),
+            ]);
+            setParentLevel((prev) => [...prev, { index, data, userAddress }]);
+          } catch (error) {
+            return { index, error };
+          }
+        };
+        for (let i = 1; i <= 4; i++) {
+          fetchPositionData(i);
+        }
       }
-
-      const results = await Promise.all(promises);
-
-      const tempResults: any = [];
-      const tempErrors: any = [];
-
-      results.forEach((result) => {
-        if (result.data) {
-          tempResults.push(result);
-        } else if (result.error) {
-          tempErrors.push(result);
-        }
-      });
-
-      setResults(tempResults);
-      setErrors(tempErrors);
     };
 
     fetchData();
-  }, [contract, address, Number(params.id)]);
+  }, [contract, address, Number(params.id), myPosition]);
+
+  // Second-Child-Level
+  useEffect(() => {
+    if (parentLevel?.[1]?.data) {
+      const fetchData = async () => {
+        if (!contract1) return;
+
+        const fetchPositionData = async (index: any) => {
+          const address = await contract1.call("IdToAddress", [
+            parseInt(parentLevel?.[1]?.data),
+          ]);
+          const cycleNo = await contract1.call("CurrentCycleNo", [
+            address,
+            Number(params.id),
+          ]);
+          try {
+            const data = await contract1.call("PositionToId", [
+              address,
+              cycleNo,
+              +params.id,
+              index,
+            ]);
+            const userAddress = await contract1.call("IdToAddress", [
+              parseInt(data),
+            ]);
+            setSecondLevelChild1((prev) => [
+              ...prev,
+              { index, data, userAddress },
+            ]);
+          } catch (error) {
+            return { index, error };
+          }
+        };
+        for (let i = 1; i <= 4; i++) {
+          fetchPositionData(i);
+        }
+      };
+
+      fetchData();
+    }
+  }, [contract1, address, Number(params.id), parentLevel]);
+  useEffect(() => {
+    if (parentLevel?.[2]?.data) {
+      const fetchData = async () => {
+        if (!contract1) return;
+
+        const fetchPositionData = async (index: any) => {
+          const address = await contract1.call("IdToAddress", [
+            parseInt(parentLevel?.[2]?.data),
+          ]);
+          const cycleNo = await contract1.call("CurrentCycleNo", [
+            address,
+            Number(params.id),
+          ]);
+          try {
+            const data = await contract1.call("PositionToId", [
+              address,
+              cycleNo,
+              +params.id,
+              index,
+            ]);
+            const userAddress = await contract1.call("IdToAddress", [
+              parseInt(data),
+            ]);
+            setSecondLevelChild2((prev) => [
+              ...prev,
+              { index, data, userAddress },
+            ]);
+          } catch (error) {
+            return { index, error };
+          }
+        };
+        for (let i = 1; i <= 4; i++) {
+          fetchPositionData(i);
+        }
+      };
+
+      fetchData();
+    }
+  }, [contract1, address, Number(params.id), parentLevel]);
+  useEffect(() => {
+    if (parentLevel?.[3]?.data) {
+      const fetchData = async () => {
+        if (!contract1) return;
+
+        const fetchPositionData = async (index: any) => {
+          const address = await contract1.call("IdToAddress", [
+            parseInt(parentLevel?.[3]?.data),
+          ]);
+          const cycleNo = await contract1.call("CurrentCycleNo", [
+            address,
+            Number(params.id),
+          ]);
+          try {
+            const data = await contract1.call("PositionToId", [
+              address,
+              cycleNo,
+              +params.id,
+              index,
+            ]);
+            const userAddress = await contract1.call("IdToAddress", [
+              parseInt(data),
+            ]);
+            setSecondLevelChild3((prev) => [
+              ...prev,
+              { index, data, userAddress },
+            ]);
+          } catch (error) {
+            return { index, error };
+          }
+        };
+        for (let i = 1; i <= 4; i++) {
+          fetchPositionData(i);
+        }
+      };
+
+      fetchData();
+    }
+  }, [contract1, address, Number(params.id), parentLevel]);
+  useEffect(() => {
+    if (parentLevel?.[4]?.data) {
+      const fetchData = async () => {
+        if (!contract1) return;
+
+        const fetchPositionData = async (index: any) => {
+          const address = await contract1.call("IdToAddress", [
+            parseInt(parentLevel?.[4]?.data),
+          ]);
+          const cycleNo = await contract1.call("CurrentCycleNo", [
+            address,
+            Number(params.id),
+          ]);
+          try {
+            const data = await contract1.call("PositionToId", [
+              address,
+              cycleNo,
+              +params.id,
+              index,
+            ]);
+            const userAddress = await contract1.call("IdToAddress", [
+              parseInt(data),
+            ]);
+            setSecondLevelChild4((prev) => [
+              ...prev,
+              { index, data, userAddress },
+            ]);
+          } catch (error) {
+            return { index, error };
+          }
+        };
+        for (let i = 1; i <= 4; i++) {
+          fetchPositionData(i);
+        }
+      };
+
+      fetchData();
+    }
+  }, [contract1, address, Number(params.id), parentLevel]);
+
+  useEffect(() => {
+    if (secondLeveLChild1?.[1]?.data) {
+      const fetchData = async () => {
+        if (!contract1) return;
+
+        const fetchPositionData = async (index: any) => {
+          const address = await contract1.call("IdToAddress", [
+            parseInt(secondLeveLChild1?.[1]?.data),
+          ]);
+          const cycleNo = await contract1.call("CurrentCycleNo", [
+            address,
+            Number(params.id),
+          ]);
+          try {
+            const data = await contract1.call("PositionToId", [
+              address,
+              cycleNo,
+              +params.id,
+              index,
+            ]);
+            const userAddress = await contract1.call("IdToAddress", [
+              parseInt(data),
+            ]);
+            setThirdLevelChildFirst((prev) => [
+              ...prev,
+              { index, data, userAddress },
+            ]);
+          } catch (error) {
+            return { index, error };
+          }
+        };
+        for (let i = 1; i <= 4; i++) {
+          fetchPositionData(i);
+        }
+      };
+
+      fetchData();
+    }
+  }, [contract1, address, Number(params.id), secondLeveLChild1]);
+  useEffect(() => {
+    if (secondLeveLChild2?.[2]?.data) {
+      const fetchData = async () => {
+        if (!contract1) return;
+
+        const fetchPositionData = async (index: any) => {
+          const address = await contract1.call("IdToAddress", [
+            parseInt(secondLeveLChild2?.[2]?.data),
+          ]);
+          const cycleNo = await contract1.call("CurrentCycleNo", [
+            address,
+            Number(params.id),
+          ]);
+          try {
+            const data = await contract1.call("PositionToId", [
+              address,
+              cycleNo,
+              +params.id,
+              index,
+            ]);
+            const userAddress = await contract1.call("IdToAddress", [
+              parseInt(data),
+            ]);
+            setThirdLevelChildSecond((prev) => [
+              ...prev,
+              { index, data, userAddress },
+            ]);
+          } catch (error) {
+            return { index, error };
+          }
+        };
+        for (let i = 1; i <= 4; i++) {
+          fetchPositionData(i);
+        }
+      };
+
+      fetchData();
+    }
+  }, [contract1, address, Number(params.id), secondLeveLChild2]);
+  useEffect(() => {
+    if (secondLeveLChild3?.[3]?.data) {
+      const fetchData = async () => {
+        if (!contract1) return;
+
+        const fetchPositionData = async (index: any) => {
+          const address = await contract1.call("IdToAddress", [
+            parseInt(secondLeveLChild3?.[3]?.data),
+          ]);
+          const cycleNo = await contract1.call("CurrentCycleNo", [
+            address,
+            Number(params.id),
+          ]);
+          try {
+            const data = await contract1.call("PositionToId", [
+              address,
+              cycleNo,
+              +params.id,
+              index,
+            ]);
+            const userAddress = await contract1.call("IdToAddress", [
+              parseInt(data),
+            ]);
+            setThirdLevelChildThird((prev) => [
+              ...prev,
+              { index, data, userAddress },
+            ]);
+          } catch (error) {
+            return { index, error };
+          }
+        };
+        for (let i = 1; i <= 4; i++) {
+          fetchPositionData(i);
+        }
+      };
+
+      fetchData();
+    }
+  }, [contract1, address, Number(params.id), secondLeveLChild3]);
+  useEffect(() => {
+    if (secondLeveLChild4?.[4]?.data) {
+      const fetchData = async () => {
+        if (!contract1) return;
+
+        const fetchPositionData = async (index: any) => {
+          const address = await contract1.call("IdToAddress", [
+            parseInt(secondLeveLChild4?.[4]?.data),
+          ]);
+          const cycleNo = await contract1.call("CurrentCycleNo", [
+            address,
+            Number(params.id),
+          ]);
+          try {
+            const data = await contract1.call("PositionToId", [
+              address,
+              cycleNo,
+              +params.id,
+              index,
+            ]);
+            const userAddress = await contract1.call("IdToAddress", [
+              parseInt(data),
+            ]);
+            setThirdLevelChildFourth((prev) => [
+              ...prev,
+              { index, data, userAddress },
+            ]);
+          } catch (error) {
+            return { index, error };
+          }
+        };
+        for (let i = 1; i <= 4; i++) {
+          fetchPositionData(i);
+        }
+      };
+
+      fetchData();
+    }
+  }, [contract1, address, Number(params.id), secondLeveLChild4]);
 
   const nextNumber = Number(params.id) + 1 === 9 ? 1 : Number(params.id) + 1;
   const previousNumber =
     Number(params.id) - 1 === 0 ? 8 : Number(params.id) - 1;
 
-  // const [positionArray, setPositionArray] = useState(
-
-  let paginationArrData: any;
-
-  if (pagination === 1) {
-    paginationArrData = [
-      array1.length > 0 && array1[0]?.userAddress,
-      array1.length > 0 && array1[4]?.userAddress,
-      array1.length > 0 && array1[8]?.userAddress,
-      array1.length > 0 && array1[12]?.userAddress,
-      array1.length > 0 && array1[16]?.userAddress,
-      array1.length > 0 && array1[20]?.userAddress,
-      array1.length > 0 && array1[36]?.userAddress,
-      array1.length > 0 && array1[52]?.userAddress,
-      array1.length > 0 && array1[68]?.userAddress,
-      array1.length > 0 && array1[21]?.userAddress,
-      array1.length > 0 && array1[37]?.userAddress,
-      array1.length > 0 && array1[53]?.userAddress,
-      array1.length > 0 && array1[69]?.userAddress,
-      array1.length > 0 && array1[22]?.userAddress,
-      array1.length > 0 && array1[38]?.userAddress,
-      array1.length > 0 && array1[54]?.userAddress,
-      array1.length > 0 && array1[70]?.userAddress,
-      array1.length > 0 && array1[23]?.userAddress,
-      array1.length > 0 && array1[39]?.userAddress,
-      array1.length > 0 && array1[55]?.userAddress,
-      array1.length > 0 && array1[71]?.userAddress,
-    ];
-  } else if (pagination === 2)
-    paginationArrData = [
-      array1.length > 0 && array1[1]?.userAddress,
-      array1.length > 0 && array1[5]?.userAddress,
-      array1.length > 0 && array1[8]?.userAddress,
-      array1.length > 0 && array1[9]?.userAddress,
-      array1.length > 0 && array1[13]?.userAddress,
-      array1.length > 0 && array1[17]?.userAddress,
-      array1.length > 0 && array1[24]?.userAddress,
-      array1.length > 0 && array1[40]?.userAddress,
-      array1.length > 0 && array1[56]?.userAddress,
-      array1.length > 0 && array1[25]?.userAddress,
-      array1.length > 0 && array1[41]?.userAddress,
-      array1.length > 0 && array1[57]?.userAddress,
-      array1.length > 0 && array1[73]?.userAddress,
-      array1.length > 0 && array1[26]?.userAddress,
-      array1.length > 0 && array1[42]?.userAddress,
-      array1.length > 0 && array1[58]?.userAddress,
-      array1.length > 0 && array1[74]?.userAddress,
-      array1.length > 0 && array1[27]?.userAddress,
-      array1.length > 0 && array1[43]?.userAddress,
-      array1.length > 0 && array1[59]?.userAddress,
-      array1.length > 0 && array1[75]?.userAddress,
-    ];
-  else if (pagination === 3) {
-    paginationArrData = [
-      array1.length > 0 && array1[2]?.userAddress,
-      array1.length > 0 && array1[6]?.userAddress,
-      array1.length > 0 && array1[10]?.userAddress,
-      array1.length > 0 && array1[14]?.userAddress,
-      array1.length > 0 && array1[18]?.userAddress,
-      array1.length > 0 && array1[28]?.userAddress,
-      array1.length > 0 && array1[44]?.userAddress,
-      array1.length > 0 && array1[60]?.userAddress,
-      array1.length > 0 && array1[76]?.userAddress,
-      array1.length > 0 && array1[29]?.userAddress,
-      array1.length > 0 && array1[45]?.userAddress,
-      array1.length > 0 && array1[61]?.userAddress,
-      array1.length > 0 && array1[77]?.userAddress,
-      array1.length > 0 && array1[30]?.userAddress,
-      array1.length > 0 && array1[46]?.userAddress,
-      array1.length > 0 && array1[62]?.userAddress,
-      array1.length > 0 && array1[78]?.userAddress,
-      array1.length > 0 && array1[31]?.userAddress,
-      array1.length > 0 && array1[47]?.userAddress,
-      array1.length > 0 && array1[63]?.userAddress,
-      array1.length > 0 && array1[79]?.userAddress,
-    ];
-  } else if (pagination === 4) {
-    paginationArrData = [
-      array1.length > 0 && array1[3]?.userAddress,
-      array1.length > 0 && array1[7]?.userAddress,
-      array1.length > 0 && array1[11]?.userAddress,
-      array1.length > 0 && array1[15]?.userAddress,
-      array1.length > 0 && array1[19]?.userAddress,
-      array1.length > 0 && array1[32]?.userAddress,
-      array1.length > 0 && array1[48]?.userAddress,
-      array1.length > 0 && array1[64]?.userAddress,
-      array1.length > 0 && array1[80]?.userAddress,
-      array1.length > 0 && array1[33]?.userAddress,
-      array1.length > 0 && array1[49]?.userAddress,
-      array1.length > 0 && array1[65]?.userAddress,
-      array1.length > 0 && array1[81]?.userAddress,
-      array1.length > 0 && array1[34]?.userAddress,
-      array1.length > 0 && array1[50]?.userAddress,
-      array1.length > 0 && array1[66]?.userAddress,
-      array1.length > 0 && array1[82]?.userAddress,
-      array1.length > 0 && array1[35]?.userAddress,
-      array1.length > 0 && array1[51]?.userAddress,
-      array1.length > 0 && array1[67]?.userAddress,
-      array1.length > 0 && array1[84]?.userAddress,
-    ];
-  } else {
-    paginationArrData = [];
-  }
-  let allData = paginationArrData && paginationArrData.slice(1);
-  // );
   const backHandler = () => {
-    if (pagination > 1) {
-      setPagination((prev) => prev - 1);
+    if (myPosition > 1) {
+      setMyPosition((prev) => prev - 1);
     }
   };
   const nextHandler = () => {
-    if (pagination < 4) {
-      setPagination((prev) => prev + 1);
+    if (myPosition < 4) {
+      setMyPosition((prev) => prev + 1);
     }
   };
 
-  console.log("allData---check------>", allData);
   return (
     <div className="z-10  mt-10 lg:ml-10  lg:mt-0">
       <div className="relative rounded-[9px] border-none bg-[#2c0219] p-3 text-center font-san sm:p-6 sm:py-12">
@@ -285,12 +555,11 @@ const Page = ({ params }: any) => {
                 Prev
               </button>
               <div className="flex justify-center  sm:mt-[-10px] sm:justify-center">
-                {allData?.[0] !== undefined ? (
+                {parentLevel?.[1]?.userAddress !== undefined ? (
                   <div className="flex flex-col items-center  ">
                     <a className="ml-[-5px] flex h-[21px] w-[21px] cursor-pointer items-center justify-center rounded-full border bg-[#9168bf] text-white sm:h-[70px] sm:w-[70px] xl:h-[80px] xl:w-[80px]">
-                      <UserId2 userAddress={allData?.[0]} />
+                      <UserId2 userAddress={parentLevel?.[1]?.userAddress} />
                     </a>
-
                     <div className="-mt-[32px] flex  gap-x-[2px] sm:gap-x-[82px]  ">
                       <div className="h-[20px] w-2 rotate-[50deg] transform border-l border-dashed  border-purple-500 sm:mt-[-14px] sm:h-[268px]"></div>
                       <div className="mt-8 h-[9.5px] w-2 border-l  rotate-[20deg]   border-dashed border-purple-500 sm:h-[174px]"></div>
@@ -320,10 +589,12 @@ const Page = ({ params }: any) => {
 
             <div className="flex justify-center  sm:justify-center ">
               <div className="flex gap-x-2 sm:mt-[-50px] sm:gap-x-2">
-                {allData?.[1] !== undefined ? (
+                {secondLeveLChild1?.[1]?.userAddress !== undefined ? (
                   <div className="flex flex-col items-center">
                     <a className="ml-[-5px] flex h-[21px] w-[21px] cursor-pointer items-center justify-center rounded-full border bg-purple-500 text-white sm:h-[50px] sm:w-[50px]">
-                      <UserId2 userAddress={allData?.[1]} />
+                      <UserId2
+                        userAddress={secondLeveLChild1?.[1]?.userAddress}
+                      />
                     </a>
                     <div className="  flex justify-center gap-x-[2px] sm:gap-x-[20px]  ">
                       <div className="h-[20px] w-2 rotate-[50deg] transform border-l border-dashed  border-purple-500 sm:mt-[-5px] sm:h-[60px]"></div>
@@ -332,30 +603,38 @@ const Page = ({ params }: any) => {
                       <div className="ml-[-2px] mt-[-5px] h-[20px] w-2 rotate-[-50deg] transform  border-l border-dashed border-purple-500  sm:ml-[-3px] sm:mt-[-10px] sm:h-[60px]"></div>
                     </div>
                     <div className="mt-[-10px] flex gap-x-2 sm:mt-[-12px] sm:gap-x-3">
-                      {allData?.[5] !== undefined ? (
+                      {thirdLeveLChildFirst?.[1]?.userAddress !== undefined ? (
                         <a className="ml-[-5px] flex h-[21px] w-[21px] cursor-pointer items-center justify-center rounded-full border bg-purple-500 text-white sm:h-[40px] sm:w-[40px]">
-                          <UserId2 userAddress={allData?.[5]} />
+                          <UserId2
+                            userAddress={thirdLeveLChildFirst?.[1]?.userAddress}
+                          />
                         </a>
                       ) : (
                         <a className="ml-[-5px]  h-[21px] w-[21px] cursor-pointer rounded-full border sm:h-[40px] sm:w-[40px] "></a>
                       )}
-                      {allData?.[6] !== undefined ? (
+                      {thirdLeveLChildFirst?.[2]?.userAddress !== undefined ? (
                         <a className="ml-[-5px] flex h-[21px] w-[21px] cursor-pointer items-center justify-center rounded-full border bg-purple-500 text-white sm:h-[40px] sm:w-[40px]">
-                          <UserId2 userAddress={allData?.[6]} />
+                          <UserId2
+                            userAddress={thirdLeveLChildFirst?.[2]?.userAddress}
+                          />
                         </a>
                       ) : (
                         <a className="ml-[-5px]  h-[21px] w-[21px] cursor-pointer rounded-full border sm:h-[40px] sm:w-[40px] "></a>
                       )}
-                      {allData?.[7] !== undefined ? (
+                      {thirdLeveLChildFirst?.[3]?.userAddress !== undefined ? (
                         <a className="ml-[-5px] flex h-[21px] w-[21px] cursor-pointer items-center justify-center rounded-full border bg-purple-500 text-white sm:h-[40px] sm:w-[40px]">
-                          <UserId2 userAddress={allData?.[7]} />
+                          <UserId2
+                            userAddress={thirdLeveLChildFirst?.[3]?.userAddress}
+                          />
                         </a>
                       ) : (
                         <a className="ml-[-5px]  h-[21px] w-[21px] cursor-pointer rounded-full border sm:h-[40px] sm:w-[40px] "></a>
                       )}
-                      {allData?.[8] !== undefined ? (
+                      {thirdLeveLChildFirst?.[4]?.userAddress !== undefined ? (
                         <a className="ml-[-5px] flex h-[21px] w-[21px] cursor-pointer items-center justify-center rounded-full border bg-purple-500 text-white sm:h-[40px] sm:w-[40px]">
-                          <UserId2 userAddress={allData?.[8]} />
+                          <UserId2
+                            userAddress={thirdLeveLChildFirst?.[4]?.userAddress}
+                          />
                         </a>
                       ) : (
                         <a className="ml-[-5px]  h-[21px] w-[21px] cursor-pointer rounded-full border sm:h-[40px] sm:w-[40px] "></a>
@@ -371,7 +650,7 @@ const Page = ({ params }: any) => {
                       <div className="ml-[-2px] mt-[-5px] h-[20px] w-2 rotate-[-30deg] transform  border-l border-dashed border-purple-500  sm:ml-[-3px] sm:mt-[-10px] sm:h-[60px]"></div>
                       <div className="ml-[-2px] mt-[-5px] h-[20px] w-2 rotate-[-50deg] transform  border-l border-dashed border-purple-500  sm:ml-[-3px] sm:mt-[-10px] sm:h-[60px]"></div>
                     </div>
-                    <div className="mt-[-10px] flex gap-x-2 sm:mt-[-12px] sm:gap-x-3">
+                    {/* <div className="mt-[-10px] flex gap-x-2 sm:mt-[-12px] sm:gap-x-3">
                       {parseInt(results?.[0]?.data) !== undefined ? (
                         <a className="ml-[-5px] flex h-[21px] w-[21px] cursor-pointer items-center justify-center rounded-full border bg-purple-500 text-white sm:h-[40px] sm:w-[40px]">
                           <UserId2 userAddress={parseInt(results?.[0]?.data)} />
@@ -400,13 +679,15 @@ const Page = ({ params }: any) => {
                       ) : (
                         <a className="ml-[-5px]  h-[21px] w-[21px] cursor-pointer rounded-full border sm:h-[40px] sm:w-[40px] "></a>
                       )}
-                    </div>
+                    </div> */}
                   </div>
                 )}
-                {allData?.[2] !== undefined ? (
+                {secondLeveLChild2?.[1]?.userAddress !== undefined ? (
                   <div className="flex flex-col items-center">
                     <a className="ml-[-5px] flex h-[21px] w-[21px] cursor-pointer items-center justify-center rounded-full border bg-purple-500 text-white sm:h-[50px] sm:w-[50px]">
-                      <UserId2 userAddress={allData?.[2]} />
+                      <UserId2
+                        userAddress={secondLeveLChild2?.[1]?.userAddress}
+                      />
                     </a>
                     <div className="  flex justify-center gap-x-[2px] sm:gap-x-[20px]  ">
                       <div className="h-[20px] w-2 rotate-[50deg] transform border-l border-dashed  border-purple-500 sm:mt-[-5px] sm:h-[60px]"></div>
@@ -415,30 +696,46 @@ const Page = ({ params }: any) => {
                       <div className="ml-[-2px] mt-[-5px] h-[20px] w-2 rotate-[-50deg] transform  border-l border-dashed border-purple-500  sm:ml-[-3px] sm:mt-[-10px] sm:h-[60px]"></div>
                     </div>
                     <div className="mt-[-10px] flex gap-x-2 sm:mt-[-12px] sm:gap-x-3">
-                      {allData?.[9] !== undefined ? (
+                      {thirdLeveLChildSecond?.[1]?.userAddress !== undefined ? (
                         <a className="ml-[-5px] flex h-[21px] w-[21px] cursor-pointer items-center justify-center rounded-full border bg-purple-500 text-white sm:h-[40px] sm:w-[40px]">
-                          <UserId2 userAddress={allData?.[9]} />
+                          <UserId2
+                            userAddress={
+                              thirdLeveLChildSecond?.[1]?.userAddress
+                            }
+                          />
                         </a>
                       ) : (
                         <a className="ml-[-5px]  h-[21px] w-[21px] cursor-pointer rounded-full border sm:h-[40px] sm:w-[40px] "></a>
                       )}
-                      {allData?.[10] !== undefined ? (
+                      {thirdLeveLChildSecond?.[2]?.userAddress !== undefined ? (
                         <a className="ml-[-5px] flex h-[21px] w-[21px] cursor-pointer items-center justify-center rounded-full border bg-purple-500 text-white sm:h-[40px] sm:w-[40px]">
-                          <UserId2 userAddress={allData?.[10]} />
+                          <UserId2
+                            userAddress={
+                              thirdLeveLChildSecond?.[2]?.userAddress
+                            }
+                          />
                         </a>
                       ) : (
                         <a className="ml-[-5px]  h-[21px] w-[21px] cursor-pointer rounded-full border sm:h-[40px] sm:w-[40px] "></a>
                       )}
-                      {allData?.[11] !== undefined ? (
+                      {thirdLeveLChildSecond?.[3]?.userAddress !== undefined ? (
                         <a className="ml-[-5px] flex h-[21px] w-[21px] cursor-pointer items-center justify-center rounded-full border bg-purple-500 text-white sm:h-[40px] sm:w-[40px]">
-                          <UserId2 userAddress={allData?.[11]} />
+                          <UserId2
+                            userAddress={
+                              thirdLeveLChildSecond?.[3]?.userAddress
+                            }
+                          />
                         </a>
                       ) : (
                         <a className="ml-[-5px]  h-[21px] w-[21px] cursor-pointer rounded-full border sm:h-[40px] sm:w-[40px] "></a>
                       )}
-                      {allData?.[12] !== undefined ? (
+                      {thirdLeveLChildSecond?.[4]?.userAddress !== undefined ? (
                         <a className="ml-[-5px] flex h-[21px] w-[21px] cursor-pointer items-center justify-center rounded-full border bg-purple-500 text-white sm:h-[40px] sm:w-[40px]">
-                          <UserId2 userAddress={allData?.[12]} />
+                          <UserId2
+                            userAddress={
+                              thirdLeveLChildSecond?.[4]?.userAddress
+                            }
+                          />
                         </a>
                       ) : (
                         <a className="ml-[-5px]  h-[21px] w-[21px] cursor-pointer rounded-full border sm:h-[40px] sm:w-[40px] "></a>
@@ -454,7 +751,7 @@ const Page = ({ params }: any) => {
                       <div className="ml-[-2px] mt-[-5px] h-[20px] w-2 rotate-[-30deg] transform  border-l border-dashed border-purple-500  sm:ml-[-3px] sm:mt-[-10px] sm:h-[60px]"></div>
                       <div className="ml-[-2px] mt-[-5px] h-[20px] w-2 rotate-[-50deg] transform  border-l border-dashed border-purple-500  sm:ml-[-3px] sm:mt-[-10px] sm:h-[60px]"></div>
                     </div>
-                    <div className="mt-[-10px] flex gap-x-2 sm:mt-[-12px] sm:gap-x-3">
+                    {/* <div className="mt-[-10px] flex gap-x-2 sm:mt-[-12px] sm:gap-x-3">
                       {parseInt(results?.[0]?.data) !== undefined ? (
                         <a className="ml-[-5px] flex h-[21px] w-[21px] cursor-pointer items-center justify-center rounded-full border bg-purple-500 text-white sm:h-[40px] sm:w-[40px]">
                           <UserId2 userAddress={parseInt(results?.[0]?.data)} />
@@ -483,13 +780,15 @@ const Page = ({ params }: any) => {
                       ) : (
                         <a className="ml-[-5px]  h-[21px] w-[21px] cursor-pointer rounded-full border sm:h-[40px] sm:w-[40px] "></a>
                       )}
-                    </div>
+                    </div> */}
                   </div>
                 )}
-                {allData?.[3] !== undefined ? (
+                {secondLeveLChild3?.[1]?.userAddress !== undefined ? (
                   <div className="flex flex-col items-center">
                     <a className="ml-[-5px] flex h-[21px] w-[21px] cursor-pointer items-center justify-center rounded-full border bg-purple-500 text-white sm:h-[50px] sm:w-[50px]">
-                      <UserId2 userAddress={allData?.[3]} />
+                      <UserId2
+                        userAddress={secondLeveLChild3?.[1]?.userAddress}
+                      />
                     </a>
                     <div className="  flex justify-center gap-x-[2px] sm:gap-x-[20px]  ">
                       <div className="h-[20px] w-2 rotate-[50deg] transform border-l border-dashed  border-purple-500 sm:mt-[-5px] sm:h-[60px]"></div>
@@ -498,30 +797,38 @@ const Page = ({ params }: any) => {
                       <div className="ml-[-2px] mt-[-5px] h-[20px] w-2 rotate-[-50deg] transform  border-l border-dashed border-purple-500  sm:ml-[-3px] sm:mt-[-10px] sm:h-[60px]"></div>
                     </div>
                     <div className="mt-[-10px] flex gap-x-2 sm:mt-[-12px] sm:gap-x-3">
-                      {allData?.[13] !== undefined ? (
+                      {thirdLeveLChildThird?.[1] !== undefined ? (
                         <a className="ml-[-5px] flex h-[21px] w-[21px] cursor-pointer items-center justify-center rounded-full border bg-purple-500 text-white sm:h-[40px] sm:w-[40px]">
-                          <UserId2 userAddress={allData?.[13]} />
+                          <UserId2
+                            userAddress={thirdLeveLChildThird?.[1]?.userAddress}
+                          />
                         </a>
                       ) : (
                         <a className="ml-[-5px]  h-[21px] w-[21px] cursor-pointer rounded-full border sm:h-[40px] sm:w-[40px] "></a>
                       )}
-                      {allData?.[14] !== undefined ? (
+                      {thirdLeveLChildThird?.[2]?.userAddress !== undefined ? (
                         <a className="ml-[-5px] flex h-[21px] w-[21px] cursor-pointer items-center justify-center rounded-full border bg-purple-500 text-white sm:h-[40px] sm:w-[40px]">
-                          <UserId2 userAddress={allData?.[14]} />
+                          <UserId2
+                            userAddress={thirdLeveLChildThird?.[2]?.userAddress}
+                          />
                         </a>
                       ) : (
                         <a className="ml-[-5px]  h-[21px] w-[21px] cursor-pointer rounded-full border sm:h-[40px] sm:w-[40px] "></a>
                       )}
-                      {allData?.[15] !== undefined ? (
+                      {thirdLeveLChildThird?.[3]?.userAddress !== undefined ? (
                         <a className="ml-[-5px] flex h-[21px] w-[21px] cursor-pointer items-center justify-center rounded-full border bg-purple-500 text-white sm:h-[40px] sm:w-[40px]">
-                          <UserId2 userAddress={allData?.[15]} />
+                          <UserId2
+                            userAddress={thirdLeveLChildThird?.[3]?.userAddress}
+                          />
                         </a>
                       ) : (
                         <a className="ml-[-5px]  h-[21px] w-[21px] cursor-pointer rounded-full border sm:h-[40px] sm:w-[40px] "></a>
                       )}
-                      {allData?.[16] !== undefined ? (
+                      {thirdLeveLChildThird?.[4]?.userAddress !== undefined ? (
                         <a className="ml-[-5px] flex h-[21px] w-[21px] cursor-pointer items-center justify-center rounded-full border bg-purple-500 text-white sm:h-[40px] sm:w-[40px]">
-                          <UserId2 userAddress={allData?.[16]} />
+                          <UserId2
+                            userAddress={thirdLeveLChildThird?.[4]?.userAddress}
+                          />
                         </a>
                       ) : (
                         <a className="ml-[-5px]  h-[21px] w-[21px] cursor-pointer rounded-full border sm:h-[40px] sm:w-[40px] "></a>
@@ -537,7 +844,7 @@ const Page = ({ params }: any) => {
                       <div className="ml-[-2px] mt-[-5px] h-[20px] w-2 rotate-[-30deg] transform  border-l border-dashed border-purple-500  sm:ml-[-3px] sm:mt-[-10px] sm:h-[60px]"></div>
                       <div className="ml-[-2px] mt-[-5px] h-[20px] w-2 rotate-[-50deg] transform  border-l border-dashed border-purple-500  sm:ml-[-3px] sm:mt-[-10px] sm:h-[60px]"></div>
                     </div>
-                    <div className="mt-[-10px] flex gap-x-2 sm:mt-[-12px] sm:gap-x-3">
+                    {/* <div className="mt-[-10px] flex gap-x-2 sm:mt-[-12px] sm:gap-x-3">
                       {parseInt(results?.[0]?.data) !== undefined ? (
                         <a className="ml-[-5px] flex h-[21px] w-[21px] cursor-pointer items-center justify-center rounded-full border bg-purple-500 text-white sm:h-[40px] sm:w-[40px]">
                           <UserId2 userAddress={parseInt(results?.[0]?.data)} />
@@ -566,13 +873,15 @@ const Page = ({ params }: any) => {
                       ) : (
                         <a className="ml-[-5px]  h-[21px] w-[21px] cursor-pointer rounded-full border sm:h-[40px] sm:w-[40px] "></a>
                       )}
-                    </div>
+                    </div> */}
                   </div>
                 )}
-                {allData?.[4] !== undefined ? (
+                {secondLeveLChild4?.[1]?.userAddress !== undefined ? (
                   <div className="flex flex-col items-center">
                     <a className="ml-[-5px] flex h-[21px] w-[21px] cursor-pointer items-center justify-center rounded-full border bg-purple-500 text-white sm:h-[50px] sm:w-[50px]">
-                      <UserId2 userAddress={allData?.[4]} />
+                      <UserId2
+                        userAddress={secondLeveLChild4?.[1]?.userAddress}
+                      />
                     </a>
                     <div className="  flex justify-center gap-x-[2px] sm:gap-x-[20px]  ">
                       <div className="h-[20px] w-2 rotate-[50deg] transform border-l border-dashed  border-purple-500 sm:mt-[-5px] sm:h-[60px]"></div>
@@ -581,30 +890,46 @@ const Page = ({ params }: any) => {
                       <div className="ml-[-2px] mt-[-5px] h-[20px] w-2 rotate-[-50deg] transform  border-l border-dashed border-purple-500  sm:ml-[-3px] sm:mt-[-10px] sm:h-[60px]"></div>
                     </div>
                     <div className="mt-[-10px] flex gap-x-2 sm:mt-[-12px] sm:gap-x-3">
-                      {allData?.[17] !== undefined ? (
+                      {thirdLeveLChildFourth?.[1] !== undefined ? (
                         <a className="ml-[-5px] flex h-[21px] w-[21px] cursor-pointer items-center justify-center rounded-full border bg-purple-500 text-white sm:h-[40px] sm:w-[40px]">
-                          <UserId2 userAddress={allData?.[17]} />
+                          <UserId2
+                            userAddress={
+                              thirdLeveLChildFourth?.[1]?.userAddress
+                            }
+                          />
                         </a>
                       ) : (
                         <a className="ml-[-5px]  h-[21px] w-[21px] cursor-pointer rounded-full border sm:h-[40px] sm:w-[40px] "></a>
                       )}
-                      {allData?.[18] !== undefined ? (
+                      {thirdLeveLChildFourth?.[2]?.userAddress !== undefined ? (
                         <a className="ml-[-5px] flex h-[21px] w-[21px] cursor-pointer items-center justify-center rounded-full border bg-purple-500 text-white sm:h-[40px] sm:w-[40px]">
-                          <UserId2 userAddress={allData?.[18]} />
+                          <UserId2
+                            userAddress={
+                              thirdLeveLChildFourth?.[2]?.userAddress
+                            }
+                          />
                         </a>
                       ) : (
                         <a className="ml-[-5px]  h-[21px] w-[21px] cursor-pointer rounded-full border sm:h-[40px] sm:w-[40px] "></a>
                       )}
-                      {allData?.[19] !== undefined ? (
+                      {thirdLeveLChildFourth?.[3]?.userAddress !== undefined ? (
                         <a className="ml-[-5px] flex h-[21px] w-[21px] cursor-pointer items-center justify-center rounded-full border bg-purple-500 text-white sm:h-[40px] sm:w-[40px]">
-                          <UserId2 userAddress={allData?.[19]} />
+                          <UserId2
+                            userAddress={
+                              thirdLeveLChildFourth?.[3]?.userAddress
+                            }
+                          />
                         </a>
                       ) : (
                         <a className="ml-[-5px]  h-[21px] w-[21px] cursor-pointer rounded-full border sm:h-[40px] sm:w-[40px] "></a>
                       )}
-                      {allData?.[20] !== undefined ? (
+                      {thirdLeveLChildFourth?.[4]?.userAddress !== undefined ? (
                         <a className="ml-[-5px] flex h-[21px] w-[21px] cursor-pointer items-center justify-center rounded-full border bg-purple-500 text-white sm:h-[40px] sm:w-[40px]">
-                          <UserId2 userAddress={allData?.[20]} />
+                          <UserId2
+                            userAddress={
+                              thirdLeveLChildFourth?.[4]?.userAddress
+                            }
+                          />
                         </a>
                       ) : (
                         <a className="ml-[-5px]  h-[21px] w-[21px] cursor-pointer rounded-full border sm:h-[40px] sm:w-[40px] "></a>
@@ -620,7 +945,7 @@ const Page = ({ params }: any) => {
                       <div className="ml-[-2px] mt-[-5px] h-[20px] w-2 rotate-[-30deg] transform  border-l border-dashed border-purple-500  sm:ml-[-3px] sm:mt-[-10px] sm:h-[60px]"></div>
                       <div className="ml-[-2px] mt-[-5px] h-[20px] w-2 rotate-[-50deg] transform  border-l border-dashed border-purple-500  sm:ml-[-3px] sm:mt-[-10px] sm:h-[60px]"></div>
                     </div>
-                    <div className="mt-[-10px] flex gap-x-2 sm:mt-[-12px] sm:gap-x-3">
+                    {/* <div className="mt-[-10px] flex gap-x-2 sm:mt-[-12px] sm:gap-x-3">
                       {parseInt(results?.[0]?.data) !== undefined ? (
                         <a className="ml-[-5px] flex h-[21px] w-[21px] cursor-pointer items-center justify-center rounded-full border bg-purple-500 text-white sm:h-[40px] sm:w-[40px]">
                           <UserId2 userAddress={parseInt(results?.[0]?.data)} />
@@ -649,7 +974,7 @@ const Page = ({ params }: any) => {
                       ) : (
                         <a className="ml-[-5px]  h-[21px] w-[21px] cursor-pointer rounded-full border sm:h-[40px] sm:w-[40px] "></a>
                       )}
-                    </div>
+                    </div> */}
                   </div>
                 )}
               </div>
@@ -657,9 +982,113 @@ const Page = ({ params }: any) => {
           </div>
         </div>
       </div>
-      {/* <TransactionTable matrixLevel={Number(params.id)} userAddress={address} /> */}
     </div>
   );
 };
 
 export default Page;
+{
+  /* <TransactionTable matrixLevel={Number(params.id)} userAddress={address} /> */
+}
+// let paginationArrData: any;
+
+// if (pagination === 1) {
+//   paginationArrData = [
+//     array1.length > 0 && array1[0]?.userAddress,
+//     array1.length > 0 && array1[4]?.userAddress,
+//     array1.length > 0 && array1[8]?.userAddress,
+//     array1.length > 0 && array1[12]?.userAddress,
+//     array1.length > 0 && array1[16]?.userAddress,
+//     array1.length > 0 && array1[20]?.userAddress,
+//     array1.length > 0 && array1[36]?.userAddress,
+//     array1.length > 0 && array1[52]?.userAddress,
+//     array1.length > 0 && array1[68]?.userAddress,
+//     array1.length > 0 && array1[21]?.userAddress,
+//     array1.length > 0 && array1[37]?.userAddress,
+//     array1.length > 0 && array1[53]?.userAddress,
+//     array1.length > 0 && array1[69]?.userAddress,
+//     array1.length > 0 && array1[22]?.userAddress,
+//     array1.length > 0 && array1[38]?.userAddress,
+//     array1.length > 0 && array1[54]?.userAddress,
+//     array1.length > 0 && array1[70]?.userAddress,
+//     array1.length > 0 && array1[23]?.userAddress,
+//     array1.length > 0 && array1[39]?.userAddress,
+//     array1.length > 0 && array1[55]?.userAddress,
+//     array1.length > 0 && array1[71]?.userAddress,
+//   ];
+// } else if (pagination === 2)
+//   paginationArrData = [
+//     array1.length > 0 && array1[1]?.userAddress,
+//     array1.length > 0 && array1[5]?.userAddress,
+//     array1.length > 0 && array1[8]?.userAddress,
+//     array1.length > 0 && array1[9]?.userAddress,
+//     array1.length > 0 && array1[13]?.userAddress,
+//     array1.length > 0 && array1[17]?.userAddress,
+//     array1.length > 0 && array1[24]?.userAddress,
+//     array1.length > 0 && array1[40]?.userAddress,
+//     array1.length > 0 && array1[56]?.userAddress,
+//     array1.length > 0 && array1[25]?.userAddress,
+//     array1.length > 0 && array1[41]?.userAddress,
+//     array1.length > 0 && array1[57]?.userAddress,
+//     array1.length > 0 && array1[73]?.userAddress,
+//     array1.length > 0 && array1[26]?.userAddress,
+//     array1.length > 0 && array1[42]?.userAddress,
+//     array1.length > 0 && array1[58]?.userAddress,
+//     array1.length > 0 && array1[74]?.userAddress,
+//     array1.length > 0 && array1[27]?.userAddress,
+//     array1.length > 0 && array1[43]?.userAddress,
+//     array1.length > 0 && array1[59]?.userAddress,
+//     array1.length > 0 && array1[75]?.userAddress,
+//   ];
+// else if (pagination === 3) {
+//   paginationArrData = [
+//     array1.length > 0 && array1[2]?.userAddress,
+//     array1.length > 0 && array1[6]?.userAddress,
+//     array1.length > 0 && array1[10]?.userAddress,
+//     array1.length > 0 && array1[14]?.userAddress,
+//     array1.length > 0 && array1[18]?.userAddress,
+//     array1.length > 0 && array1[28]?.userAddress,
+//     array1.length > 0 && array1[44]?.userAddress,
+//     array1.length > 0 && array1[60]?.userAddress,
+//     array1.length > 0 && array1[76]?.userAddress,
+//     array1.length > 0 && array1[29]?.userAddress,
+//     array1.length > 0 && array1[45]?.userAddress,
+//     array1.length > 0 && array1[61]?.userAddress,
+//     array1.length > 0 && array1[77]?.userAddress,
+//     array1.length > 0 && array1[30]?.userAddress,
+//     array1.length > 0 && array1[46]?.userAddress,
+//     array1.length > 0 && array1[62]?.userAddress,
+//     array1.length > 0 && array1[78]?.userAddress,
+//     array1.length > 0 && array1[31]?.userAddress,
+//     array1.length > 0 && array1[47]?.userAddress,
+//     array1.length > 0 && array1[63]?.userAddress,
+//     array1.length > 0 && array1[79]?.userAddress,
+//   ];
+// } else if (pagination === 4) {
+//   paginationArrData = [
+//     array1.length > 0 && array1[3]?.userAddress,
+//     array1.length > 0 && array1[7]?.userAddress,
+//     array1.length > 0 && array1[11]?.userAddress,
+//     array1.length > 0 && array1[15]?.userAddress,
+//     array1.length > 0 && array1[19]?.userAddress,
+//     array1.length > 0 && array1[32]?.userAddress,
+//     array1.length > 0 && array1[48]?.userAddress,
+//     array1.length > 0 && array1[64]?.userAddress,
+//     array1.length > 0 && array1[80]?.userAddress,
+//     array1.length > 0 && array1[33]?.userAddress,
+//     array1.length > 0 && array1[49]?.userAddress,
+//     array1.length > 0 && array1[65]?.userAddress,
+//     array1.length > 0 && array1[81]?.userAddress,
+//     array1.length > 0 && array1[34]?.userAddress,
+//     array1.length > 0 && array1[50]?.userAddress,
+//     array1.length > 0 && array1[66]?.userAddress,
+//     array1.length > 0 && array1[82]?.userAddress,
+//     array1.length > 0 && array1[35]?.userAddress,
+//     array1.length > 0 && array1[51]?.userAddress,
+//     array1.length > 0 && array1[67]?.userAddress,
+//     array1.length > 0 && array1[84]?.userAddress,
+//   ];
+// } else {
+//   paginationArrData = [];
+// }
+// let allData = paginationArrData && paginationArrData.slice(1);

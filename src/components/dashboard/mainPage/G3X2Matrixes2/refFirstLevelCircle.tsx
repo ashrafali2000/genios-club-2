@@ -2,7 +2,7 @@ import PopOver2 from "@/components/popover2";
 import PopOver3 from "@/components/popover3";
 import { GeniosClubAbi2, GeniosClubAddress2 } from "@/lib/constant";
 import { useContract, useContractRead } from "@thirdweb-dev/react";
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 const RefFirstLevelCircle = ({
   RefFirstLevel,
@@ -15,6 +15,216 @@ const RefFirstLevelCircle = ({
   userAddress: any;
   position: any[];
 }) => {
+  const [results1, setResults1] = useState<any[]>([]);
+  const [results2, setResults2] = useState<any[]>([]);
+  const [results3, setResults3] = useState<any[]>([]);
+  const [results4, setResults4] = useState<any[]>([]);
+
+  const { contract } = useContract(GeniosClubAddress2);
+  useEffect(() => {
+    const fetchData = async () => {
+      if (!contract) return;
+
+      const fetchPositionData = async (index: any, val: any) => {
+        const address = await contract.call("IdToAddress", [val]);
+        const cycleNo = await contract.call("CurrentCycleNo", [
+          address,
+          Number(MatrixLevel),
+        ]);
+
+        try {
+          const data = await contract.call("PositionToId", [
+            address,
+            cycleNo,
+            +MatrixLevel,
+            index,
+          ]);
+          const userAddress = await contract.call("IdToAddress", [
+            parseInt(data),
+          ]);
+          return { index, data, userAddress };
+        } catch (error) {
+          return { index, error };
+        }
+      };
+
+      const promises = [];
+      for (let i = 1; i <= 4; i++) {
+        promises.push(fetchPositionData(i, parseInt(position[0].data)));
+      }
+
+      const results = await Promise.all(promises);
+
+      const tempResults: any = [];
+      const tempErrors: any = [];
+
+      results.forEach((result) => {
+        if (result.data) {
+          tempResults.push(result);
+        } else if (result.error) {
+          tempErrors.push(result);
+        }
+      });
+
+      setResults1(tempResults);
+    };
+
+    fetchData();
+  }, [contract, MatrixLevel]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      if (!contract) return;
+
+      const fetchPositionData = async (index: any, val: any) => {
+        const address = await contract.call("IdToAddress", [val]);
+        const cycleNo = await contract.call("CurrentCycleNo", [
+          address,
+          Number(MatrixLevel),
+        ]);
+
+        try {
+          const data = await contract.call("PositionToId", [
+            address,
+            cycleNo,
+            +MatrixLevel,
+            index,
+          ]);
+          const userAddress = await contract.call("IdToAddress", [
+            parseInt(data),
+          ]);
+          return { index, data, userAddress };
+        } catch (error) {
+          return { index, error };
+        }
+      };
+
+      const promises = [];
+      for (let i = 1; i <= 4; i++) {
+        promises.push(fetchPositionData(i, parseInt(position[1].data)));
+      }
+
+      const results = await Promise.all(promises);
+
+      const tempResults: any = [];
+      const tempErrors: any = [];
+
+      results.forEach((result) => {
+        if (result.data) {
+          tempResults.push(result);
+        } else if (result.error) {
+          tempErrors.push(result);
+        }
+      });
+
+      setResults2(tempResults);
+    };
+
+    fetchData();
+  }, [contract, MatrixLevel]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      if (!contract) return;
+
+      const fetchPositionData = async (index: any, val: any) => {
+        const address = await contract.call("IdToAddress", [val]);
+        const cycleNo = await contract.call("CurrentCycleNo", [
+          address,
+          Number(MatrixLevel),
+        ]);
+
+        try {
+          const data = await contract.call("PositionToId", [
+            address,
+            cycleNo,
+            +MatrixLevel,
+            index,
+          ]);
+          const userAddress = await contract.call("IdToAddress", [
+            parseInt(data),
+          ]);
+          return { index, data, userAddress };
+        } catch (error) {
+          return { index, error };
+        }
+      };
+
+      const promises = [];
+      for (let i = 1; i <= 4; i++) {
+        promises.push(fetchPositionData(i, parseInt(position[2].data)));
+      }
+
+      const results = await Promise.all(promises);
+
+      const tempResults: any = [];
+      const tempErrors: any = [];
+
+      results.forEach((result) => {
+        if (result.data) {
+          tempResults.push(result);
+        } else if (result.error) {
+          tempErrors.push(result);
+        }
+      });
+
+      setResults3(tempResults);
+    };
+
+    fetchData();
+  }, [contract, MatrixLevel]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      if (!contract) return;
+
+      const fetchPositionData = async (index: any, val: any) => {
+        const address = await contract.call("IdToAddress", [val]);
+        const cycleNo = await contract.call("CurrentCycleNo", [
+          address,
+          Number(MatrixLevel),
+        ]);
+
+        try {
+          const data = await contract.call("PositionToId", [
+            address,
+            cycleNo,
+            +MatrixLevel,
+            index,
+          ]);
+          const userAddress = await contract.call("IdToAddress", [
+            parseInt(data),
+          ]);
+          return { index, data, userAddress };
+        } catch (error) {
+          return { index, error };
+        }
+      };
+
+      const promises = [];
+      for (let i = 1; i <= 4; i++) {
+        promises.push(fetchPositionData(i, parseInt(position[3].data)));
+      }
+
+      const results = await Promise.all(promises);
+
+      const tempResults: any = [];
+      const tempErrors: any = [];
+
+      results.forEach((result) => {
+        if (result.data) {
+          tempResults.push(result);
+        } else if (result.error) {
+          tempErrors.push(result);
+        }
+      });
+
+      setResults4(tempResults);
+    };
+
+    fetchData();
+  }, [contract, MatrixLevel]);
+
   return (
     <>
       {parseInt(position[0].data) === 0 &&
@@ -137,26 +347,26 @@ const RefFirstLevelCircle = ({
           <div className="flex justify-between gap-10  xl:gap-20 -ml-[60px] xl:-ml-[50px]">
             <div className="ml-5">
               <RefFirstLevelCircle2
-                address={position.slice(4, 8)}
-                position2={position.slice(4, 8)}
+                address={results1.slice(0, 4)}
+                position2={results1.slice(0, 4)}
               />
             </div>
             <div className=" -ml-2 lg:-ml-5">
               <RefFirstLevelCircle2
-                address={position.slice(8, 12)}
-                position2={position.slice(8, 12)}
+                address={results2.slice(0, 4)}
+                position2={results2.slice(0, 4)}
               />
             </div>
             <div className=" -ml-3">
               <RefFirstLevelCircle2
-                address={position.slice(12, 16)}
-                position2={position.slice(12, 16)}
+                address={results3.slice(0, 4)}
+                position2={results3.slice(0, 4)}
               />
             </div>
             <div className="-ml-4 lg:-ml-3">
               <RefFirstLevelCircle2
-                address={position.slice(16, 20)}
-                position2={position.slice(16, 20)}
+                address={results4.slice(0, 4)}
+                position2={results4.slice(0, 4)}
               />
             </div>
           </div>

@@ -18,7 +18,6 @@ const Matrix = ({
   view?: boolean;
 }) => {
   const [openModal, setOpenModal] = useState(false);
-  const [myPosition, setMyPosition] = useState("0");
   const { contract: GeniosClubContract } = useContract(
     GeniosClubAddress2,
     GeniosClubAbi2
@@ -30,8 +29,7 @@ const Matrix = ({
   );
 
   // new today code
-  const [results, setResults] = useState([]);
-  const [errors, setErrors] = useState([]);
+  const [results, setResults] = useState<any[]>([]);
   const { contract } = useContract(GeniosClubAddress2);
   useEffect(() => {
     const fetchData = async () => {
@@ -55,7 +53,7 @@ const Matrix = ({
       };
 
       const promises = [];
-      for (let i = 1; i <= 84; i++) {
+      for (let i = 1; i <= 4; i++) {
         promises.push(fetchPositionData(i));
       }
 
@@ -73,12 +71,10 @@ const Matrix = ({
       });
 
       setResults(tempResults);
-      setErrors(tempErrors);
     };
 
     fetchData();
   }, [contract, address, cycleNo, MatrixLevel]);
-  // console.log("results--------->", results);
 
   const { data: user, isLoading: usersIsLoading } = useContractRead(
     GeniosClubContract,

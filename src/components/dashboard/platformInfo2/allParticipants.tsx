@@ -44,7 +44,7 @@ const AllParticipants = () => {
         </span>
       ) : (
         <h1 className="pt-1 text-[22px] font-bold text-[#f7ce3c] ">
-          {totalUsers === 0 ? 0 : totalUsers}
+          {totalUsers === 0 ? 0 : totalUsers - 1}
         </h1>
       )}
     </div>
