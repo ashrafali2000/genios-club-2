@@ -33,9 +33,10 @@ const UserCard = ({
   usersIsLoading: any;
   userAddress: any;
 }) => {
-  const affiliateLink = `https://geniosclub.team/auth/register?ref=${String(
-    user?.Id
-  )}`;
+  // const affiliateLink = `https://geniosclub.team/auth/register?ref=${String(
+  //   user?.Id
+  // )}`;
+  const affiliateLink = `https://genios-club-2.vercel.app/authgc2/login`;
   const { contract: GeniosClubContract } = useContract(
     GeniosClubAddress2,
     GeniosClubAbi2
