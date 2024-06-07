@@ -9,9 +9,6 @@ const MyUpline = ({ Ref }: { Ref: any }) => {
     GeniosClubAbi2
   );
 
-  // const { data: RefData } = useContractRead(GeniosClubContract, "Users", [Ref]);
-  // console.log("RefData---->", RefData);
-
   return (
     <>
       <h1 className="text-[15px] font-bold text-[#ffffffb3]">My Upline</h1>

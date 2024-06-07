@@ -48,8 +48,6 @@ const UserCard = ({
     [user?.DRef]
   );
 
-  console.log("user---------------->", user);
-
   const [levelStatus, setLevelStatus] = useState<{
     G3X2: { [key: number]: boolean };
     G3X7: { [key: number]: boolean };

@@ -15,7 +15,6 @@ const AllParticipants = () => {
   );
 
   totalUsers = UseFormatNumber(totalUsers);
-  console.log("totalUsers", totalUsers);
 
   return (
     <div className="mt-5 flex flex-col items-center  text-center">

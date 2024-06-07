@@ -20,7 +20,6 @@ const JoinedIn24Hours = () => {
         "/api/events/new-users/gen"
       );
       const responseData = response.data.data;
-      // console.log("responseData", responseData);
 
       setEventsArray(responseData);
     } catch (error) {
