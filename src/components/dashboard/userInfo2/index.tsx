@@ -36,6 +36,7 @@ const UserCard = ({
   // const affiliateLink = `https://geniosclub.team/auth/register?ref=${String(
   //   user?.Id
   // )}`;
+  const address = useAddress();
   const affiliateLink = `https://genios-club-2.vercel.app/authgc2/login`;
   const { contract: GeniosClubContract } = useContract(
     GeniosClubAddress2,
@@ -77,8 +78,8 @@ const UserCard = ({
   }
   useEffect(() => {
     fetchLevelStatus();
-  }, [userAddress, user]); // The empty dependency array ensures this effect runs once on component mount
-  console.log("user---->", user);
+  }, [userAddress, user]);
+
   const isAllTrueG3X2 = Object.values(levelStatus.G3X2).every((value) => value);
   const isAllTrueG3X7 = Object.values(levelStatus.G3X7).every((value) => value);
   const [inputVal, setInputVal] = useState("");
@@ -92,7 +93,7 @@ const UserCard = ({
   const upgradeApprove = async (val: any) => {
     try {
       const data = await upgrade({
-        args: [userAddress, val],
+        args: [address, val],
       });
       if (data) {
         setMessage("Your are upprove/Upgrade");

@@ -27,7 +27,6 @@ const Page = () => {
     contract,
     "LastIdUser"
   );
-  console.log("LastIdUser", LastIdUser);
   function handleClick() {
     router.push(`/view2/main2?uid=${id}`);
   }
