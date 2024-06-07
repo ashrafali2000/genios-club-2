@@ -44,7 +44,6 @@ const Page = ({ params }: any) => {
     [address, Number(params.id)]
   );
   const [myPosition, setMyPosition] = useState(1);
-  const [pagination, setPagination] = useState(1);
   let index;
   let data;
   let userAddress;

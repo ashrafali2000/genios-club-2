@@ -40,7 +40,7 @@ const UserCard = ({
     GeniosClubAddress2,
     GeniosClubAbi2
   );
-
+  const { contract: MTKContract } = useContract(MTKAddress2, MTKAbi2);
   const { data: userRef, isLoading: usersRefIsLoading } = useContractRead(
     GeniosClubContract,
     "Users",
@@ -48,15 +48,7 @@ const UserCard = ({
   );
 
   console.log("user---------------->", user);
-  console.log("user---------------->", parseInt(user && user[0]));
-  console.log("user---------------->", parseInt(user && user[1]));
-  console.log("user---------------->", parseInt(user && user[2]));
-  console.log("user---------------->", parseInt(user && user[3]));
-  console.log(
-    "userRef---------------->",
-    parseInt(userRef && parseInt(userRef[0]))
-  );
-  // const [levelStatus, setLevelStatus] = useState({});
+
   const [levelStatus, setLevelStatus] = useState<{
     G3X2: { [key: number]: boolean };
     G3X7: { [key: number]: boolean };
@@ -77,21 +69,6 @@ const UserCard = ({
           GeniosClubAddress2,
           GeniosClubAbi2
         );
-
-        // Fetch status for G3X2 levels
-        // const isActiveG3X2 = await contract.call("usersActiveG3X2Levels", [
-        //   userAddress,
-        //   level,
-        // ]);
-
-        // Fetch status for G3X7 levels
-        // const isActiveG3X7 = await contract.call("usersActiveG3X7Levels", [
-        //   userAddress,
-        //   level,
-        // ]);
-
-        // levelStatusUpdates.G3X2[level] = isActiveG3X2;
-        // levelStatusUpdates.G3X7[level] = isActiveG3X7;
       }
 
       setLevelStatus(levelStatusUpdates);
@@ -107,19 +84,35 @@ const UserCard = ({
   const isAllTrueG3X7 = Object.values(levelStatus.G3X7).every((value) => value);
   const [inputVal, setInputVal] = useState("");
   const [message, setMessage] = useState("");
-  const { contract: MTKContract } = useContract(MTKAddress2, MTKAbi2);
+
+  const { mutateAsync: approve, isLoading: approveIsLoading } =
+    useContractWrite(MTKContract, "approve");
   const { mutateAsync: upgrade, isLoading: upgradeIsLoading } =
     useContractWrite(MTKContract, "AddUpgradeAmount");
 
-  const upgradeApprove = async () => {
+  const upgradeApprove = async (val: any) => {
     try {
       const data = await upgrade({
-        args: [userAddress, +inputVal],
+        args: [userAddress, val],
       });
       if (data) {
-        setMessage("Your are Upgrade");
+        setMessage("Your are upprove/Upgrade");
       }
       console.info("contract call success", data);
+    } catch (err) {
+      console.error("contract call failure", err);
+    }
+  };
+
+  const callApprove = async () => {
+    try {
+      const data = await approve({
+        args: [GeniosClubAddress2, +inputVal],
+      });
+      console.info("contract call success", data);
+      if (data) {
+        upgradeApprove(+inputVal);
+      }
     } catch (err) {
       console.error("contract call failure", err);
     }
@@ -261,11 +254,6 @@ const UserCard = ({
                       ></path>
                     </svg>
                   </div>
-
-                  {/* <div className="mt-5 flex items-center justify-end text-[18px] text-[#eeeeee]">
-                    <h1 className="mr-2"> {String(user?.TotalTeam || 0)}</h1>
-                    <img src="/partner.svg" alt="" className="h-6 w-6" />
-                  </div> */}
                 </div>
               </div>
 
@@ -292,23 +280,6 @@ const UserCard = ({
                   <img src="/Dai.png" alt="" className="h-6 w-6" />
                 </div>
               </div>
-              {/* <div className="mt-5 flex justify-between  text-[#eeeeee] ">
-                <h1 className="text-start text-[15px] ">
-                  G3X5 <br /> EARNINGS :
-                </h1>
-
-                <div className="flex items-center ">
-                  <h1 className="mr-2 text-[16px]">
-                    {" "}
-                    {formatEther(String(user?.G3X7Earnings || 0))}
-                  </h1>
-                  <img src="/Dai.png" alt="" className="h-6 w-6 " />
-                </div>
-              </div> */}
-
-              {/* <div className="mt-5 flex items-center justify-between text-[#eeeeee]">
-                <RanksEarnings userAddress={userAddress} />
-              </div> */}
             </div>
           )}
         </div>
@@ -435,7 +406,7 @@ const UserCard = ({
                 </div>
                 <div className="mt-4">
                   <button
-                    onClick={upgradeApprove}
+                    onClick={callApprove}
                     className="rounded-2xl bg-red-900 text-white py-2 px-3 w-full"
                   >
                     {message ? message : "  Click"}
