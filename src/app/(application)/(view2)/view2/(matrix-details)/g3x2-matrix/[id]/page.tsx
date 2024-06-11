@@ -1,7 +1,11 @@
 "use client";
 
 import TransactionTable from "@/components/dashboard/mainPage/G3X2Matrixes/matrixDetails/transactionTable";
-import { UseFormatEther, UseFormatNumber } from "@/lib/utils/useEthers";
+import {
+  UseFormatEther,
+  UseFormatEtherNumber,
+  UseFormatNumber,
+} from "@/lib/utils/useEthers";
 import { useContract, useContractRead } from "@thirdweb-dev/react";
 import {
   GeniosClubAddress2,
@@ -38,6 +42,10 @@ const Page = ({ params }: any) => {
   const { data: user } = useContractRead(GeniosClubContract, "Users", [
     address,
   ]);
+  console.log(
+    "user---upgradeBalances----",
+    UseFormatEtherNumber(user?.upgradeBalance)
+  );
   const { data: cycleNo } = useContractRead(
     GeniosClubContract,
     "CurrentCycleNo",

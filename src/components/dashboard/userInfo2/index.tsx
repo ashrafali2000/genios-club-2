@@ -259,23 +259,25 @@ const UserCard = ({
 
               <div className="mt-5 flex items-center justify-between  text-[#eeeeee] ">
                 <h1 className="text-start text-[15px] ">
-                  TOTAL <br /> EARNINGS :
+                  GC2 <br /> EARNINGS :
                 </h1>
                 <div className="flex items-center  ">
                   <h1 className="mr-2 text-[16px]">
-                    {UseFormatEtherNumber(user?.[3])}
+                    {user?.[3] ? UseFormatEtherNumber(user?.[3]) : 0}
                   </h1>
                   <img src="/Dai.png" alt="" className="h-6 w-6 " />
                 </div>
               </div>
               <div className="mt-5 flex items-center justify-between  text-[#eeeeee] ">
                 <h1 className="text-start text-[15px] ">
-                  GC2 <br /> EARNINGS :
+                  Upgrade <br /> BALANCE :
                 </h1>
                 <div className="flex items-center ">
                   <h1 className="mr-2 text-[16px]">
                     {" "}
-                    {formatEther(String(user?.G3X2Earnings || 0))}
+                    {user?.upgradeBalance
+                      ? UseFormatEtherNumber(user?.upgradeBalance)
+                      : 0}
                   </h1>
                   <img src="/Dai.png" alt="" className="h-6 w-6" />
                 </div>
