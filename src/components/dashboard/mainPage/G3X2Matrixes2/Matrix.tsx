@@ -27,6 +27,11 @@ const Matrix = ({
     "CurrentCycleNo",
     [address, Number(MatrixLevel)]
   );
+  // const { data: activeLevel } = useContractRead(
+  //   GeniosClubContract,
+  //   "LevelOpen",
+  //   [address, Number(MatrixLevel)]
+  // );
 
   // new today code
   const [results, setResults] = useState<any[]>([]);
@@ -132,17 +137,16 @@ const Matrix = ({
               LOADING...
             </span>
           ) : (
-            results
-              .slice(0, 1)
-              .map((i, index) => (
-                <RefFirstLevelCircle
-                  key={index}
-                  RefFirstLevel={i}
-                  position={results}
-                  userAddress={i}
-                  MatrixLevel={MatrixLevel}
-                />
-              ))
+            results.slice(0, 1).map((i, index) => (
+              <RefFirstLevelCircle
+                key={index}
+                RefFirstLevel={i}
+                position={results}
+                userAddress={i}
+                MatrixLevel={MatrixLevel}
+                // activeLevel={activeLevel}
+              />
+            ))
           )}
         </div>
       </div>
