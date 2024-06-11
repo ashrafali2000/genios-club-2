@@ -42,10 +42,7 @@ const Page = ({ params }: any) => {
   const { data: user } = useContractRead(GeniosClubContract, "Users", [
     address,
   ]);
-  console.log(
-    "user---upgradeBalances----",
-    UseFormatEtherNumber(user?.upgradeBalance)
-  );
+
   const { data: cycleNo } = useContractRead(
     GeniosClubContract,
     "CurrentCycleNo",
