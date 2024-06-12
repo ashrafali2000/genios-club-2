@@ -1,5 +1,6 @@
 import PopOver2 from "@/components/popover2";
 import PopOver3 from "@/components/popover3";
+import PopOver4 from "@/components/popover4";
 import { GeniosClubAbi2, GeniosClubAddress2 } from "@/lib/constant";
 import { useContract, useContractRead } from "@thirdweb-dev/react";
 import React, { useEffect, useState } from "react";
@@ -7,12 +8,14 @@ import React, { useEffect, useState } from "react";
 const RefFirstLevelCircle = ({
   RefFirstLevel,
   userAddress,
+  activeLevel,
   MatrixLevel,
   position,
 }: {
   RefFirstLevel: any[];
   MatrixLevel: any;
   userAddress: any;
+  activeLevel: any;
   position: any[];
 }) => {
   const [results1, setResults1] = useState<any[]>([]);
@@ -227,19 +230,12 @@ const RefFirstLevelCircle = ({
 
   return (
     <>
-      {parseInt(position[0].data) === 0 &&
-      parseInt(position[1].data) === 0 &&
-      parseInt(position[2].data) === 0 &&
-      parseInt(position[3].data) === 0 ? (
-        <div className="bg-purple-500 text-white px-4 py-3 rounded-2xl">
-          No Active Data
-        </div>
-      ) : (
+      {activeLevel || MatrixLevel === "1" ? (
         <div>
           <div className="flex justify-between flex-wrap md:flex-nowrap">
             {RefFirstLevel && (
               <>
-                {RefFirstLevel !== undefined ? (
+                {position[0] ? (
                   <div className="flex flex-col items-center  ">
                     <PopOver2
                       RefFirstLevel={position[0].data}
@@ -264,7 +260,7 @@ const RefFirstLevelCircle = ({
                   </div>
                 )}
 
-                {RefFirstLevel !== undefined ? (
+                {position[1] ? (
                   <div className="flex flex-col items-center  ">
                     <PopOver2
                       RefFirstLevel={position[1].data}
@@ -290,7 +286,7 @@ const RefFirstLevelCircle = ({
                   </div>
                 )}
 
-                {RefFirstLevel !== undefined ? (
+                {position[2] ? (
                   <div className="flex flex-col items-center  ">
                     <PopOver2
                       RefFirstLevel={position[2].data}
@@ -315,7 +311,7 @@ const RefFirstLevelCircle = ({
                     </div>
                   </div>
                 )}
-                {RefFirstLevel !== undefined ? (
+                {position[3] ? (
                   <div className="flex flex-col items-center  ">
                     <PopOver2
                       RefFirstLevel={position[3].data}
@@ -343,33 +339,40 @@ const RefFirstLevelCircle = ({
               </>
             )}
           </div>
-
           <div className="flex justify-between gap-10  xl:gap-20 -ml-[60px] xl:-ml-[50px]">
             <div className="ml-5">
               <RefFirstLevelCircle2
+                activeLevel={activeLevel}
                 address={results1.slice(0, 4)}
                 position2={results1.slice(0, 4)}
               />
             </div>
             <div className=" -ml-2 lg:-ml-5">
               <RefFirstLevelCircle2
+                activeLevel={activeLevel}
                 address={results2.slice(0, 4)}
                 position2={results2.slice(0, 4)}
               />
             </div>
             <div className=" -ml-3">
               <RefFirstLevelCircle2
+                activeLevel={activeLevel}
                 address={results3.slice(0, 4)}
                 position2={results3.slice(0, 4)}
               />
             </div>
             <div className="-ml-4 lg:-ml-3">
               <RefFirstLevelCircle2
+                activeLevel={activeLevel}
                 address={results4.slice(0, 4)}
                 position2={results4.slice(0, 4)}
               />
             </div>
           </div>
+        </div>
+      ) : (
+        <div className="bg-purple-700 text-center py-3 px-3">
+          <p className="font-bold text-white uppercase">NO Active Level</p>
         </div>
       )}
     </>
@@ -379,69 +382,63 @@ const RefFirstLevelCircle = ({
 const RefFirstLevelCircle2 = ({
   position2,
   address,
+  activeLevel,
 }: {
   position2: any[];
   address: any;
+  activeLevel: any;
 }) => {
   return (
     <>
-      <div className=" mt-[-6px] flex gap-x-4">
+      <div className="ml-[6px] mt-[-6px] flex gap-x-4">
         <div className="flex flex-col gap-3">
-          <div>
-            {position2[0] ? (
-              <div className="flex flex-col items-center">
-                <PopOver2
-                  userAddress={position2[0].userAddress}
-                  RefFirstLevel={position2[0].data}
-                />
-              </div>
-            ) : (
-              <a className=" h-[21px] w-[21px] cursor-pointer rounded-full border"></a>
-            )}
-          </div>
+          {position2[0] ? (
+            <div className="ml-[-6px] flex flex-col items-center">
+              <PopOver4
+                userAddress={position2[0].userAddress}
+                RefFirstLevel={position2[0].data}
+              />
+            </div>
+          ) : (
+            <a className="ml-[-8px] h-[21px] w-[21px] cursor-pointer rounded-full border "></a>
+          )}
         </div>
         <div className="flex flex-col gap-3">
-          <div>
-            {position2[1] ? (
-              <div className="flex flex-col items-center">
-                <PopOver2
-                  userAddress={position2[1].userAddress}
-                  RefFirstLevel={position2[1].data}
-                />
-              </div>
-            ) : (
-              <a className=" h-[21px] w-[21px] cursor-pointer rounded-full border"></a>
-            )}
-          </div>
+          {position2[1] ? (
+            <div className="flex flex-col items-center">
+              <PopOver4
+                userAddress={position2[1].userAddress}
+                RefFirstLevel={position2[1].data}
+              />
+            </div>
+          ) : (
+            <a className="ml-[-8px] h-[21px] w-[21px] cursor-pointer rounded-full border"></a>
+          )}
         </div>
 
         <div className="flex flex-col gap-3">
-          <div>
-            {position2[2] ? (
-              <div className="flex flex-col items-center">
-                <PopOver2
-                  userAddress={position2[2].userAddress}
-                  RefFirstLevel={position2[2].data}
-                />
-              </div>
-            ) : (
-              <a className=" h-[21px] w-[21px] cursor-pointer rounded-full border"></a>
-            )}
-          </div>
+          {position2[2] ? (
+            <div className="flex flex-col items-center">
+              <PopOver4
+                userAddress={position2[2].userAddress}
+                RefFirstLevel={position2[2].data}
+              />
+            </div>
+          ) : (
+            <a className="ml-[-7px] h-[21px] w-[21px] cursor-pointer rounded-full border"></a>
+          )}
         </div>
         <div className="flex flex-col gap-3">
-          <div>
-            {position2[3] ? (
-              <div className="flex flex-col items-center">
-                <PopOver2
-                  userAddress={position2[3].userAddress}
-                  RefFirstLevel={position2[3].data}
-                />
-              </div>
-            ) : (
-              <a className=" h-[21px] w-[21px] cursor-pointer rounded-full border"></a>
-            )}
-          </div>
+          {position2[3] ? (
+            <div className="flex flex-col items-center">
+              <PopOver4
+                userAddress={position2[3].userAddress}
+                RefFirstLevel={position2[3].data}
+              />
+            </div>
+          ) : (
+            <a className="ml-[-5px] h-[21px] w-[21px] cursor-pointer rounded-full border"></a>
+          )}
         </div>
       </div>
     </>

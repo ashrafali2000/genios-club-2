@@ -29,7 +29,10 @@ export const AddressZero = "0x0000000000000000000000000000000000000000";
 export const MTKAddress = "0x5F620d60795A2D0210c43bB927b2c989E1fbbf1c";
 // USDT
 // export const MTKAddress2 = "0xf01D053BA39D69FaBe3848e34D1eB211E4283052";
-export const MTKAddress2 = "0x5145F0158dE9Cc9AdEf82aD3777976F31Fff7ebF";
+// export const MTKAddress2 = "0x5145F0158dE9Cc9AdEf82aD3777976F31Fff7ebF";
+// export const MTKAddress2 = "0xad1ccDe80429921AF402E9AC099A83c32F4e1776";
+// export const MTKAddress2 = "0x811C2C33E9e63D2155f0C73c01f2960725d6f291";
+export const MTKAddress2 = "0x6d743CbA5A414Eec3580d2055eB6FE98D7066956";
 export const PoolAddress = "0x456c66b4ea2246166d81772bC9Cc3e9F1D28ee06";
 // export const GeniosClubAddress = "0xebdB008B0323989e3830c89A2fCd626A7F47C645";
 //without pool Worked
@@ -39,7 +42,10 @@ export const GeniosClubAddress = "0x18642729d5770b18c108D0B991903e857f04497E";
 // MLM
 // export const GeniosClubAddress2 = "0x27cb4c54950E61319860D53E1573A04CD92a753E";
 // export const GeniosClubAddress2 = "0x76b2335554ab5008345bEd61271357F6068a30de";
-export const GeniosClubAddress2 = "0x658F0F18d86c90C56ca5781eb77f4F3BB7c70E8f";
+// export const GeniosClubAddress2 = "0x658F0F18d86c90C56ca5781eb77f4F3BB7c70E8f";
+// export const GeniosClubAddress2 = "0x11A087836C0Da7E480DAF7d3985876f8CBea6aF2";
+// export const GeniosClubAddress2 = "0xEF3313bd112D17DF34cb66c59559A7aDa2b21650";
+export const GeniosClubAddress2 = "0xB56DcBb92768C887DF4cfF1eeb288dA1F6c56982";
 
 // export const MTKAbi = [{"inputs":[{"internalType":"address","name":"_proxyTo","type":"address"}],"stateMutability":"nonpayable","type":"constructor"},{"anonymous":false,"inputs":[{"indexed":false,"internalType":"address","name":"_new","type":"address"},{"indexed":false,"internalType":"address","name":"_old","type":"address"}],"name":"ProxyOwnerUpdate","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"_new","type":"address"},{"indexed":true,"internalType":"address","name":"_old","type":"address"}],"name":"ProxyUpdated","type":"event"},{"stateMutability":"payable","type":"fallback"},{"inputs":[],"name":"implementation","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"proxyOwner","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"proxyType","outputs":[{"internalType":"uint256","name":"proxyTypeId","type":"uint256"}],"stateMutability":"pure","type":"function"},{"inputs":[{"internalType":"address","name":"newOwner","type":"address"}],"name":"transferProxyOwnership","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"_newProxyTo","type":"address"},{"internalType":"bytes","name":"data","type":"bytes"}],"name":"updateAndCall","outputs":[],"stateMutability":"payable","type":"function"},{"inputs":[{"internalType":"address","name":"_newProxyTo","type":"address"}],"name":"updateImplementation","outputs":[],"stateMutability":"nonpayable","type":"function"},{"stateMutability":"payable","type":"receive"}];
 export const MTKAbi = [
@@ -1444,6 +1450,173 @@ export const PoolAbi = [
 ];
 
 // New Genios club 2
+// export const GeniosClubAbi2 = [
+//   {
+//     inputs: [
+//       { internalType: "address", name: "_owner", type: "address" },
+//       { internalType: "address", name: "_Idx", type: "address" },
+//       { internalType: "address", name: "_admin", type: "address" },
+//       { internalType: "address", name: "_dai", type: "address" },
+//     ],
+//     stateMutability: "nonpayable",
+//     type: "constructor",
+//   },
+//   {
+//     inputs: [
+//       { internalType: "address", name: "_user", type: "address" },
+//       { internalType: "uint256", name: "_amount", type: "uint256" },
+//     ],
+//     name: "AddUpgradeAmount",
+//     outputs: [],
+//     stateMutability: "nonpayable",
+//     type: "function",
+//   },
+//   {
+//     inputs: [{ internalType: "address", name: "", type: "address" }],
+//     name: "AddressToId",
+//     outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+//     stateMutability: "view",
+//     type: "function",
+//   },
+//   {
+//     inputs: [
+//       { internalType: "address", name: "_user", type: "address" },
+//       { internalType: "uint256", name: "_matrix", type: "uint256" },
+//     ],
+//     name: "CurrentCycleNo",
+//     outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+//     stateMutability: "view",
+//     type: "function",
+//   },
+//   {
+//     inputs: [],
+//     name: "EmergencyWithdraw",
+//     outputs: [],
+//     stateMutability: "nonpayable",
+//     type: "function",
+//   },
+//   {
+//     inputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+//     name: "IdToAddress",
+//     outputs: [{ internalType: "address", name: "", type: "address" }],
+//     stateMutability: "view",
+//     type: "function",
+//   },
+//   {
+//     inputs: [
+//       { internalType: "address", name: "_ref", type: "address" },
+//       { internalType: "uint256", name: "_cycle", type: "uint256" },
+//       { internalType: "uint256", name: "_matrix", type: "uint256" },
+//       { internalType: "uint256", name: "_id", type: "uint256" },
+//     ],
+//     name: "IdToPosition",
+//     outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+//     stateMutability: "view",
+//     type: "function",
+//   },
+//   {
+//     inputs: [],
+//     name: "LAST_LEVEL",
+//     outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+//     stateMutability: "view",
+//     type: "function",
+//   },
+//   {
+//     inputs: [],
+//     name: "LastIdUser",
+//     outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+//     stateMutability: "view",
+//     type: "function",
+//   },
+//   {
+//     inputs: [],
+//     name: "LastUserId",
+//     outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+//     stateMutability: "view",
+//     type: "function",
+//   },
+//   {
+//     inputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+//     name: "MatrixRates",
+//     outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+//     stateMutability: "view",
+//     type: "function",
+//   },
+//   {
+//     inputs: [
+//       { internalType: "uint256", name: "one_", type: "uint256" },
+//       { internalType: "uint256", name: "two_", type: "uint256" },
+//       { internalType: "uint256", name: "third_", type: "uint256" },
+//     ],
+//     name: "PositionCalculator",
+//     outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+//     stateMutability: "pure",
+//     type: "function",
+//   },
+//   {
+//     inputs: [
+//       { internalType: "address", name: "_ref", type: "address" },
+//       { internalType: "uint256", name: "cycle", type: "uint256" },
+//       { internalType: "uint256", name: "_matrix", type: "uint256" },
+//       { internalType: "uint256", name: "_postion", type: "uint256" },
+//     ],
+//     name: "PositionToId",
+//     outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+//     stateMutability: "view",
+//     type: "function",
+//   },
+//   {
+//     inputs: [
+//       { internalType: "address", name: "_newUser", type: "address" },
+//       { internalType: "address", name: "_Ref", type: "address" },
+//     ],
+//     name: "Register",
+//     outputs: [],
+//     stateMutability: "nonpayable",
+//     type: "function",
+//   },
+//   {
+//     inputs: [
+//       { internalType: "address", name: "_newUser", type: "address" },
+//       { internalType: "uint256", name: "_matrix", type: "uint256" },
+//     ],
+//     name: "Upgrade",
+//     outputs: [],
+//     stateMutability: "nonpayable",
+//     type: "function",
+//   },
+//   {
+//     inputs: [{ internalType: "address", name: "", type: "address" }],
+//     name: "Users",
+//     outputs: [
+//       { internalType: "uint256", name: "Id", type: "uint256" },
+//       { internalType: "uint256", name: "DirectRefs", type: "uint256" },
+//       { internalType: "uint256", name: "ReinvestCount", type: "uint256" },
+//       { internalType: "uint256", name: "Earnings", type: "uint256" },
+//       { internalType: "uint256", name: "Amount", type: "uint256" },
+//       { internalType: "uint256", name: "upgradeBalance", type: "uint256" },
+//       { internalType: "uint256", name: "recycleBalance", type: "uint256" },
+//       { internalType: "uint256", name: "recycle1", type: "uint256" },
+//       { internalType: "uint256", name: "recycle2", type: "uint256" },
+//       { internalType: "uint256", name: "recycle3", type: "uint256" },
+//       { internalType: "uint256", name: "recycle4", type: "uint256" },
+//       { internalType: "uint256", name: "recycle5", type: "uint256" },
+//       { internalType: "uint256", name: "recycle6", type: "uint256" },
+//       { internalType: "uint256", name: "recycle7", type: "uint256" },
+//       { internalType: "uint256", name: "recycle8", type: "uint256" },
+//       { internalType: "address", name: "DRef", type: "address" },
+//     ],
+//     stateMutability: "view",
+//     type: "function",
+//   },
+//   {
+//     inputs: [{ internalType: "address", name: "_user", type: "address" }],
+//     name: "withdrawFeeAmount",
+//     outputs: [{ internalType: "bool", name: "", type: "bool" }],
+//     stateMutability: "nonpayable",
+//     type: "function",
+//   },
+// ];
 export const GeniosClubAbi2 = [
   {
     inputs: [
@@ -1526,6 +1699,16 @@ export const GeniosClubAbi2 = [
     inputs: [],
     name: "LastUserId",
     outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      { internalType: "address", name: "_user", type: "address" },
+      { internalType: "uint256", name: "matrix__", type: "uint256" },
+    ],
+    name: "LevelOpen",
+    outputs: [{ internalType: "bool", name: "", type: "bool" }],
     stateMutability: "view",
     type: "function",
   },

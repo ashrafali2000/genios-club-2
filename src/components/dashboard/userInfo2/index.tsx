@@ -275,9 +275,7 @@ const UserCard = ({
                 <div className="flex items-center ">
                   <h1 className="mr-2 text-[16px]">
                     {" "}
-                    {user?.upgradeBalance
-                      ? UseFormatEtherNumber(user?.upgradeBalance)
-                      : 0}
+                    {user?.[5] ? UseFormatEtherNumber(user?.[5]) : 0}
                   </h1>
                   <img src="/Dai.png" alt="" className="h-6 w-6" />
                 </div>
