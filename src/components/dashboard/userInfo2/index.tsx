@@ -268,14 +268,15 @@ const UserCard = ({
                   <img src="/Dai.png" alt="" className="h-6 w-6 " />
                 </div>
               </div>
+
               <div className="mt-5 flex items-center justify-between  text-[#eeeeee] ">
-                <h1 className="text-start text-[15px] ">
-                  Upgrade <br /> BALANCE :
+                <h1 className="text-start text-[15px] uppercase">
+                  recycle <br /> BALANCE :
                 </h1>
                 <div className="flex items-center ">
                   <h1 className="mr-2 text-[16px]">
                     {" "}
-                    {user?.[5] ? UseFormatEtherNumber(user?.[5]) : 0}
+                    {user?.[6] ? UseFormatEtherNumber(user?.[6]) : 0}
                   </h1>
                   <img src="/Dai.png" alt="" className="h-6 w-6" />
                 </div>
@@ -393,13 +394,26 @@ const UserCard = ({
               <div className="relative mt-6">
                 <MyUpline Ref={userRef && parseInt(userRef[0])} />
               </div>
+              <div className="mt-5 flex items-center justify-between  text-[#eeeeee] ">
+                <h1 className="text-start text-[15px] ">
+                  Upgrade <br /> BALANCE :
+                </h1>
+                <div className="flex items-center ">
+                  <h1 className="mr-2 text-[16px]">
+                    {" "}
+                    {user?.[5] ? UseFormatEtherNumber(user?.[5]) : 0}
+                  </h1>
+                  <img src="/Dai.png" alt="" className="h-6 w-6" />
+                </div>
+              </div>
               <div className="relative mt-6">
                 <h1 className="text-[15px] font-bold text-[#ffffffb3]">
                   Input Enter
                 </h1>
-                <div className="text-black mt-2 flex items-center justify-between rounded border p-1">
+                <div className="text-white mt-2 flex items-center justify-between rounded border p-1">
                   <input
                     type="text"
+                    className="pl-2 bg-[#2c0219]"
                     value={inputVal}
                     onChange={(e: any) => setInputVal(e.target.value)}
                   />

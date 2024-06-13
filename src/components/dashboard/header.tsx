@@ -9,6 +9,7 @@ import {
 import { classNames } from "@/lib/classNames";
 import { ConnectWallet, useDisconnect } from "@thirdweb-dev/react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 export default function Header({
   view,
@@ -33,7 +34,11 @@ export default function Header({
   const leavee = () => {
     setIsMenuOpenn(false);
   };
-
+  const router = useRouter();
+  const logOutHandler = () => {
+    disconnect();
+    router.push("/authgc2/login/");
+  };
   return (
     <header className="relative z-10 bg-[#14000b] font-san">
       <div className="mx-auto hidden max-w-7xl  items-center justify-between px-5 text-3xl md:flex md:h-20 ">
@@ -133,7 +138,7 @@ export default function Header({
           </div>
 
           <div>
-            <button onClick={disconnect} className="nav-a active">
+            <button onClick={logOutHandler} className="nav-a active">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="27"
@@ -339,7 +344,7 @@ export default function Header({
                   </div>
 
                   <div>
-                    <button onClick={disconnect} className="nav-a active">
+                    <button onClick={logOutHandler} className="nav-a active">
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         width="27"

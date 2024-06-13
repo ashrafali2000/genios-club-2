@@ -98,7 +98,7 @@ const Page = () => {
       });
       console.log("file: page.tsx:214  callRegister  data:", data);
       if (data) {
-        const id = parseInt(user[0]);
+        const id = parseInt(user?.[0]);
         router.push(`/view2/main2?uid=${id}`);
       }
       // const response = await axios.post("/api/matrix/add/", {
