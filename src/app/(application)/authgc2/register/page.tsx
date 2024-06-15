@@ -61,7 +61,7 @@ const Page = () => {
   );
   // Read Functions
   const { data: IsUserExists, isLoading: isUserExistsILoading } =
-    useContractRead(GeniosClubContract, "IsUserExists", [address]);
+    useContractRead(GeniosClubContract, "exists", [address]);
 
   //    Write functions
   const { mutateAsync: approve, isLoading: approveIsLoading } =
@@ -99,7 +99,8 @@ const Page = () => {
       console.log("file: page.tsx:214  callRegister  data:", data);
       if (data) {
         const id = parseInt(user?.[0]);
-        router.push(`/view2/main2?uid=${id}`);
+        // router.push(`/view2/main2?uid=${id}`);
+        console.log("data-----router---->", data);
       }
       // const response = await axios.post("/api/matrix/add/", {
       //   userAddress: address,

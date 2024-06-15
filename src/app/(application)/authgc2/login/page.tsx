@@ -18,7 +18,7 @@ const Page = () => {
   const address = useAddress();
   const { contract } = useContract(GeniosClubAddress2, GeniosClubAbi2);
 
-  const { data: IsUserExists } = useContractRead(contract, "IsUserExists", [
+  const { data: IsUserExists } = useContractRead(contract, "exists", [
     ethers.utils.isAddress(address as string) ? address : AddressZero,
   ]);
 

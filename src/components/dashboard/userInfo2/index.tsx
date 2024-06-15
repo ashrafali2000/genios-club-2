@@ -1,7 +1,7 @@
 "use client";
 
 import CopyToClipboardButton from "@/lib/copyToClipboard";
-import { formatEther } from "ethers/lib/utils";
+import { formatEther, parseEther } from "ethers/lib/utils";
 import RanksEarnings from "./ranksEarnings";
 import WithdrawButton from "./withdrawButton";
 import MyUpline from "./myUpline";
@@ -88,7 +88,7 @@ const UserCard = ({
   const { mutateAsync: approve, isLoading: approveIsLoading } =
     useContractWrite(MTKContract, "approve");
   const { mutateAsync: upgrade, isLoading: upgradeIsLoading } =
-    useContractWrite(MTKContract, "AddUpgradeAmount");
+    useContractWrite(GeniosClubContract, "AddUpgradeAmount");
 
   const upgradeApprove = async (val: any) => {
     try {
@@ -107,11 +107,22 @@ const UserCard = ({
   const callApprove = async () => {
     try {
       const data = await approve({
-        args: [GeniosClubAddress2, +inputVal],
+        args: [GeniosClubAddress2, parseEther(inputVal)],
       });
       console.info("contract call success", data);
       if (data) {
-        upgradeApprove(+inputVal);
+        // await upgradeApprove(parseEther(inputVal));
+        try {
+          const data = await upgrade({
+            args: [address, parseEther(inputVal)],
+          });
+          if (data) {
+            setMessage("Your are Approved/Upgrade");
+          }
+          console.info("contract call success", data);
+        } catch (err) {
+          console.error("contract call failure", err);
+        }
       }
     } catch (err) {
       console.error("contract call failure", err);
