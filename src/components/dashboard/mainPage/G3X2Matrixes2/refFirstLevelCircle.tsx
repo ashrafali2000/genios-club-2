@@ -73,7 +73,7 @@ const RefFirstLevelCircle = ({
     };
 
     fetchData();
-  }, [contract, MatrixLevel]);
+  }, [MatrixLevel]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -87,7 +87,7 @@ const RefFirstLevelCircle = ({
         ]);
 
         try {
-          const data = await contract.call("PositionToId", [
+          const data = await contract.call("postionToId", [
             address,
             cycleNo,
             +MatrixLevel,
@@ -124,8 +124,12 @@ const RefFirstLevelCircle = ({
     };
 
     fetchData();
-  }, [contract, MatrixLevel]);
-
+  }, [MatrixLevel]);
+  // console.log("results1---------->", position);
+  // console.log("position---------->", parseInt(position[0]?.data));
+  // console.log("position---------->", parseInt(position[1]?.data));
+  // console.log("position---------->", parseInt(position[2]?.data));
+  // console.log("position---------->", parseInt(position[3]?.data));
   useEffect(() => {
     const fetchData = async () => {
       if (!contract) return;
@@ -138,7 +142,7 @@ const RefFirstLevelCircle = ({
         ]);
 
         try {
-          const data = await contract.call("PositionToId", [
+          const data = await contract.call("postionToId", [
             address,
             cycleNo,
             +MatrixLevel,
@@ -175,7 +179,7 @@ const RefFirstLevelCircle = ({
     };
 
     fetchData();
-  }, [contract, MatrixLevel]);
+  }, [MatrixLevel]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -189,7 +193,7 @@ const RefFirstLevelCircle = ({
         ]);
 
         try {
-          const data = await contract.call("PositionToId", [
+          const data = await contract.call("postionToId", [
             address,
             cycleNo,
             +MatrixLevel,
@@ -226,11 +230,12 @@ const RefFirstLevelCircle = ({
     };
 
     fetchData();
-  }, [contract, MatrixLevel]);
-
+  }, [MatrixLevel]);
   return (
     <>
       {activeLevel || MatrixLevel === "1" ? (
+        // <>
+        //   {MatrixLevel === "1" ? (
         <div>
           <div className="flex justify-between flex-wrap md:flex-nowrap">
             {RefFirstLevel && (
@@ -371,6 +376,148 @@ const RefFirstLevelCircle = ({
           </div>
         </div>
       ) : (
+        //   ) : (
+        //     <div>
+        //       <div className="flex justify-between flex-wrap md:flex-nowrap">
+        //         {RefFirstLevel && (
+        //           <>
+        //             {results1[0] ? (
+        //               <div className="flex flex-col items-center  ">
+        //                 <PopOver2
+        //                   RefFirstLevel={results1[0].data}
+        //                   userAddress={results1[0].userAddress}
+        //                 />
+        //                 <div className="  flex justify-center gap-x-[2px] mt-[-4px]">
+        //                   <div className=" h-[20px] w-2 rotate-[50deg] transform border-l border-dashed border-purple-500"></div>
+        //                   <div className="  h-[15px] w-2 border-l border-dashed border-purple-500"></div>
+        //                   <div className="ml-[-2px] mt-[-5px] h-[20px] w-2 rotate-[-40deg] transform border-l border-dashed border-purple-500"></div>
+        //                   <div className="ml-[-2px] mt-[-5px] h-[20px] w-2 rotate-[-60deg] transform border-l border-dashed border-purple-500"></div>
+        //                 </div>
+        //               </div>
+        //             ) : (
+        //               <div className="flex flex-col items-center  ">
+        //                 <a className="ml-[-5px]  h-[21px] w-[21px] cursor-pointer rounded-full  border "></a>
+        //                 <div className="  flex justify-center gap-x-[2px]  ">
+        //                   <div className="h-[20px] w-2 rotate-[50deg] transform   border-l border-dashed border-purple-500"></div>
+        //                   <div className="  h-[15px] w-2   border-l border-dashed border-purple-500"></div>
+        //                   <div className="ml-[-2px] mt-[-5px] h-[20px] w-2 rotate-[-40deg] transform border-l border-dashed border-purple-500"></div>
+        //                   <div className="ml-[-2px] mt-[-5px] h-[20px] w-2 rotate-[-60deg] transform border-l border-dashed border-purple-500"></div>
+        //                 </div>
+        //               </div>
+        //             )}
+
+        //             {results1[1] ? (
+        //               <div className="flex flex-col items-center  ">
+        //                 <PopOver2
+        //                   RefFirstLevel={results1[1].data}
+        //                   userAddress={results1[1].userAddress}
+        //                 />
+
+        //                 <div className="  flex justify-center gap-x-[2px]  ">
+        //                   <div className="h-[20px] w-2 rotate-[50deg] transform   border-l border-dashed border-purple-500"></div>
+        //                   <div className="  h-[15px] w-2   border-l border-dashed border-purple-500"></div>
+        //                   <div className="ml-[-2px] mt-[-5px] h-[20px] w-2 rotate-[-40deg] transform border-l border-dashed border-purple-500"></div>
+        //                   <div className="ml-[-2px] mt-[-5px] h-[20px] w-2 rotate-[-60deg] transform border-l border-dashed border-purple-500"></div>
+        //                 </div>
+        //               </div>
+        //             ) : (
+        //               <div className="flex flex-col items-center  ">
+        //                 <a className="ml-[-5px]  h-[21px] w-[21px] cursor-pointer  rounded-full border"></a>
+        //                 <div className="  flex justify-center gap-x-[2px]  ">
+        //                   <div className="h-[20px] w-2 rotate-[50deg] transform   border-l border-dashed border-purple-500"></div>
+        //                   <div className="  h-[15px] w-2   border-l border-dashed border-purple-500"></div>
+        //                   <div className="ml-[-2px] mt-[-5px] h-[20px] w-2 rotate-[-40deg] transform border-l border-dashed border-purple-500"></div>
+        //                   <div className="ml-[-2px] mt-[-5px] h-[20px] w-2 rotate-[-60deg] transform border-l border-dashed border-purple-500"></div>
+        //                 </div>
+        //               </div>
+        //             )}
+
+        //             {results1[2] ? (
+        //               <div className="flex flex-col items-center  ">
+        //                 <PopOver2
+        //                   RefFirstLevel={results1[2].data}
+        //                   userAddress={results1[2].userAddress}
+        //                 />
+
+        //                 <div className="  flex justify-center gap-x-[2px]  ">
+        //                   <div className="h-[20px] w-2 rotate-[50deg] transform   border-l border-dashed border-purple-500"></div>
+        //                   <div className="  h-[15px] w-2   border-l border-dashed border-purple-500"></div>
+        //                   <div className="ml-[-2px] mt-[-5px] h-[20px] w-2 rotate-[-40deg] transform border-l border-dashed border-purple-500"></div>
+        //                   <div className="ml-[-2px] mt-[-5px] h-[20px] w-2 rotate-[-60deg] transform border-l border-dashed border-purple-500"></div>
+        //                 </div>
+        //               </div>
+        //             ) : (
+        //               <div className="flex flex-col items-center  ">
+        //                 <a className="ml-[-5px]  h-[21px] w-[21px] cursor-pointer  rounded-full border"></a>
+        //                 <div className="  flex justify-center gap-x-[2px]  ">
+        //                   <div className="h-[20px] w-2 rotate-[50deg] transform   border-l border-dashed border-purple-500"></div>
+        //                   <div className="  h-[15px] w-2   border-l border-dashed border-purple-500"></div>
+        //                   <div className="ml-[-2px] mt-[-5px] h-[20px] w-2 rotate-[-40deg] transform border-l border-dashed border-purple-500"></div>
+        //                   <div className="ml-[-2px] mt-[-5px] h-[20px] w-2 rotate-[-60deg] transform border-l border-dashed border-purple-500"></div>
+        //                 </div>
+        //               </div>
+        //             )}
+        //             {results1[3] ? (
+        //               <div className="flex flex-col items-center  ">
+        //                 <PopOver2
+        //                   RefFirstLevel={results1[3].data}
+        //                   userAddress={results1[3].userAddress}
+        //                 />
+
+        //                 <div className="  flex justify-center gap-x-[2px]  ">
+        //                   <div className="h-[20px] w-2 rotate-[50deg] transform   border-l border-dashed border-purple-500"></div>
+        //                   <div className="  h-[15px] w-2   border-l border-dashed border-purple-500"></div>
+        //                   <div className="ml-[-2px] mt-[-5px] h-[20px] w-2 rotate-[-40deg] transform border-l border-dashed border-purple-500"></div>
+        //                   <div className="ml-[-2px] mt-[-5px] h-[20px] w-2 rotate-[-60deg] transform border-l border-dashed border-purple-500"></div>
+        //                 </div>
+        //               </div>
+        //             ) : (
+        //               <div className="flex flex-col items-center  ">
+        //                 <a className="ml-[-5px]  h-[21px] w-[21px] cursor-pointer  rounded-full border"></a>
+        //                 <div className="  flex justify-center gap-x-[2px]  ">
+        //                   <div className="h-[20px] w-2 rotate-[50deg] transform   border-l border-dashed border-purple-500"></div>
+        //                   <div className="  h-[15px] w-2   border-l border-dashed border-purple-500"></div>
+        //                   <div className="ml-[-2px] mt-[-5px] h-[20px] w-2 rotate-[-40deg] transform border-l border-dashed border-purple-500"></div>
+        //                   <div className="ml-[-2px] mt-[-5px] h-[20px] w-2 rotate-[-60deg] transform border-l border-dashed border-purple-500"></div>
+        //                 </div>
+        //               </div>
+        //             )}
+        //           </>
+        //         )}
+        //       </div>
+        //       <div className="flex justify-between gap-10  xl:gap-20 -ml-[60px] xl:-ml-[50px]">
+        //         <div className="ml-5">
+        //           <RefFirstLevelCircle2
+        //             activeLevel={activeLevel}
+        //             address={results1.slice(0, 4)}
+        //             position2={results1.slice(0, 4)}
+        //           />
+        //         </div>
+        //         <div className=" -ml-2 lg:-ml-5">
+        //           <RefFirstLevelCircle2
+        //             activeLevel={activeLevel}
+        //             address={results2.slice(0, 4)}
+        //             position2={results2.slice(0, 4)}
+        //           />
+        //         </div>
+        //         <div className=" -ml-3">
+        //           <RefFirstLevelCircle2
+        //             activeLevel={activeLevel}
+        //             address={results3.slice(0, 4)}
+        //             position2={results3.slice(0, 4)}
+        //           />
+        //         </div>
+        //         <div className="-ml-4 lg:-ml-3">
+        //           <RefFirstLevelCircle2
+        //             activeLevel={activeLevel}
+        //             address={results4.slice(0, 4)}
+        //             position2={results4.slice(0, 4)}
+        //           />
+        //         </div>
+        //       </div>
+        //     </div>
+        //   )}
+        // </>
         <div className="bg-purple-700 text-center py-3 px-3">
           <p className="font-bold text-white uppercase">NO Active Level</p>
         </div>

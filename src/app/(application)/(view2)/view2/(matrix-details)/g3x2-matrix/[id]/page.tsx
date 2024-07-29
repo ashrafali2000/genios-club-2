@@ -321,6 +321,15 @@ const Page = ({ params }: any) => {
 
           <div className="z-10 mx-auto w-[70%] rounded-lg bg-[#9168bf] p-5 sm:w-[340px] xl:w-[440px]">
             <div className="flex justify-between">
+              {parentLevel?.[1]?.userAddress !== undefined ? (
+                <a className="ml-[-5px] flex h-[21px] w-[21px] cursor-pointer items-center justify-center rounded-full border bg-[#9168bf] text-white sm:h-[70px] sm:w-[70px] xl:h-[80px] xl:w-[80px]">
+                  <UserId2
+                    userAddress={parentLevel?.[myPosition]?.userAddress}
+                  />
+                </a>
+              ) : (
+                <a className="ml-[-5px] mt-[16px] flex h-[21px] w-[21px] cursor-pointer items-center justify-center rounded-full border text-white sm:h-[70px] sm:w-[70px] xl:h-[80px] xl:w-[80px]"></a>
+              )}
               <h1 className="text-white md:text-[25px]">{Number(params.id)}</h1>
               <a href="#" className="font-bold text-white md:text-[25px]">
                 ID {UseFormatNumber(user?.[0])}
@@ -344,7 +353,7 @@ const Page = ({ params }: any) => {
         <div className="sm:w-full">
           <div className="px-5 md:px-[50px] lg:px-5 xl:px-[50px]">
             <div className="flex justify-center">
-              <div className=" h-[15px] w-2 border-l border-dashed border-purple-500  sm:h-[65px]"></div>
+              {/* <div className=" h-[15px] w-2 border-l border-dashed border-purple-500  sm:h-[65px]"></div> */}
             </div>
             <div className="flex justify-between">
               <button
@@ -357,11 +366,11 @@ const Page = ({ params }: any) => {
               <div className="flex justify-center  sm:mt-[-10px] sm:justify-center">
                 {parentLevel?.[1]?.userAddress !== undefined ? (
                   <div className="flex flex-col items-center  ">
-                    <a className="ml-[-5px] flex h-[21px] w-[21px] cursor-pointer items-center justify-center rounded-full border bg-[#9168bf] text-white sm:h-[70px] sm:w-[70px] xl:h-[80px] xl:w-[80px]">
+                    {/* <a className="ml-[-5px] flex h-[21px] w-[21px] cursor-pointer items-center justify-center rounded-full border bg-[#9168bf] text-white sm:h-[70px] sm:w-[70px] xl:h-[80px] xl:w-[80px]">
                       <UserId2
                         userAddress={parentLevel?.[myPosition]?.userAddress}
                       />
-                    </a>
+                    </a> */}
                     <div className="-mt-[32px] flex  gap-x-[2px] sm:gap-x-[82px]  ">
                       <div className="h-[20px] w-2 rotate-[50deg] transform border-l border-dashed  border-purple-500 sm:mt-[-14px] sm:h-[268px]"></div>
                       <div className="mt-8 h-[9.5px] w-2 border-l  rotate-[20deg]   border-dashed border-purple-500 sm:h-[174px]"></div>
@@ -371,7 +380,7 @@ const Page = ({ params }: any) => {
                   </div>
                 ) : (
                   <div className="flex flex-col items-center  ">
-                    <a className="ml-[-5px] mt-[16px] flex h-[21px] w-[21px] cursor-pointer items-center justify-center rounded-full border text-white sm:h-[70px] sm:w-[70px] xl:h-[80px] xl:w-[80px]"></a>
+                    {/* <a className="ml-[-5px] mt-[16px] flex h-[21px] w-[21px] cursor-pointer items-center justify-center rounded-full border text-white sm:h-[70px] sm:w-[70px] xl:h-[80px] xl:w-[80px]"></a> */}
                     <div className="-mt-[32px] flex  gap-x-[2px] sm:gap-x-[82px]  ">
                       <div className="h-[20px] w-2 rotate-[50deg] transform border-l border-dashed  border-purple-500 sm:mt-[-14px] sm:h-[268px]"></div>
                       <div className="mt-8 h-[9.5px] w-2 border-l  rotate-[20deg]   border-dashed border-purple-500 sm:h-[174px]"></div>

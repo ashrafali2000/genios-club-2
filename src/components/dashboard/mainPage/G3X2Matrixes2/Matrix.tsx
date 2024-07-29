@@ -5,6 +5,7 @@ import Modal from "../../../modal";
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import RefFirstLevelCircle from "./refFirstLevelCircle";
+import RefSecondLevelCircle from "./refSecondLevelCircle";
 
 const Matrix = ({
   MatrixLevel,
@@ -22,17 +23,18 @@ const Matrix = ({
     GeniosClubAddress2,
     GeniosClubAbi2
   );
-  const { data: cycleNo } = useContractRead(
-    GeniosClubContract,
-    "CurrentCycleNo",
-    [address, Number(MatrixLevel)]
-  );
+  // const { data: cycleNo } = useContractRead(
+  //   GeniosClubContract,
+  //   "CurrentCycleNo",
+  //   [address, Number(MatrixLevel)]
+  // );
+  console.log("address-----check----->", address);
   const { data: activeLevel } = useContractRead(
     GeniosClubContract,
     "LevelOpen",
     [address, Number(MatrixLevel)]
   );
-
+  console.log("activeLevel-----check----->", activeLevel);
   // new today code
   const [results, setResults] = useState<any[]>([]);
   const { contract } = useContract(GeniosClubAddress2);
@@ -42,7 +44,12 @@ const Matrix = ({
 
       const fetchPositionData = async (index: any) => {
         try {
-          const data = await contract.call("PositionToId", [
+          const cycleNo = await contract.call("CurrentCycleNo", [
+            address,
+            Number(MatrixLevel),
+          ]);
+          console.log("cycleNo--------->", parseInt(cycleNo));
+          const data = await contract.call("postionToId", [
             address,
             cycleNo,
             +MatrixLevel,
@@ -63,7 +70,7 @@ const Matrix = ({
       }
 
       const results = await Promise.all(promises);
-
+      console.log("results----------->", results);
       const tempResults: any = [];
       const tempErrors: any = [];
 
@@ -79,7 +86,7 @@ const Matrix = ({
     };
 
     fetchData();
-  }, [contract, address, cycleNo, MatrixLevel]);
+  }, [address]);
 
   const { data: user, isLoading: usersIsLoading } = useContractRead(
     GeniosClubContract,
@@ -139,16 +146,27 @@ const Matrix = ({
           ) : (
             results
               .slice(0, 1)
-              .map((i, index) => (
-                <RefFirstLevelCircle
-                  key={index}
-                  RefFirstLevel={i}
-                  position={results}
-                  userAddress={i}
-                  MatrixLevel={MatrixLevel}
-                  activeLevel={activeLevel}
-                />
-              ))
+              .map((i, index) =>
+                MatrixLevel === "1" ? (
+                  <RefFirstLevelCircle
+                    key={index}
+                    RefFirstLevel={i}
+                    position={results}
+                    userAddress={i}
+                    MatrixLevel={MatrixLevel}
+                    activeLevel={activeLevel}
+                  />
+                ) : (
+                  <RefSecondLevelCircle
+                    key={index}
+                    RefFirstLevel={i}
+                    position={results[0]}
+                    userAddress={i}
+                    MatrixLevel={MatrixLevel}
+                    activeLevel={activeLevel}
+                  />
+                )
+              )
           )}
         </div>
       </div>

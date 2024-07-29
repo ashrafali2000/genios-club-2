@@ -6,7 +6,7 @@ import RanksEarnings from "./ranksEarnings";
 import WithdrawButton from "./withdrawButton";
 import MyUpline from "./myUpline";
 import { UseFormatEther, UseFormatEtherNumber } from "@/lib/utils/useEthers";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { ThirdwebSDK } from "@thirdweb-dev/sdk";
 import {
   ActiveChain,
@@ -76,10 +76,294 @@ const UserCard = ({
       console.error("Error fetching level status:", error);
     }
   }
+  const [minsVal, setMinsVal] = useState(0);
+  const [cycleVal, setCycleVal] = useState(0);
+  const [cycleBalanceVal, setCycleBalanceVal] = useState<any>(null);
+  const check: any = [];
+  const userIdFind = (data: any) => {
+    if (parseInt(data) > 0) {
+      check.push(parseInt(data));
+    }
+  };
+  // check Upgrade Balance
+  const { data: activeLevel1 } = useContractRead(
+    GeniosClubContract,
+    "LevelOpen",
+    [userAddress, 1]
+  );
+  const { data: activeLevel2 } = useContractRead(
+    GeniosClubContract,
+    "LevelOpen",
+    [userAddress, 2]
+  );
+  const { data: activeLevel3 } = useContractRead(
+    GeniosClubContract,
+    "LevelOpen",
+    [userAddress, 3]
+  );
+  const { data: activeLevel4 } = useContractRead(
+    GeniosClubContract,
+    "LevelOpen",
+    [userAddress, 4]
+  );
+  const { data: activeLevel5 } = useContractRead(
+    GeniosClubContract,
+    "LevelOpen",
+    [userAddress, 5]
+  );
+  const { data: activeLevel6 } = useContractRead(
+    GeniosClubContract,
+    "LevelOpen",
+    [userAddress, 6]
+  );
+  const { data: activeLevel7 } = useContractRead(
+    GeniosClubContract,
+    "LevelOpen",
+    [userAddress, 7]
+  );
   useEffect(() => {
     fetchLevelStatus();
-  }, [userAddress, user]);
 
+    if (activeLevel7) {
+      setMinsVal(40960);
+      setCycleVal(7);
+    } else if (activeLevel6) {
+      setMinsVal(10240);
+      setCycleVal(6);
+    } else if (activeLevel5) {
+      setMinsVal(2560);
+      setCycleVal(5);
+    } else if (activeLevel4) {
+      setMinsVal(640);
+      setCycleVal(4);
+    } else if (activeLevel3) {
+      setMinsVal(160);
+      setCycleVal(3);
+    } else if (activeLevel2) {
+      setMinsVal(40);
+      setCycleVal(2);
+    } else if (activeLevel1) {
+      setMinsVal(10);
+      setCycleVal(1);
+    }
+  }, [userAddress, user]);
+  const [results, setResults] = useState([]);
+  const { data: cycleNo } = useContractRead(
+    GeniosClubContract,
+    "CurrentCycleNo",
+    [userAddress, cycleVal]
+  );
+  const { data: cycleNoForMatrix1 } = useContractRead(
+    GeniosClubContract,
+    "CurrentCycleNo",
+    [userAddress, 1]
+  );
+  const { data: cycleNoForMatrix2 } = useContractRead(
+    GeniosClubContract,
+    "CurrentCycleNo",
+    [userAddress, 2]
+  );
+  const { data: cycleNoForMatrix3 } = useContractRead(
+    GeniosClubContract,
+    "CurrentCycleNo",
+    [userAddress, 3]
+  );
+  const { data: cycleNoForMatrix4 } = useContractRead(
+    GeniosClubContract,
+    "CurrentCycleNo",
+    [userAddress, 4]
+  );
+  const { data: cycleNoForMatrix5 } = useContractRead(
+    GeniosClubContract,
+    "CurrentCycleNo",
+    [userAddress, 5]
+  );
+  const { data: cycleNoForMatrix6 } = useContractRead(
+    GeniosClubContract,
+    "CurrentCycleNo",
+    [userAddress, 6]
+  );
+  const { data: cycleNoForMatrix7 } = useContractRead(
+    GeniosClubContract,
+    "CurrentCycleNo",
+    [userAddress, 7]
+  );
+  const { data: cycleNoForMatrix8 } = useContractRead(
+    GeniosClubContract,
+    "CurrentCycleNo",
+    [userAddress, 8]
+  );
+  const countRecycleBalance = (dependentVal: any, valCycle: any, cont: any) => {
+    return valCycle
+      ? UseFormatEtherNumber(user?.[6]) - cont
+      : UseFormatEtherNumber(user?.[6]);
+  };
+  const countRecycleBalanceForOne = (
+    dependentVal: any,
+    valCycle: any,
+    cont: any
+  ) => {
+    return valCycle
+      ? // ? UseFormatEtherNumber(user?.[6]) - dependentVal * (valCycle - cont)
+        UseFormatEtherNumber(user?.[6]) - cont
+      : UseFormatEtherNumber(user?.[6]);
+  };
+  const matrix1 = countRecycleBalanceForOne(
+    parseInt(cycleNoForMatrix1) > 1 ? 2.4658203125 : 0,
+    parseInt(cycleNoForMatrix1) >= 1 ? parseInt(cycleNoForMatrix1) : 0,
+    parseInt(cycleNoForMatrix1) > 1
+      ? 2.4658203125 * (parseInt(cycleNoForMatrix1) - 1)
+      : 0
+  );
+  const matrix2 = countRecycleBalance(
+    parseInt(cycleNoForMatrix2) > 2 ? 10 : 0,
+    parseInt(cycleNoForMatrix2) > 2 ? parseInt(cycleNoForMatrix2) : 0,
+    parseInt(cycleNoForMatrix2) > 2 ? 10 * (parseInt(cycleNoForMatrix2) - 2) : 0
+  );
+  const matrix3 = countRecycleBalance(
+    parseInt(cycleNoForMatrix2) > 2 ? 40 : 0,
+    parseInt(cycleNoForMatrix3) > 2 ? parseInt(cycleNoForMatrix3) : 0,
+    parseInt(cycleNoForMatrix3) > 2 ? 40 * (parseInt(cycleNoForMatrix3) - 2) : 0
+  );
+  const matrix4 = countRecycleBalance(
+    parseInt(cycleNoForMatrix2) > 2 ? 160 : 0,
+    parseInt(cycleNoForMatrix4) > 2 ? parseInt(cycleNoForMatrix4) : 0,
+    parseInt(cycleNoForMatrix4) > 2
+      ? 160 * (parseInt(cycleNoForMatrix4) - 2)
+      : 0
+  );
+  const matrix5 = countRecycleBalance(
+    parseInt(cycleNoForMatrix2) > 2 ? 640 : 0,
+    parseInt(cycleNoForMatrix5) > 2 ? parseInt(cycleNoForMatrix5) : 0,
+    parseInt(cycleNoForMatrix5) > 2
+      ? 640 * (parseInt(cycleNoForMatrix5) - 2)
+      : 0
+  );
+  const matrix6 = countRecycleBalance(
+    parseInt(cycleNoForMatrix2) > 2 ? 2560 : 0,
+    parseInt(cycleNoForMatrix6) > 2 ? parseInt(cycleNoForMatrix6) : 0,
+    parseInt(cycleNoForMatrix6) > 2
+      ? 2560 * (parseInt(cycleNoForMatrix6) - 2)
+      : 0
+  );
+  const matrix7 = countRecycleBalance(
+    parseInt(cycleNoForMatrix2) > 2 ? 10240 : 0,
+    parseInt(cycleNoForMatrix7) > 2 ? parseInt(cycleNoForMatrix7) : 0,
+    parseInt(cycleNoForMatrix7) > 2
+      ? 10240 * (parseInt(cycleNoForMatrix7) - 2)
+      : 0
+  );
+  const matrix8 = countRecycleBalance(
+    parseInt(cycleNoForMatrix2) > 2 ? 46960 : 0,
+    parseInt(cycleNoForMatrix8) > 2 ? parseInt(cycleNoForMatrix8) : 0,
+    parseInt(cycleNoForMatrix8) > 2
+      ? 46960 * (parseInt(cycleNoForMatrix8) - 2)
+      : 0
+  );
+  console.log("matrix1---------->", matrix1);
+  useEffect(() => {
+    if (parseInt(cycleNoForMatrix7) > 1) {
+      setCycleBalanceVal(
+        parseInt(cycleNoForMatrix7) === 2
+          ? UseFormatEtherNumber(user?.[6])
+          : UseFormatEtherNumber(user?.[6]) -
+              10240 * (parseInt(cycleNoForMatrix7) - 2)
+      );
+    } else if (parseInt(cycleNoForMatrix6) > 1) {
+      setCycleBalanceVal(
+        parseInt(cycleNoForMatrix6) === 2
+          ? UseFormatEtherNumber(user?.[6])
+          : UseFormatEtherNumber(user?.[6]) -
+              2560 * (parseInt(cycleNoForMatrix6) - 2)
+      );
+    } else if (parseInt(cycleNoForMatrix5) > 1) {
+      setCycleBalanceVal(
+        parseInt(cycleNoForMatrix5) === 2
+          ? UseFormatEtherNumber(user?.[6])
+          : UseFormatEtherNumber(user?.[6]) -
+              640 * (parseInt(cycleNoForMatrix5) - 2)
+      );
+    } else if (parseInt(cycleNoForMatrix4) > 1) {
+      setCycleBalanceVal(
+        parseInt(cycleNoForMatrix4) === 2
+          ? UseFormatEtherNumber(user?.[6])
+          : UseFormatEtherNumber(user?.[6]) -
+              160 * (parseInt(cycleNoForMatrix4) - 2)
+      );
+    } else if (parseInt(cycleNoForMatrix3) > 1) {
+      setCycleBalanceVal(
+        parseInt(cycleNoForMatrix3) === 2
+          ? UseFormatEtherNumber(user?.[6])
+          : UseFormatEtherNumber(user?.[6]) -
+              40 * (parseInt(cycleNoForMatrix3) - 2)
+      );
+    } else if (parseInt(cycleNoForMatrix2) > 1) {
+      setCycleBalanceVal(
+        parseInt(cycleNoForMatrix2) === 2
+          ? UseFormatEtherNumber(user?.[6])
+          : UseFormatEtherNumber(user?.[6]) -
+              10 * (parseInt(cycleNoForMatrix2) - 2)
+      );
+    } else if (parseInt(cycleNoForMatrix1)) {
+      setCycleBalanceVal(
+        parseInt(cycleNoForMatrix1) === 1
+          ? UseFormatEtherNumber(user?.[6])
+          : parseInt(cycleNoForMatrix1) === 2
+          ? 2.5 * 1 - UseFormatEtherNumber(user?.[6])
+          : UseFormatEtherNumber(user?.[6]) -
+            2.5 * (parseInt(cycleNoForMatrix1) - 1)
+      );
+    }
+  }, [user, setCycleBalanceVal]);
+  const { contract } = useContract(GeniosClubAddress2);
+  const myDataFetch = useCallback(async () => {
+    if (!contract) return;
+
+    const fetchPositionData = async (index: any) => {
+      try {
+        const data = await contract.call("postionToId", [
+          userAddress,
+          cycleNo,
+          1,
+          index,
+        ]);
+        const userAddress1 = await contract.call("IdToAddress", [
+          parseInt(data),
+        ]);
+        return { index, data, userAddress1 };
+      } catch (error) {
+        return { index, error };
+      }
+    };
+
+    const promises = [];
+    for (let i = 1; i <= 85; i++) {
+      promises.push(fetchPositionData(i));
+    }
+
+    const result = await Promise.all(promises);
+
+    const tempResults: any = [];
+    const tempErrors: any = [];
+
+    result.forEach((result) => {
+      if (result.data) {
+        tempResults.push(result);
+      } else if (result.error) {
+        tempErrors.push(result);
+      }
+    });
+
+    setResults(tempResults);
+  }, [userAddress, cycleNo, contract]);
+  useEffect(() => {
+    myDataFetch();
+  }, [myDataFetch]);
+  // const memoizedResults = useMemo(() => results, [results]);
+  if (results) {
+    results.slice(4, 20).map((val: any) => userIdFind(val.data));
+  }
+  // yeha tak
   const isAllTrueG3X2 = Object.values(levelStatus.G3X2).every((value) => value);
   const isAllTrueG3X7 = Object.values(levelStatus.G3X7).every((value) => value);
   const [inputVal, setInputVal] = useState("");
@@ -287,7 +571,14 @@ const UserCard = ({
                 <div className="flex items-center ">
                   <h1 className="mr-2 text-[16px]">
                     {" "}
-                    {user?.[6] ? UseFormatEtherNumber(user?.[6]) : 0}
+                    {matrix1 +
+                      matrix2 +
+                      matrix3 +
+                      matrix4 +
+                      matrix5 +
+                      matrix6 +
+                      matrix7 +
+                      matrix8}
                   </h1>
                   <img src="/Dai.png" alt="" className="h-6 w-6" />
                 </div>
@@ -412,7 +703,11 @@ const UserCard = ({
                 <div className="flex items-center ">
                   <h1 className="mr-2 text-[16px]">
                     {" "}
-                    {user?.[5] ? UseFormatEtherNumber(user?.[5]) : 0}
+                    {/* {user?.[5] ? UseFormatEtherNumber(user?.[5]) : 0}
+                     */}
+                    {check.length === 16 && results.length < 85
+                      ? UseFormatEtherNumber(user?.[5]) - minsVal
+                      : UseFormatEtherNumber(user?.[5])}
                   </h1>
                   <img src="/Dai.png" alt="" className="h-6 w-6" />
                 </div>
