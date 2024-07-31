@@ -28,7 +28,7 @@ const Matrix = ({
   //   "CurrentCycleNo",
   //   [address, Number(MatrixLevel)]
   // );
-  console.log("address-----check----->", address);
+  // console.log("address-----check----->", address);
   const { data: activeLevel } = useContractRead(
     GeniosClubContract,
     "LevelOpen",
@@ -48,13 +48,14 @@ const Matrix = ({
             address,
             Number(MatrixLevel),
           ]);
-          console.log("cycleNo--------->", parseInt(cycleNo));
+          // console.log("cycleNo--------->", parseInt(cycleNo));
           const data = await contract.call("postionToId", [
             address,
             cycleNo,
             +MatrixLevel,
             index,
           ]);
+          // console.log("data--------->", data);
           const userAddress = await contract.call("IdToAddress", [
             parseInt(data),
           ]);
