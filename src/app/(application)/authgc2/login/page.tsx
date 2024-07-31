@@ -51,7 +51,7 @@ const Page = () => {
                   {address ? (
                     IsUserExists ? (
                       <Link
-                        href="/main2"
+                        href="/view2/main2"
                         className="inline-block w-full  cursor-pointer rounded-3xl bg-[#9064b2] p-[10px] text-[12px]  font-normal leading-[20px] text-white sm:p-[15px] sm:text-[15px] md:w-[60%]"
                       >
                         Automatic Login
