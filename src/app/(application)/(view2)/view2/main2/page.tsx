@@ -14,7 +14,8 @@ const Page = () => {
     "IdToAddress",
     [uid]
   );
-  console.log("addressWallet------test------->", addressWallet);
+  // console.log("addressWallet------test------->", addressWallet);
+  // console.log("address------test------->", address);
   return (
     <>
       <G3X2Matrixes2

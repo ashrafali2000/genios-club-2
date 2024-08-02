@@ -18,33 +18,39 @@ const RefFirstLevelCircle = ({
   activeLevel: any;
   position: any[];
 }) => {
+  let address1 = position[0].userAddress;
+  let address2 = position[0].userAddress;
+  let address3 = position[0].userAddress;
+  let address4 = position[0].userAddress;
   const [results1, setResults1] = useState<any[]>([]);
   const [results2, setResults2] = useState<any[]>([]);
   const [results3, setResults3] = useState<any[]>([]);
   const [results4, setResults4] = useState<any[]>([]);
-
+  let testUserAddress;
   const { contract } = useContract(GeniosClubAddress2);
   useEffect(() => {
     const fetchData = async () => {
       if (!contract) return;
 
       const fetchPositionData = async (index: any, val: any) => {
-        const address = await contract.call("IdToAddress", [val]);
+        let address = await contract.call("IdToAddress", [val]);
         const cycleNo = await contract.call("CurrentCycleNo", [
           address,
           Number(MatrixLevel),
         ]);
 
         try {
-          const data = await contract.call("PositionToId", [
+          let data = await contract.call("PositionToId", [
             address,
             cycleNo,
             +MatrixLevel,
             index,
           ]);
-          const userAddress = await contract.call("IdToAddress", [
+          let userAddress = await contract.call("IdToAddress", [
             parseInt(data),
           ]);
+          testUserAddress = userAddress;
+
           return { index, data, userAddress };
         } catch (error) {
           return { index, error };
@@ -125,11 +131,11 @@ const RefFirstLevelCircle = ({
 
     fetchData();
   }, [MatrixLevel]);
-  // console.log("results1---------->", position);
-  // console.log("position---------->", parseInt(position[0]?.data));
-  // console.log("position---------->", parseInt(position[1]?.data));
-  // console.log("position---------->", parseInt(position[2]?.data));
-  // console.log("position---------->", parseInt(position[3]?.data));
+  console.log("position---------->", position);
+  console.log("position0---------->", parseInt(position[0]?.data));
+  console.log("position1---------->", parseInt(position[1]?.data));
+  console.log("position2---------->", position[2]?.data);
+  console.log("position3---------->", position[3]?.data);
   useEffect(() => {
     const fetchData = async () => {
       if (!contract) return;
@@ -240,7 +246,7 @@ const RefFirstLevelCircle = ({
           <div className="flex justify-between flex-wrap md:flex-nowrap">
             {RefFirstLevel && (
               <>
-                {position[0] ? (
+                {parseInt(position[0].data) > 0 ? (
                   <div className="flex flex-col items-center  ">
                     <PopOver2
                       RefFirstLevel={position[0].data}
@@ -254,7 +260,7 @@ const RefFirstLevelCircle = ({
                     </div>
                   </div>
                 ) : (
-                  <div className="flex flex-col items-center  ">
+                  <div className="flex flex-col items-center">
                     <a className="ml-[-5px]  h-[21px] w-[21px] cursor-pointer rounded-full  border "></a>
                     <div className="  flex justify-center gap-x-[2px]  ">
                       <div className="h-[20px] w-2 rotate-[50deg] transform   border-l border-dashed border-purple-500"></div>
@@ -265,7 +271,7 @@ const RefFirstLevelCircle = ({
                   </div>
                 )}
 
-                {position[1] ? (
+                {parseInt(position[1].data) > 0 ? (
                   <div className="flex flex-col items-center  ">
                     <PopOver2
                       RefFirstLevel={position[1].data}
@@ -291,7 +297,7 @@ const RefFirstLevelCircle = ({
                   </div>
                 )}
 
-                {position[2] ? (
+                {parseInt(position[2].data) > 0 ? (
                   <div className="flex flex-col items-center  ">
                     <PopOver2
                       RefFirstLevel={position[2].data}
@@ -316,7 +322,7 @@ const RefFirstLevelCircle = ({
                     </div>
                   </div>
                 )}
-                {position[3] ? (
+                {parseInt(position[3].data) > 0 ? (
                   <div className="flex flex-col items-center  ">
                     <PopOver2
                       RefFirstLevel={position[3].data}
@@ -348,28 +354,28 @@ const RefFirstLevelCircle = ({
             <div className="ml-5">
               <RefFirstLevelCircle2
                 activeLevel={activeLevel}
-                address={results1.slice(0, 4)}
+                address={[address1, address2, address3, address4]}
                 position2={results1.slice(0, 4)}
               />
             </div>
-            <div className=" -ml-2 lg:-ml-5">
+            <div className="-ml-2 lg:-ml-5">
               <RefFirstLevelCircle2
                 activeLevel={activeLevel}
-                address={results2.slice(0, 4)}
+                address={[address1, address2, address3, address4]}
                 position2={results2.slice(0, 4)}
               />
             </div>
-            <div className=" -ml-3">
+            <div className="-ml-3">
               <RefFirstLevelCircle2
                 activeLevel={activeLevel}
-                address={results3.slice(0, 4)}
+                address={[address1, address2, address3, address4]}
                 position2={results3.slice(0, 4)}
               />
             </div>
             <div className="-ml-4 lg:-ml-3">
               <RefFirstLevelCircle2
                 activeLevel={activeLevel}
-                address={results4.slice(0, 4)}
+                address={[address1, address2, address3, address4]}
                 position2={results4.slice(0, 4)}
               />
             </div>
@@ -535,14 +541,15 @@ const RefFirstLevelCircle2 = ({
   address: any;
   activeLevel: any;
 }) => {
+  console.log("position2-----myTest@------>", position2);
   return (
     <>
       <div className="ml-[6px] mt-[-6px] flex gap-x-4">
         <div className="flex flex-col gap-3">
-          {position2[0] ? (
+          {parseInt(position2[0]?.data) > 0 ? (
             <div className="ml-[-6px] flex flex-col items-center">
               <PopOver4
-                userAddress={position2[0].userAddress}
+                userAddress={address}
                 RefFirstLevel={position2[0].data}
               />
             </div>
@@ -551,10 +558,10 @@ const RefFirstLevelCircle2 = ({
           )}
         </div>
         <div className="flex flex-col gap-3">
-          {position2[1] ? (
+          {parseInt(position2[1]?.data) > 0 ? (
             <div className="flex flex-col items-center">
               <PopOver4
-                userAddress={position2[1].userAddress}
+                userAddress={address}
                 RefFirstLevel={position2[1].data}
               />
             </div>
@@ -564,10 +571,10 @@ const RefFirstLevelCircle2 = ({
         </div>
 
         <div className="flex flex-col gap-3">
-          {position2[2] ? (
+          {parseInt(position2[2]?.data) > 0 ? (
             <div className="flex flex-col items-center">
               <PopOver4
-                userAddress={position2[2].userAddress}
+                userAddress={address}
                 RefFirstLevel={position2[2].data}
               />
             </div>
@@ -576,10 +583,10 @@ const RefFirstLevelCircle2 = ({
           )}
         </div>
         <div className="flex flex-col gap-3">
-          {position2[3] ? (
+          {parseInt(position2[3]?.data) > 0 ? (
             <div className="flex flex-col items-center">
               <PopOver4
-                userAddress={position2[3].userAddress}
+                userAddress={address}
                 RefFirstLevel={position2[3].data}
               />
             </div>

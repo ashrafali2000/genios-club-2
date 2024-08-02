@@ -34,7 +34,7 @@ const Matrix = ({
     "LevelOpen",
     [address, Number(MatrixLevel)]
   );
-  console.log("activeLevel-----check----->", activeLevel);
+  // console.log("activeLevel-----myTest@----->", activeLevel);
   // new today code
   const [results, setResults] = useState<any[]>([]);
   const { contract } = useContract(GeniosClubAddress2);
@@ -48,17 +48,18 @@ const Matrix = ({
             address,
             Number(MatrixLevel),
           ]);
-          // console.log("cycleNo--------->", parseInt(cycleNo));
+          // console.log("cycleNo----myTest@----->", parseInt(cycleNo));
           const data = await contract.call("postionToId", [
             address,
             cycleNo,
             +MatrixLevel,
             index,
           ]);
-          // console.log("data--------->", data);
+          // console.log("data----myTest@----->", data);
           const userAddress = await contract.call("IdToAddress", [
             parseInt(data),
           ]);
+          // console.log("userAddress----myTest@----->", userAddress);
           return { index, data, userAddress };
         } catch (error) {
           return { index, error };
@@ -71,7 +72,7 @@ const Matrix = ({
       }
 
       const results = await Promise.all(promises);
-      console.log("results----------->", results);
+      // console.log("results-----myTest@------>", results);
       const tempResults: any = [];
       const tempErrors: any = [];
 

@@ -105,7 +105,7 @@ const RefSecondLevelCircle = ({
         ]);
 
         try {
-          const data = await contract.call("postionToId", [
+          let data = await contract.call("postionToId", [
             address,
             cycleNo,
             +MatrixLevel,
@@ -114,7 +114,9 @@ const RefSecondLevelCircle = ({
           const userAddress = await contract.call("IdToAddress", [
             parseInt(data),
           ]);
-          return { index, data, userAddress };
+
+          let dataTest = data === 0 ? 0 : data;
+          return { index, dataTest, userAddress };
         } catch (error) {
           return { index, error };
         }
@@ -131,7 +133,7 @@ const RefSecondLevelCircle = ({
       const tempErrors: any = [];
 
       results.forEach((result) => {
-        if (result.data) {
+        if (result.dataTest) {
           tempResults.push(result);
         } else if (result.error) {
           tempErrors.push(result);
@@ -159,7 +161,7 @@ const RefSecondLevelCircle = ({
           Number(MatrixLevel),
         ]);
         try {
-          const data = await contract.call("postionToId", [
+          let data = await contract.call("postionToId", [
             address,
             cycleNo,
             +MatrixLevel,
@@ -168,6 +170,7 @@ const RefSecondLevelCircle = ({
           const userAddress = await contract.call("IdToAddress", [
             parseInt(data),
           ]);
+
           return { index, data, userAddress };
         } catch (error) {
           return { index, error };
@@ -196,24 +199,24 @@ const RefSecondLevelCircle = ({
 
     fetchData();
   }, [MatrixLevel]);
-  console.log("results1---------->", results1);
-  console.log("mainResult1---------->", parseInt(results1[0]?.data));
-  console.log("mainResult2---------->", parseInt(results1[1]?.data));
-  console.log("mainResult3---------->", parseInt(results1[2]?.data));
-  console.log("mainResult4---------->", parseInt(results1[3]?.data));
+  // console.log("results1---------->", results1);
+  // console.log("mainResult1---------->", parseInt(results1[0]?.data));
+  // console.log("mainResult2---------->", parseInt(results1[1]?.data));
+  // console.log("mainResult3---------->", parseInt(results1[2]?.data));
+  // console.log("mainResult4---------->", parseInt(results1[3]?.data));
   useEffect(() => {
     const fetchData = async () => {
       if (!contract) return;
 
       const fetchPositionData = async (index: any, val: any) => {
-        const address = await contract.call("IdToAddress", [val]);
+        let address = await contract.call("IdToAddress", [val]);
         const cycleNo = await contract.call("CurrentCycleNo", [
           address,
           Number(MatrixLevel),
         ]);
 
         try {
-          const data = await contract.call("postionToId", [
+          let data = await contract.call("postionToId", [
             address,
             cycleNo,
             +MatrixLevel,
@@ -222,6 +225,7 @@ const RefSecondLevelCircle = ({
           const userAddress = await contract.call("IdToAddress", [
             parseInt(data),
           ]);
+
           return { index, data, userAddress };
         } catch (error) {
           return { index, error };
@@ -267,7 +271,7 @@ const RefSecondLevelCircle = ({
           address,
           Number(MatrixLevel),
         ]);
-        console.log("cycleNo----------> ", cycleNo);
+        // console.log("cycleNo----------> ", cycleNo);
         try {
           const data = await contract.call("postionToId", [
             address,
@@ -533,7 +537,7 @@ const RefFirstLevelCircle2 = ({
     <>
       <div className="ml-[6px] mt-[-6px] flex gap-x-4">
         <div className="flex flex-col gap-3">
-          {position2[0] ? (
+          {parseInt(position2[0]?.data) > 0 ? (
             <div className="ml-[-6px] flex flex-col items-center">
               <PopOver4
                 userAddress={position2[0].userAddress}
@@ -545,7 +549,7 @@ const RefFirstLevelCircle2 = ({
           )}
         </div>
         <div className="flex flex-col gap-3">
-          {position2[1] ? (
+          {parseInt(position2[1]?.data) > 0 ? (
             <div className="flex flex-col items-center">
               <PopOver4
                 userAddress={position2[1].userAddress}
@@ -558,7 +562,7 @@ const RefFirstLevelCircle2 = ({
         </div>
 
         <div className="flex flex-col gap-3">
-          {position2[2] ? (
+          {parseInt(position2[2]?.data) > 0 ? (
             <div className="flex flex-col items-center">
               <PopOver4
                 userAddress={position2[2].userAddress}
@@ -570,7 +574,7 @@ const RefFirstLevelCircle2 = ({
           )}
         </div>
         <div className="flex flex-col gap-3">
-          {position2[3] ? (
+          {parseInt(position2[3]?.data) > 0 ? (
             <div className="flex flex-col items-center">
               <PopOver4
                 userAddress={position2[3].userAddress}
