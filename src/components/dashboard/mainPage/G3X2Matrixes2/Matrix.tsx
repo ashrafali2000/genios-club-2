@@ -69,10 +69,11 @@ const Matrix = ({
       const promises = [];
       for (let i = 1; i <= 4; i++) {
         let dataTest: any = await fetchPositionData(i);
-        if (parseInt(dataTest?.data) > 0) {
-          console.log("myTest__________> data", parseInt(dataTest?.data));
-          promises.push(fetchPositionData(i));
-        }
+        promises.push(fetchPositionData(i));
+        // if (parseInt(dataTest?.data) > 0) {
+        //   console.log("myTest__________> data", parseInt(dataTest?.data));
+        //   promises.push(fetchPositionData(i));
+        // }
       }
 
       const results = await Promise.all(promises);
