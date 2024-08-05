@@ -166,6 +166,12 @@ const RefFirstLevelCircle = ({
       const promises = [];
       for (let i = 1; i <= 4; i++) {
         promises.push(fetchPositionData(i, parseInt(position[2]?.data)));
+        // if (parseInt(position[2]?.data) > 0){
+        //   promises.push(fetchPositionData(i, parseInt(position[2]?.data)));
+        // }else{
+        //   let data = 0;
+        //   return {data, userAddress}
+        // }
       }
 
       const results = await Promise.all(promises);
@@ -240,7 +246,12 @@ const RefFirstLevelCircle = ({
   }, [MatrixLevel]);
   return (
     <>
-      {activeLevel || MatrixLevel === "1" ? (
+      {activeLevel ||
+      (MatrixLevel === "1" &&
+        parseInt(position[0].data) > 0 &&
+        parseInt(position[1].data) > 0 &&
+        parseInt(position[2].data) > 0 &&
+        parseInt(position[3].data) > 0) ? (
         // <>
         //   {MatrixLevel === "1" ? (
         <div>
