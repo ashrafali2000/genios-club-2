@@ -68,11 +68,15 @@ const Matrix = ({
 
       const promises = [];
       for (let i = 1; i <= 4; i++) {
-        promises.push(fetchPositionData(i));
+        let dataTest: any = await fetchPositionData(i);
+        if (parseInt(dataTest?.data) > 0) {
+          console.log("myTest__________> data", parseInt(dataTest?.data));
+          promises.push(fetchPositionData(i));
+        }
       }
 
       const results = await Promise.all(promises);
-      // console.log("results-----myTest@------>", results);
+      console.log("results-----myTest@------>", results);
       const tempResults: any = [];
       const tempErrors: any = [];
 

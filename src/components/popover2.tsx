@@ -46,7 +46,7 @@ export default function PopOver2({
 
   return (
     <>
-      {(parseInt(RefFirstLevel) > 0 &&
+      {(parseInt(RefFirstLevel) >= 0 &&
         userAddress[0] === "0x8D7df39af8CEd4bE71BF3777Bb738ec2f04806AA") ||
       userAddress[1] === "0x8D7df39af8CEd4bE71BF3777Bb738ec2f04806AA" ||
       userAddress[2] === "0x8D7df39af8CEd4bE71BF3777Bb738ec2f04806AA" ||

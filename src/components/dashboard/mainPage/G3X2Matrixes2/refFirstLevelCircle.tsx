@@ -134,8 +134,8 @@ const RefFirstLevelCircle = ({
   console.log("position---------->", position);
   console.log("position0---------->", parseInt(position[0]?.data));
   console.log("position1---------->", parseInt(position[1]?.data));
-  console.log("position2---------->", position[2]?.data);
-  console.log("position3---------->", position[3]?.data);
+  console.log("position2---------->", parseInt(position[2]?.data));
+  console.log("position3---------->", parseInt(position[3]?.data));
   useEffect(() => {
     const fetchData = async () => {
       if (!contract) return;
@@ -165,7 +165,7 @@ const RefFirstLevelCircle = ({
 
       const promises = [];
       for (let i = 1; i <= 4; i++) {
-        promises.push(fetchPositionData(i, parseInt(position[2].data)));
+        promises.push(fetchPositionData(i, parseInt(position[2]?.data)));
       }
 
       const results = await Promise.all(promises);
@@ -216,7 +216,8 @@ const RefFirstLevelCircle = ({
 
       const promises = [];
       for (let i = 1; i <= 4; i++) {
-        promises.push(fetchPositionData(i, parseInt(position[3].data)));
+        // if (parseInt(position[i].data) )
+        promises.push(fetchPositionData(i, parseInt(position[3]?.data)));
       }
 
       const results = await Promise.all(promises);
@@ -297,7 +298,7 @@ const RefFirstLevelCircle = ({
                   </div>
                 )}
 
-                {parseInt(position[2].data) > 0 ? (
+                {parseInt(position[2]?.data) > 0 ? (
                   <div className="flex flex-col items-center  ">
                     <PopOver2
                       RefFirstLevel={position[2].data}
@@ -322,7 +323,7 @@ const RefFirstLevelCircle = ({
                     </div>
                   </div>
                 )}
-                {parseInt(position[3].data) > 0 ? (
+                {parseInt(position[3]?.data) > 0 ? (
                   <div className="flex flex-col items-center  ">
                     <PopOver2
                       RefFirstLevel={position[3].data}
@@ -342,7 +343,10 @@ const RefFirstLevelCircle = ({
                     <div className="  flex justify-center gap-x-[2px]  ">
                       <div className="h-[20px] w-2 rotate-[50deg] transform   border-l border-dashed border-purple-500"></div>
                       <div className="  h-[15px] w-2   border-l border-dashed border-purple-500"></div>
-                      <div className="ml-[-2px] mt-[-5px] h-[20px] w-2 rotate-[-40deg] transform border-l border-dashed border-purple-500"></div>
+                      <div
+                        className="ml-[-2px] mt-[-5px] h-[20px] w-2 rotate-[-40deg] transform border-l 
+                      border-dashed border-purple-500"
+                      ></div>
                       <div className="ml-[-2px] mt-[-5px] h-[20px] w-2 rotate-[-60deg] transform border-l border-dashed border-purple-500"></div>
                     </div>
                   </div>
