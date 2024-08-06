@@ -5,6 +5,7 @@ import { Fragment, useRef } from "react";
 
 export default function PopOver4({
   userAddress,
+  userAddress1,
   RefFirstLevel,
   matrix,
   size,
@@ -93,8 +94,8 @@ export default function PopOver4({
                       </div>
                       <div className="rounded-b-lg  bg-[#2c0219] px-3 py-2 text-white">
                         <p>
-                          {userAddress?.slice(0, 9)} . . .{" "}
-                          {userAddress?.slice(-9)}
+                          {userAddress1?.slice(0, 9)} . . .{" "}
+                          {userAddress1?.slice(-9)}
                         </p>
                       </div>
                     </div>

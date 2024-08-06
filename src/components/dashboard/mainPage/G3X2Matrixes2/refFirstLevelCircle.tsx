@@ -40,7 +40,7 @@ const RefFirstLevelCircle = ({
         ]);
 
         try {
-          let data = await contract.call("PositionToId", [
+          let data = await contract.call("postionToId", [
             address,
             cycleNo,
             +MatrixLevel,
@@ -86,7 +86,7 @@ const RefFirstLevelCircle = ({
 
     fetchData();
   }, [MatrixLevel]);
-
+  console.log("results1---------mytest0101-----<", results1);
   useEffect(() => {
     const fetchData = async () => {
       if (!contract) return;
@@ -578,6 +578,7 @@ const RefFirstLevelCircle2 = ({
             <div className="ml-[-6px] flex flex-col items-center">
               <PopOver4
                 userAddress={address}
+                userAddress1={position2[0].userAddress}
                 RefFirstLevel={position2[0].data}
               />
             </div>
@@ -590,6 +591,7 @@ const RefFirstLevelCircle2 = ({
             <div className="flex flex-col items-center">
               <PopOver4
                 userAddress={address}
+                userAddress1={position2[1].userAddress}
                 RefFirstLevel={position2[1].data}
               />
             </div>
@@ -603,6 +605,7 @@ const RefFirstLevelCircle2 = ({
             <div className="flex flex-col items-center">
               <PopOver4
                 userAddress={address}
+                userAddress1={position2[2].userAddress}
                 RefFirstLevel={position2[2].data}
               />
             </div>
@@ -615,6 +618,7 @@ const RefFirstLevelCircle2 = ({
             <div className="flex flex-col items-center">
               <PopOver4
                 userAddress={address}
+                userAddress1={position2[3].userAddress}
                 RefFirstLevel={position2[3].data}
               />
             </div>
