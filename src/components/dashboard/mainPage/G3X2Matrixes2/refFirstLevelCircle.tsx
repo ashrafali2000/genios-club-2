@@ -59,7 +59,13 @@ const RefFirstLevelCircle = ({
 
       const promises = [];
       for (let i = 1; i <= 4; i++) {
-        promises.push(fetchPositionData(i, parseInt(position[0].data)));
+        // promises.push(fetchPositionData(i, parseInt(position[0].data)));
+        if (parseInt(position[0]?.data) > 0) {
+          promises.push(fetchPositionData(i, parseInt(position[0]?.data)));
+        } else {
+          let data = 0;
+          return { data, userAddress };
+        }
       }
 
       const results = await Promise.all(promises);
@@ -110,7 +116,13 @@ const RefFirstLevelCircle = ({
 
       const promises = [];
       for (let i = 1; i <= 4; i++) {
-        promises.push(fetchPositionData(i, parseInt(position[1].data)));
+        // promises.push(fetchPositionData(i, parseInt(position[1].data)));
+        if (parseInt(position[1]?.data) > 0) {
+          promises.push(fetchPositionData(i, parseInt(position[1]?.data)));
+        } else {
+          let data = 0;
+          return { data, userAddress };
+        }
       }
 
       const results = await Promise.all(promises);
@@ -165,13 +177,13 @@ const RefFirstLevelCircle = ({
 
       const promises = [];
       for (let i = 1; i <= 4; i++) {
-        promises.push(fetchPositionData(i, parseInt(position[2]?.data)));
-        // if (parseInt(position[2]?.data) > 0){
-        //   promises.push(fetchPositionData(i, parseInt(position[2]?.data)));
-        // }else{
-        //   let data = 0;
-        //   return {data, userAddress}
-        // }
+        // promises.push(fetchPositionData(i, parseInt(position[2]?.data)));
+        if (parseInt(position[2]?.data) > 0) {
+          promises.push(fetchPositionData(i, parseInt(position[2]?.data)));
+        } else {
+          let data = 0;
+          return { data, userAddress };
+        }
       }
 
       const results = await Promise.all(promises);
@@ -223,7 +235,13 @@ const RefFirstLevelCircle = ({
       const promises = [];
       for (let i = 1; i <= 4; i++) {
         // if (parseInt(position[i].data) )
-        promises.push(fetchPositionData(i, parseInt(position[3]?.data)));
+        // promises.push(fetchPositionData(i, parseInt(position[3]?.data)));
+        if (parseInt(position[3]?.data) > 0) {
+          promises.push(fetchPositionData(i, parseInt(position[3]?.data)));
+        } else {
+          let data = 0;
+          return { data, userAddress };
+        }
       }
 
       const results = await Promise.all(promises);
@@ -561,7 +579,7 @@ const RefFirstLevelCircle2 = ({
     <>
       <div className="ml-[6px] mt-[-6px] flex gap-x-4">
         <div className="flex flex-col gap-3">
-          {parseInt(position2[0]?.data) > 0 ? (
+          {position2[0]?.data !== 0 && parseInt(position2[0]?.data) > 0 ? (
             <div className="ml-[-6px] flex flex-col items-center">
               <PopOver4
                 userAddress={address}
@@ -573,7 +591,7 @@ const RefFirstLevelCircle2 = ({
           )}
         </div>
         <div className="flex flex-col gap-3">
-          {parseInt(position2[1]?.data) > 0 ? (
+          {position2[1]?.data !== 0 && parseInt(position2[1]?.data) > 0 ? (
             <div className="flex flex-col items-center">
               <PopOver4
                 userAddress={address}
@@ -586,7 +604,7 @@ const RefFirstLevelCircle2 = ({
         </div>
 
         <div className="flex flex-col gap-3">
-          {parseInt(position2[2]?.data) > 0 ? (
+          {position2[2]?.data !== 0 && parseInt(position2[2]?.data) > 0 ? (
             <div className="flex flex-col items-center">
               <PopOver4
                 userAddress={address}
@@ -598,7 +616,7 @@ const RefFirstLevelCircle2 = ({
           )}
         </div>
         <div className="flex flex-col gap-3">
-          {parseInt(position2[3]?.data) > 0 ? (
+          {position2[3]?.data !== 0 && parseInt(position2[3]?.data) > 0 ? (
             <div className="flex flex-col items-center">
               <PopOver4
                 userAddress={address}
