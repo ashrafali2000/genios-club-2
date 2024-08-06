@@ -106,7 +106,7 @@ const Page = ({ params }: any) => {
       if (myPosition === 1) {
         const fetchPositionData = async (index: any) => {
           try {
-            const data = await contract1.call("PositionToId", [
+            const data = await contract1.call("postionToId", [
               address,
               cycleNo,
               +params.id,
@@ -134,7 +134,7 @@ const Page = ({ params }: any) => {
         ]);
         const fetchPositionData = async (index: any) => {
           try {
-            const data = await contract1.call("PositionToId", [
+            const data = await contract1.call("postionToId", [
               address,
               cycleNo,
               +params.id,
@@ -166,7 +166,7 @@ const Page = ({ params }: any) => {
     const address = await contract1?.call("IdToAddress", [data]);
 
     try {
-      const data = await contract1?.call("PositionToId", [
+      const data = await contract1?.call("postionToId", [
         address,
         cycleNo,
         +params.id,
@@ -184,7 +184,7 @@ const Page = ({ params }: any) => {
     const address = await contract1?.call("IdToAddress", [data]);
 
     try {
-      const data = await contract1?.call("PositionToId", [
+      const data = await contract1?.call("postionToId", [
         address,
         cycleNo,
         +params.id,
