@@ -88,7 +88,6 @@ const Matrix = ({
           tempErrors.push(result);
         }
       });
-
       setResults(tempResults);
     };
 

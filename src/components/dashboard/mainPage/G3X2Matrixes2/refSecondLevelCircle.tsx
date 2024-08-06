@@ -115,8 +115,8 @@ const RefSecondLevelCircle = ({
             parseInt(data),
           ]);
 
-          let dataTest = data === 0 ? 0 : data;
-          return { index, dataTest, userAddress };
+          // let dataTest = data === 0 ? 0 : data;
+          return { index, data, userAddress };
         } catch (error) {
           return { index, error };
         }
@@ -133,7 +133,7 @@ const RefSecondLevelCircle = ({
       const tempErrors: any = [];
 
       results.forEach((result) => {
-        if (result.dataTest) {
+        if (result.data) {
           tempResults.push(result);
         } else if (result.error) {
           tempErrors.push(result);
@@ -380,7 +380,7 @@ const RefSecondLevelCircle = ({
           <div className="flex justify-between flex-wrap md:flex-nowrap">
             {RefFirstLevel && (
               <>
-                {mainResult[0] ? (
+                {parseInt(mainResult[0]?.data) > 0 ? (
                   <div className="flex flex-col items-center  ">
                     <PopOver2
                       RefFirstLevel={mainResult[0].data}
@@ -405,7 +405,7 @@ const RefSecondLevelCircle = ({
                   </div>
                 )}
 
-                {mainResult[1] ? (
+                {parseInt(mainResult[1]?.data) > 0 ? (
                   <div className="flex flex-col items-center  ">
                     <PopOver2
                       RefFirstLevel={mainResult[1].data}
@@ -413,17 +413,17 @@ const RefSecondLevelCircle = ({
                     />
 
                     <div className="  flex justify-center gap-x-[2px]  ">
-                      <div className="h-[20px] w-2 rotate-[50deg] transform   border-l border-dashed border-purple-500"></div>
-                      <div className="  h-[15px] w-2   border-l border-dashed border-purple-500"></div>
+                      <div className="h-[20px] w-2 rotate-[50deg] transform border-l border-dashed border-purple-500"></div>
+                      <div className="  h-[15px] w-2 border-l border-dashed border-purple-500"></div>
                       <div className="ml-[-2px] mt-[-5px] h-[20px] w-2 rotate-[-40deg] transform border-l border-dashed border-purple-500"></div>
                       <div className="ml-[-2px] mt-[-5px] h-[20px] w-2 rotate-[-60deg] transform border-l border-dashed border-purple-500"></div>
                     </div>
                   </div>
                 ) : (
-                  <div className="flex flex-col items-center  ">
-                    <a className="ml-[-5px]  h-[21px] w-[21px] cursor-pointer  rounded-full border"></a>
-                    <div className="  flex justify-center gap-x-[2px]  ">
-                      <div className="h-[20px] w-2 rotate-[50deg] transform   border-l border-dashed border-purple-500"></div>
+                  <div className="flex flex-col items-center">
+                    <a className="ml-[-5px] h-[21px] w-[21px] cursor-pointer rounded-full border"></a>
+                    <div className="  flex justify-center gap-x-[2px]">
+                      <div className="h-[20px] w-2 rotate-[50deg] transform order-l border-dashed border-purple-500"></div>
                       <div className="  h-[15px] w-2   border-l border-dashed border-purple-500"></div>
                       <div className="ml-[-2px] mt-[-5px] h-[20px] w-2 rotate-[-40deg] transform border-l border-dashed border-purple-500"></div>
                       <div className="ml-[-2px] mt-[-5px] h-[20px] w-2 rotate-[-60deg] transform border-l border-dashed border-purple-500"></div>
@@ -431,7 +431,7 @@ const RefSecondLevelCircle = ({
                   </div>
                 )}
 
-                {mainResult[2] ? (
+                {parseInt(mainResult[2]?.data) > 0 ? (
                   <div className="flex flex-col items-center  ">
                     <PopOver2
                       RefFirstLevel={mainResult[2].data}
@@ -456,7 +456,7 @@ const RefSecondLevelCircle = ({
                     </div>
                   </div>
                 )}
-                {mainResult[3] ? (
+                {parseInt(mainResult[3]?.data) > 0 ? (
                   <div className="flex flex-col items-center  ">
                     <PopOver2
                       RefFirstLevel={mainResult[3].data}

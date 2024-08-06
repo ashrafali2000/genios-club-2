@@ -264,12 +264,7 @@ const RefFirstLevelCircle = ({
   }, [MatrixLevel]);
   return (
     <>
-      {activeLevel ||
-      (MatrixLevel === "1" &&
-        parseInt(position[0].data) > 0 &&
-        parseInt(position[1].data) > 0 &&
-        parseInt(position[2].data) > 0 &&
-        parseInt(position[3].data) > 0) ? (
+      {activeLevel || MatrixLevel === "1" ? (
         // <>
         //   {MatrixLevel === "1" ? (
         <div>
