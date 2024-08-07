@@ -208,6 +208,14 @@ const UserCard = ({
         UseFormatEtherNumber(user?.[6]) - cont
       : UseFormatEtherNumber(user?.[6]);
   };
+  console.log("cycleNoForMatrix1------------->", parseInt(cycleNoForMatrix1));
+  console.log("cycleNoForMatrix2------------->", parseInt(cycleNoForMatrix2));
+  console.log("cycleNoForMatrix3------------->", parseInt(cycleNoForMatrix3));
+  console.log("cycleNoForMatrix4------------->", parseInt(cycleNoForMatrix4));
+  console.log("cycleNoForMatrix5------------->", parseInt(cycleNoForMatrix5));
+  console.log("cycleNoForMatrix6------------->", parseInt(cycleNoForMatrix6));
+  console.log("cycleNoForMatrix7------------->", parseInt(cycleNoForMatrix7));
+  console.log("cycleNoForMatrix8------------->", parseInt(cycleNoForMatrix8));
   const matrix1 = countRecycleBalanceForOne(
     parseInt(cycleNoForMatrix1) > 1 ? 2.4658203125 : 0,
     parseInt(cycleNoForMatrix1) >= 1 ? parseInt(cycleNoForMatrix1) : 0,
@@ -571,14 +579,7 @@ const UserCard = ({
                 <div className="flex items-center ">
                   <h1 className="mr-2 text-[16px]">
                     {" "}
-                    {matrix1 +
-                      matrix2 +
-                      matrix3 +
-                      matrix4 +
-                      matrix5 +
-                      matrix6 +
-                      matrix7 +
-                      matrix8}
+                    {UseFormatEtherNumber(user?.[6])}
                   </h1>
                   <img src="/Dai.png" alt="" className="h-6 w-6" />
                 </div>
