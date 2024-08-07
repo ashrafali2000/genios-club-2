@@ -6,12 +6,12 @@ export const clientId = "d75935c2db33dd391882dd2fb2474ceb"; // You can get a cli
 export const AddressZero = "0x0000000000000000000000000000000000000000";
 export const MTKAddress = "0x5F620d60795A2D0210c43bB927b2c989E1fbbf1c";
 // USDT new
-export const MTKAddress2 = "0x11bb006F19c55EcF0E0f76528c8E8c6e74A0fCa9";
+export const MTKAddress2 = "0xB07D332E4c7A6671312eceD1c066234432ec5524";
 export const PoolAddress = "0x456c66b4ea2246166d81772bC9Cc3e9F1D28ee06";
 // Mainnet
 export const GeniosClubAddress = "0x18642729d5770b18c108D0B991903e857f04497E";
 // MLM new
-export const GeniosClubAddress2 = "0x60F3e32a42731048bFfb2b782DCd0611422ACa8B";
+export const GeniosClubAddress2 = "0x1299C7bD8c9366aC60608c5d38358DfE9C002602";
 
 export const MTKAbi = [
   {
@@ -1393,6 +1393,74 @@ export const GeniosClubAbi2 = [
     type: "constructor",
   },
   {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: false,
+        internalType: "address",
+        name: "_user",
+        type: "address",
+      },
+      {
+        indexed: false,
+        internalType: "address",
+        name: "_sponcer",
+        type: "address",
+      },
+      {
+        indexed: false,
+        internalType: "uint256",
+        name: "amount",
+        type: "uint256",
+      },
+      {
+        indexed: false,
+        internalType: "uint256",
+        name: "time",
+        type: "uint256",
+      },
+    ],
+    name: "NewUser",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: false,
+        internalType: "address",
+        name: "_user",
+        type: "address",
+      },
+      {
+        indexed: false,
+        internalType: "address",
+        name: "_sponcer",
+        type: "address",
+      },
+      {
+        indexed: false,
+        internalType: "uint256",
+        name: "amount",
+        type: "uint256",
+      },
+      {
+        indexed: false,
+        internalType: "uint256",
+        name: "newMatrix",
+        type: "uint256",
+      },
+      {
+        indexed: false,
+        internalType: "uint256",
+        name: "time",
+        type: "uint256",
+      },
+    ],
+    name: "Upgrade",
+    type: "event",
+  },
+  {
     inputs: [
       { internalType: "address", name: "_user", type: "address" },
       { internalType: "uint256", name: "_amount", type: "uint256" },
@@ -1532,6 +1600,13 @@ export const GeniosClubAbi2 = [
     inputs: [{ internalType: "address", name: "", type: "address" }],
     name: "exists",
     outputs: [{ internalType: "bool", name: "", type: "bool" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+    name: "myTime",
+    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
     stateMutability: "view",
     type: "function",
   },
