@@ -6,12 +6,12 @@ export const clientId = "d75935c2db33dd391882dd2fb2474ceb"; // You can get a cli
 export const AddressZero = "0x0000000000000000000000000000000000000000";
 export const MTKAddress = "0x5F620d60795A2D0210c43bB927b2c989E1fbbf1c";
 // USDT new
-export const MTKAddress2 = "0xFf84Da47847A382Ddd6581FB11463C4E71b522c6";
+export const MTKAddress2 = "0xEAA16a292F9a0eaa4be9E68af4aC84fbD04B440E";
 export const PoolAddress = "0x456c66b4ea2246166d81772bC9Cc3e9F1D28ee06";
 // Mainnet
 export const GeniosClubAddress = "0x18642729d5770b18c108D0B991903e857f04497E";
 // MLM new
-export const GeniosClubAddress2 = "0x158bd5Bd855DdD1335630D2D22a6Fcef264B005a";
+export const GeniosClubAddress2 = "0xb7aeE81231a561e6dCA9122bC534809f862228Fb";
 
 export const MTKAbi = [
   {
