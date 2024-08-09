@@ -119,7 +119,7 @@ const Page = () => {
   const { data: user1, isLoading: usersIsLoading } = useContractRead(
     GeniosClubContract,
     "Users",
-    [userAddress2]
+    [userAddress2 && userAddress2]
   );
   userId = user1?.[0];
   console.log("user1------test------->", user1);
