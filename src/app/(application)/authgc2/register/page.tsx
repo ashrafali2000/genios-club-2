@@ -97,13 +97,20 @@ const Page = () => {
         args: [address, refAddr],
       });
       console.log("file: page.tsx:214  callRegister  data:", data);
-
+      let userAddress2;
       if (data) {
-        userId = parseInt(user?.[0]);
-        console.log("id------test------->", userId);
+        userAddress2 = data?.receipt?.from;
+
         console.log("user------userTest------->", user);
         // router.push(`/view2/main2?uid=${id}`);
       }
+      const { data: user1, isLoading: usersIsLoading } = useContractRead(
+        GeniosClubContract,
+        "Users",
+        [userAddress2]
+      );
+      userId = user1?.[0];
+      console.log("id------test------->", userId);
       // const response = await axios.post("/api/matrix/add/", {
       //   userAddress: address,
       //   referrerAddress: refAddr,
@@ -258,11 +265,10 @@ const Page = () => {
                     </div>
                   ) : (
                     //  User already Registered
-                    <div className="my-16 flex justify-center  gap-4">
-                      <p className="text-white">YOU ARE ALREADY REGISTERED</p>
-                      {userId ? (
+                    <div className="my-16 flex justify-center gap-4">
+                      {userId && parseInt(userId) >= 1 ? (
                         <Link
-                          href={`/view2/main2?uid=${userId}`}
+                          href={`/view2/main2?uid=${parseInt(userId)}`}
                           className="!text-blue-500 hover:underline"
                         >
                           Go to Dashboard
