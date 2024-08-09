@@ -1,30 +1,30 @@
-'use client';
+"use client";
 import {
   ActiveChain,
   GeniosClubAbi,
   GeniosClubAddress,
   MTKAbi,
   MTKAddress,
-} from '@/lib/constant';
+} from "@/lib/constant";
 import {
   ThirdwebSDK,
   useAddress,
   useContract,
   useContractRead,
   useContractWrite,
-} from '@thirdweb-dev/react';
-import axios from 'axios';
-import { formatEther, parseEther } from 'ethers/lib/utils';
-import Link from 'next/link';
-import { useSearchParams } from 'next/navigation';
-import { useState } from 'react';
+} from "@thirdweb-dev/react";
+import axios from "axios";
+import { formatEther, parseEther } from "ethers/lib/utils";
+import Link from "next/link";
+import { useSearchParams } from "next/navigation";
+import { useState } from "react";
 
 const Page = () => {
   const address = useAddress();
   const searchParams: any = useSearchParams();
-  const ref = searchParams.get('ref');
+  const ref = searchParams.get("ref");
 
-  const [refId, setRefId] = useState<any>(ref ? ref : '');
+  const [refId, setRefId] = useState<any>(ref ? ref : "");
 
   // Contracts
   const { contract: GeniosClubContract } = useContract(
@@ -36,53 +36,53 @@ const Page = () => {
   // Read Functions (Token)
   const { data: balance, isLoading: balanceIsLoading } = useContractRead(
     MTKContract,
-    'balanceOf',
+    "balanceOf",
     [address]
   );
 
   const { data: allowance, isLoading: allowanceIsLoading } = useContractRead(
     MTKContract,
-    'allowance',
+    "allowance",
     [address, GeniosClubAddress]
   );
 
   // Read Functions
   const { data: IsUserExists, isLoading: isUserExistsILoading } =
-    useContractRead(GeniosClubContract, 'IsUserExists', [address]);
+    useContractRead(GeniosClubContract, "IsUserExists", [address]);
 
   //    Write functions
   const { mutateAsync: approve, isLoading: approveIsLoading } =
-    useContractWrite(MTKContract, 'approve');
+    useContractWrite(MTKContract, "approve");
 
   const { mutateAsync: RegistrationExt, isLoading: registrationExtIsLoading } =
-    useContractWrite(GeniosClubContract, 'RegistrationExt');
+    useContractWrite(GeniosClubContract, "RegistrationExt");
 
   // Approve Function
   const callApprove = async () => {
     try {
       const data = await approve({
-        args: [GeniosClubAddress, parseEther('5')],
+        args: [GeniosClubAddress, parseEther("5")],
       });
-      console.info('contract call success', data);
+      console.info("contract call success", data);
     } catch (err) {
-      console.error('contract call failure', err);
+      console.error("contract call failure", err);
     }
   };
   // jugar
-  const addressToID = await contract.call('AddressToId', [address])
+  // const addressToID = await contract.call('AddressToId', [address])
 
   // Register Function
   const callRegister = async () => {
     try {
       const sdk = new ThirdwebSDK(ActiveChain);
       const contract = await sdk.getContract(GeniosClubAddress, GeniosClubAbi);
-      const refAddr = await contract.call('IdToAddress', [refId]);
+      const refAddr = await contract.call("IdToAddress", [refId]);
       // const response1 = await axios.get(`/api/matrix/add/${refAddr}`);
 
       const data = await RegistrationExt({
         args: [refAddr],
       });
-      console.log('file: page.tsx:214  callRegister  data:', data);
+      console.log("file: page.tsx:214  callRegister  data:", data);
 
       // const response = await axios.post("/api/matrix/add/", {
       //   userAddress: address,
@@ -91,7 +91,7 @@ const Page = () => {
       // });
       // console.log("file: page.tsx:221  callRegister  response:", response);
     } catch (err) {
-      console.error('contract call failure', err);
+      console.error("contract call failure", err);
     }
   };
 
@@ -241,7 +241,7 @@ const Page = () => {
                     <div className="my-16 flex justify-center  gap-4">
                       <p className="text-white">YOU ARE ALREADY REGISTERED</p>
                       <Link
-                        href="/main2?uid={addressToID}"
+                        href={`/view2/main2?uid=${refId}`}
                         className="!text-blue-500 hover:underline"
                       >
                         Go to Dashboard
