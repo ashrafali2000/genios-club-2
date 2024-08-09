@@ -259,7 +259,7 @@ const Page = () => {
                     <div className="my-16 flex justify-center  gap-4">
                       <p className="text-white">YOU ARE ALREADY REGISTERED</p>
                       <Link
-                        href="/view2/main2"
+                        href={`/view2/main2?uid=${refId}`}
                         className="!text-blue-500 hover:underline"
                       >
                         Go to Dashboard
