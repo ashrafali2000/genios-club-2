@@ -20,7 +20,7 @@ import axios from "axios";
 import { formatEther, parseEther } from "ethers/lib/utils";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const Page = () => {
   const router = useRouter();
@@ -83,7 +83,7 @@ const Page = () => {
   };
   let userId;
   // Register Function
-  let userAddress2;
+  let userAddress2: any;
   const callRegister = async () => {
     try {
       const sdk = new ThirdwebSDK(ActiveChain);
@@ -116,13 +116,20 @@ const Page = () => {
       console.error("contract call failure", err);
     }
   };
-  const { data: user1, isLoading: usersIsLoading } = useContractRead(
-    GeniosClubContract,
-    "Users",
-    [userAddress2 && userAddress2]
-  );
-  userId = user1?.[0];
-  console.log("user1------test------->", user1);
+  //
+
+  const { contract } = useContract(GeniosClubAddress2);
+  let user2: any;
+  useEffect(() => {
+    if (!contract) return;
+    const fetchAddress = async () => {
+      user2 = await contract.call("Users", [userAddress2 && userAddress2]);
+    };
+    fetchAddress();
+    userId = user2?.[0];
+  }, [userAddress2]);
+
+  console.log("user1------test------->", user2);
 
   return (
     <main className="h-screen">
