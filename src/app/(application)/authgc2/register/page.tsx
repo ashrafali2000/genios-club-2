@@ -122,7 +122,7 @@ const Page = () => {
     [userAddress2]
   );
   userId = user1?.[0];
-  console.log("id------test------->", userId);
+  console.log("user1------test------->", user1);
 
   return (
     <main className="h-screen">
