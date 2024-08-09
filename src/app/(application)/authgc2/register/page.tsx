@@ -104,10 +104,11 @@ const Page = () => {
         userAddress2 = data?.receipt?.from;
         const fetchAddress = async () => {
           user2 = await contract.call("Users", [userAddress2]);
+          console.log("user2------user2------->", user2);
         };
         fetchAddress();
         userId = user2?.[0];
-        console.log("userId------userId------->", userId);
+        // console.log("userId------userId------->", userId);
         // router.push(`/view2/main2?uid=${id}`);
       }
 
