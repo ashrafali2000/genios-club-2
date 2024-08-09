@@ -54,7 +54,7 @@ const Page = () => {
     "allowance",
     [address, GeniosClubAddress2]
   );
-  const { data: user, isLoading: usersIsLoading } = useContractRead(
+  const { data: user, isLoading: usersIsLoading1 } = useContractRead(
     GeniosClubContract,
     "Users",
     [address]
@@ -83,6 +83,7 @@ const Page = () => {
   };
   let userId;
   // Register Function
+  let userAddress2;
   const callRegister = async () => {
     try {
       const sdk = new ThirdwebSDK(ActiveChain);
@@ -97,20 +98,14 @@ const Page = () => {
         args: [address, refAddr],
       });
       console.log("file: page.tsx:214  callRegister  data:", data);
-      let userAddress2;
+
       if (data) {
         userAddress2 = data?.receipt?.from;
 
         console.log("user------userTest------->", user);
         // router.push(`/view2/main2?uid=${id}`);
       }
-      const { data: user1, isLoading: usersIsLoading } = useContractRead(
-        GeniosClubContract,
-        "Users",
-        [userAddress2]
-      );
-      userId = user1?.[0];
-      console.log("id------test------->", userId);
+
       // const response = await axios.post("/api/matrix/add/", {
       //   userAddress: address,
       //   referrerAddress: refAddr,
@@ -121,6 +116,13 @@ const Page = () => {
       console.error("contract call failure", err);
     }
   };
+  const { data: user1, isLoading: usersIsLoading } = useContractRead(
+    GeniosClubContract,
+    "Users",
+    [userAddress2]
+  );
+  userId = user1?.[0];
+  console.log("id------test------->", userId);
 
   return (
     <main className="h-screen">
