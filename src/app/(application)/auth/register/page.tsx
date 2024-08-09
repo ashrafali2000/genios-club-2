@@ -68,6 +68,8 @@ const Page = () => {
       console.error('contract call failure', err);
     }
   };
+  // jugar
+  const addressToID = await contract.call('AddressToId', [address])
 
   // Register Function
   const callRegister = async () => {
@@ -239,7 +241,7 @@ const Page = () => {
                     <div className="my-16 flex justify-center  gap-4">
                       <p className="text-white">YOU ARE ALREADY REGISTERED</p>
                       <Link
-                        href="/main"
+                        href="/main2?uid={addressToID}"
                         className="!text-blue-500 hover:underline"
                       >
                         Go to Dashboard
