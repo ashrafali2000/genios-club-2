@@ -81,7 +81,7 @@ const Page = () => {
       console.error("contract call failure", err);
     }
   };
-
+  let userId;
   // Register Function
   const callRegister = async () => {
     try {
@@ -97,8 +97,10 @@ const Page = () => {
         args: [address, refAddr],
       });
       console.log("file: page.tsx:214  callRegister  data:", data);
+
       if (data) {
-        const id = parseInt(user?.[0]);
+        userId = parseInt(user?.[0]);
+        console.log("id------test------->", userId);
         // router.push(`/view2/main2?uid=${id}`);
         console.log("data-----router---->", data);
       }
@@ -259,7 +261,7 @@ const Page = () => {
                     <div className="my-16 flex justify-center  gap-4">
                       <p className="text-white">YOU ARE ALREADY REGISTERED</p>
                       <Link
-                        href={`/view2/main2?uid=${refId}`}
+                        href={`/view2/main2?uid=${userId}`}
                         className="!text-blue-500 hover:underline"
                       >
                         Go to Dashboard
