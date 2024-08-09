@@ -82,6 +82,7 @@ const Page = () => {
     }
   };
   let userId;
+  let user2: any;
   // Register Function
   let userAddress2: any;
   const callRegister = async () => {
@@ -101,8 +102,12 @@ const Page = () => {
 
       if (data) {
         userAddress2 = data?.receipt?.from;
-
-        console.log("user------userAddress2------->", userAddress2);
+        const fetchAddress = async () => {
+          user2 = await contract.call("Users", [userAddress2]);
+        };
+        fetchAddress();
+        userId = user2?.[0];
+        console.log("userId------userId------->", userId);
         // router.push(`/view2/main2?uid=${id}`);
       }
 
@@ -117,18 +122,6 @@ const Page = () => {
     }
   };
   //
-
-  const { contract } = useContract(GeniosClubAddress2);
-  let user2: any;
-  useEffect(() => {
-    if (!contract) return;
-    const fetchAddress = async () => {
-      user2 = await contract.call("Users", [userAddress2 && userAddress2]);
-    };
-    fetchAddress();
-    userId = user2?.[0];
-  }, [userAddress2]);
-
   console.log("user1------test------->", user2);
 
   return (
