@@ -102,7 +102,7 @@ const Page = () => {
       if (data) {
         userAddress2 = data?.receipt?.from;
 
-        console.log("user------userTest------->", user);
+        console.log("user------userAddress2------->", userAddress2);
         // router.push(`/view2/main2?uid=${id}`);
       }
 
