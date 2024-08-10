@@ -6,7 +6,7 @@ import {
   MTKAbi2,
   MTKAddress2,
 } from "@/lib/constant";
-import { useRouter } from "next/navigation";
+
 import {
   ThirdwebSDK,
   getContract,
@@ -19,7 +19,7 @@ import {
 import axios from "axios";
 import { formatEther, parseEther } from "ethers/lib/utils";
 import Link from "next/link";
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
 const Page = () => {
@@ -27,6 +27,7 @@ const Page = () => {
   const address = useAddress();
   const searchParams = useSearchParams();
   const ref = searchParams.get("ref");
+  const [userId1, setUserId1] = useState(0);
   const [refId, setRefId] = useState(ref ? ref : "");
 
   // Contracts
@@ -105,6 +106,7 @@ const Page = () => {
         const fetchAddress = async () => {
           // user2 = await contract.call("Users", [userAddress2]);
           userId = await contract.call("AddressToId", [address]);
+          setUserId1(parseInt(userId) && parseInt(userId));
           console.log("userId------userId------->", parseInt(userId));
         };
         fetchAddress();
@@ -124,8 +126,10 @@ const Page = () => {
     }
   };
   //
-  console.log("user1------test------->", user2);
-
+  // console.log("user1------test------->", user2);
+  const navigateToDashboard = () => {
+    router.push(`/view2/main2?uid=${userId1}`);
+  };
   return (
     <main className="h-screen">
       <div className="overlay flex h-fit px-5 py-10 md:h-screen md:px-10 lg:px-20">
@@ -270,14 +274,14 @@ const Page = () => {
                   ) : (
                     //  User already Registered
                     <div className="my-16 flex justify-center gap-4">
-                      {parseInt(userId) ? (
-                        <Link
-                          href={`/view2/main2?uid=${parseInt(userId)}`}
-                          className="!text-blue-500 hover:underline"
-                        >
-                          Go to Dashboard
-                        </Link>
-                      ) : (
+                      {/* {parseInt(userId) > 1 ? ( */}
+                      <button
+                        onClick={navigateToDashboard}
+                        className="!text-blue-500 hover:underline"
+                      >
+                        Go to Dashboard
+                      </button>
+                      {/* ) : (
                         <p className="text-white">
                           {" "}
                           <svg
@@ -299,7 +303,7 @@ const Page = () => {
                           </svg>
                           LOADING...
                         </p>
-                      )}
+                      )} */}
                     </div>
                   )
                 ) : (
