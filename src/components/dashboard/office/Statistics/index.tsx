@@ -14,6 +14,7 @@ import RankEarners from "./rankEarners";
 import axios from "axios";
 import Pagination from "@/lib/utils/pagination";
 
+import { defineChain } from "thirdweb/chains";
 const Statistics = ({ address }: any) => {
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [EventsArray, setEventsArray] = useState<any[]>();
@@ -22,17 +23,17 @@ const Statistics = ({ address }: any) => {
   const [filters, setFilters] = useState({
     addr: "",
   });
-  const [totalPages, setTotalPages] = useState<number | null>(null);
+  // const [totalPages, setTotalPages] = useState<number | null>(null);
   const fetchData = async () => {
     setIsLoading(true);
     try {
-      const response = await axios.post(`/api/events/${address}`, {
-        currentPage,
-        itemsPerPage,
-      });
+      const response = await axios.get(
+        `https://genios-club-2-backend.vercel.app/newusers`
+      );
       const eventsData = response.data;
-      setTotalPages(eventsData.pagination.totalPages);
-      setEventsArray(eventsData.data);
+      console.log("eventsData------------>", eventsData);
+      // setTotalPages(eventsData.pagination.totalPages);
+      setEventsArray(eventsData);
     } catch (error) {
       console.error("Error fetching data:", error);
     } finally {
@@ -48,6 +49,12 @@ const Statistics = ({ address }: any) => {
     setCurrentPage(1); // Reset to the first page
     setItemsPerPage(newItemsPerPage);
   };
+
+  //
+
+  // create the client with your clientId, or secretKey if in a server environment
+
+  // connect to your contract
 
   return (
     <div className=" rounded-[9px] border-none bg-[#2c0219] px-2 pb-6 pt-4 text-center font-san">
@@ -108,16 +115,10 @@ const Statistics = ({ address }: any) => {
                   ID
                 </th>
                 <th scope="col" className="px-6 py-3">
-                  PROGRAM
+                  Ref Id
                 </th>
                 <th scope="col" className="px-6 py-3">
-                  PLATFORM
-                </th>
-                <th scope="col" className="px-6 py-3">
-                  DAI
-                </th>
-                <th scope="col" className="px-6 py-3">
-                  HASH
+                  Amount
                 </th>
 
                 <th scope="col" className="px-6 py-3">
@@ -156,87 +157,9 @@ const Statistics = ({ address }: any) => {
                   })
                 : EventsArray &&
                   EventsArray.map((event: any, index: any) => {
-                    const eventName = event.eventName;
-
-                    if (eventName === "Registration") {
-                      return (
-                        <Registration key={index} event={event} index={index} />
-                      );
-                    }
-
-                    if (eventName === "NewUserPlace") {
-                      return (
-                        <NewUserPlace key={index} event={event} index={index} />
-                      );
-                    }
-
-                    if (eventName === "Upgrade") {
-                      return (
-                        <Upgrade key={index} event={event} index={index} />
-                      );
-                    }
-
-                    if (eventName === "Reinvest") {
-                      return (
-                        <Reinvest key={index} event={event} index={index} />
-                      );
-                    }
-
-                    if (eventName === "MissedTokenReceive") {
-                      return (
-                        <MissedTokenReceive
-                          key={index}
-                          event={event}
-                          index={index}
-                        />
-                      );
-                    }
-
-                    if (eventName === "SentExtraTokenDividends") {
-                      return (
-                        <SentExtraTokenDividends
-                          key={index}
-                          event={event}
-                          index={index}
-                        />
-                      );
-                    }
-
-                    if (eventName === "G3X7RankUpdated") {
-                      return (
-                        <G3X7RankUpdated
-                          key={index}
-                          event={event}
-                          index={index}
-                        />
-                      );
-                    }
-
-                    if (eventName === "G3X7ClubUpdated") {
-                      return (
-                        <G3X7ClubUpdated
-                          key={index}
-                          event={event}
-                          index={index}
-                        />
-                      );
-                    }
-
-                    if (eventName === "G3X7AcademyUpdated") {
-                      return (
-                        <G3X7AcademyUpdated
-                          key={index}
-                          event={event}
-                          index={index}
-                        />
-                      );
-                    }
-
-                    if (eventName === "RankEarners") {
-                      return (
-                        <RankEarners key={index} event={event} index={index} />
-                      );
-                    }
+                    return (
+                      <NewUserPlace key={index} event={event} index={index} />
+                    );
                   })}
             </tbody>
           </table>
@@ -247,14 +170,14 @@ const Statistics = ({ address }: any) => {
           ) : null}
         </div>
       </div>
-      {!isLoading && totalPages != null && (
+      {/* {!isLoading && totalPages != null && (
         <Pagination
           totalPages={totalPages}
           currentPage={currentPage}
           setCurrentPage={setCurrentPage}
           marginTop={"6"}
         />
-      )}
+      )} */}
     </div>
   );
 };
