@@ -1,20 +1,20 @@
 "use client";
 import { useEffect, useState } from "react";
-import Upgrade from "./upgrade";
+// import Upgrade from "./upgrade";
 import { TableLoader } from "@/lib/utils/tableLoader";
-import Registration from "./registration";
+// import Registration from "./registration";
 import NewUserPlace from "./newUserPlace";
-import Reinvest from "./reinvest";
-import MissedTokenReceive from "./missedTokenReceive";
-import SentExtraTokenDividends from "./sentExtraTokenDividends";
-import G3X7RankUpdated from "./G3X7RankUpdated";
-import G3X7ClubUpdated from "./G3X7ClubUpdated";
-import G3X7AcademyUpdated from "./G3X7AcademyUpdated";
-import RankEarners from "./rankEarners";
+// import Reinvest from "./reinvest";
+// import MissedTokenReceive from "./missedTokenReceive";
+// import SentExtraTokenDividends from "./sentExtraTokenDividends";
+// import G3X7RankUpdated from "./G3X7RankUpdated";
+// import G3X7ClubUpdated from "./G3X7ClubUpdated";
+// import G3X7AcademyUpdated from "./G3X7AcademyUpdated";
+// import RankEarners from "./rankEarners";
 import axios from "axios";
-import Pagination from "@/lib/utils/pagination";
+// import Pagination from "@/lib/utils/pagination";
 
-import { defineChain } from "thirdweb/chains";
+// import { defineChain } from "thirdweb/chains";
 const Statistics = ({ address }: any) => {
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [EventsArray, setEventsArray] = useState<any[]>();
