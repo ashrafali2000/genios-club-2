@@ -2,11 +2,12 @@
 
 import { classNames } from "@/lib/classNames";
 import {
+  ActiveChain,
   AddressZero,
   GeniosClubAbi2,
   GeniosClubAddress2,
 } from "@/lib/constant";
-import { ConnectWallet } from "@thirdweb-dev/react";
+import { ConnectWallet, ThirdwebSDK } from "@thirdweb-dev/react";
 import { useAddress, useContract, useContractRead } from "@thirdweb-dev/react";
 import { ethers } from "ethers";
 import Link from "next/link";
@@ -30,6 +31,17 @@ const Page = () => {
   function handleClick() {
     router.push(`/view2/main2?uid=${id}`);
   }
+  // const { contract: GeniosClubContract } = useContract(
+  //   GeniosClubAddress2,
+  //   GeniosClubAbi2
+  // );
+  let userId: any;
+  const [secUserId, setSecUserId] = useState(0);
+  const fetchAddress = async () => {
+    userId = await contract?.call("AddressToId", [address]);
+    setSecUserId(parseInt(userId));
+  };
+  fetchAddress();
 
   return (
     <section className=" ">
@@ -51,7 +63,7 @@ const Page = () => {
                   {address ? (
                     IsUserExists ? (
                       <Link
-                        href="/view2/main2"
+                        href={`/view2/main2?uid=${secUserId}`}
                         className="inline-block w-full  cursor-pointer rounded-3xl bg-[#9064b2] p-[10px] text-[12px]  font-normal leading-[20px] text-white sm:p-[15px] sm:text-[15px] md:w-[60%]"
                       >
                         Automatic Login
