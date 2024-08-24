@@ -4,14 +4,14 @@ export const ActiveChain = "fantom-testnet";
 export const clientId = "d75935c2db33dd391882dd2fb2474ceb"; // You can get a client id from dashboard settings
 // export const clientId = "0xfa2"; // You can get a client id from dashboard settings
 export const AddressZero = "0x0000000000000000000000000000000000000000";
-export const MTKAddress = "0xC21c68c38268a46fC43886AB811331FcC1Fbc4B9";
+export const MTKAddress = "0x89CAb729b260c1ad8EFD1A764cb29fE2A68cDb24";
 // USDT new
-export const MTKAddress2 = "0xC21c68c38268a46fC43886AB811331FcC1Fbc4B9";
+export const MTKAddress2 = "0x89CAb729b260c1ad8EFD1A764cb29fE2A68cDb24";
 export const PoolAddress = "0x456c66b4ea2246166d81772bC9Cc3e9F1D28ee06";
 // Mainnet
 export const GeniosClubAddress = "0x18642729d5770b18c108D0B991903e857f04497E";
 // MLM new
-export const GeniosClubAddress2 = "0xa5936223204a7e738606bf03E809F70128080036";
+export const GeniosClubAddress2 = "0x022348e03F5E82D3B0a3068c68C8Ab6229dCaeaF";
 
 export const MTKAbi = [
   {
