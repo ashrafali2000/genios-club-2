@@ -121,10 +121,10 @@ const Matrix = ({
         </Link>
 
         <div className="px-5 md:px-[50px] lg:px-5 xl:px-[50px] w-10/12 mx-auto">
-          <div className="flex justify-center gap-x-[90px] ">
+          <div className="flex justify-center gap-x-[120px] xl:gap-x-[150px] ">
             <div className="h-[18px] w-2 rotate-[60deg] transform   border-l border-dashed border-purple-500"></div>
-            <div className="  h-[15px] w-2   border-l border-dashed  border-purple-500"></div>
-            <div className=" h-[18px] w-2 rotate-[-40deg] transform   border-l border-dashed border-purple-500"></div>
+            <div className="  h-[15px] w-2  rotate-[20deg] border-l border-dashed  border-purple-500"></div>
+            <div className=" h-[15px] w-2 rotate-[-40deg] transform   border-l border-dashed border-purple-500"></div>
             <div className=" h-[18px] w-2 rotate-[-50deg] transform   border-l border-dashed border-purple-500"></div>
           </div>
 

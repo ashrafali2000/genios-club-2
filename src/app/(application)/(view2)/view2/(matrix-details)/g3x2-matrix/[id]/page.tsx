@@ -95,10 +95,10 @@ const Page = ({ params }: any) => {
 
   // new today code
   const { contract: contract1 } = useContract(GeniosClubAddress2);
-  const [parentLev1, setParentLevel1] = useState(1);
-  const [parentLev2, setParentLevel2] = useState(2);
-  const [parentLev3, setParentLevel3] = useState(3);
-  const [parentLev4, setParentLevel4] = useState(4);
+  // const [parentLev1, setParentLevel1] = useState(1);
+  // const [parentLev2, setParentLevel2] = useState(2);
+  // const [parentLev3, setParentLevel3] = useState(3);
+  // const [parentLev4, setParentLevel4] = useState(4);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -152,10 +152,10 @@ const Page = ({ params }: any) => {
         for (let i = 1; i <= 4; i++) {
           fetchPositionData(i);
         }
-        setParentLevel1(parseInt(parentLevel?.slice(-4)[0]?.data));
-        setParentLevel2(parseInt(parentLevel?.slice(-3)[0]?.data));
-        setParentLevel3(parseInt(parentLevel?.slice(-2)[0]?.data));
-        setParentLevel4(parseInt(parentLevel?.slice(-1)[0]?.data));
+        // setParentLevel1(parseInt(parentLevel?.slice(-4)[0]?.data));
+        // setParentLevel2(parseInt(parentLevel?.slice(-3)[0]?.data));
+        // setParentLevel3(parseInt(parentLevel?.slice(-2)[0]?.data));
+        // setParentLevel4(parseInt(parentLevel?.slice(-1)[0]?.data));
       }
     };
 
@@ -198,7 +198,7 @@ const Page = ({ params }: any) => {
       return { index, error };
     }
   };
-
+  // 2
   useEffect(() => {
     if (parentLevel?.[myPosition]?.data) {
       let BigToNumber = parseInt(parentLevel?.[myPosition]?.data);
@@ -209,19 +209,19 @@ const Page = ({ params }: any) => {
       };
       myFunc();
 
-      const secondFunc = async () => {
-        const { data } = await fetchId2(BigToNumber, 1);
+      // const secondFunc = async () => {
+      //   const { data } = await fetchId2(BigToNumber, 1);
 
-        for (let i = 1; i <= 4; i++) {
-          const myData = parseInt(data);
-          const userAddress = await fetchId(myData, i);
+      //   for (let i = 1; i <= 4; i++) {
+      //     const myData = parseInt(data);
+      //     const userAddress = await fetchId(myData, i);
 
-          setThirdLevelChildFirst((prev) => [...prev, { userAddress }]);
-        }
-      };
-      secondFunc();
+      //     setThirdLevelChildFirst((prev) => [...prev, { userAddress }]);
+      //   }
+      // };
+      // secondFunc();
     }
-  }, [parentLevel, myPosition, thirdLeveLChildFirst]);
+  }, [parentLevel, myPosition]);
   useEffect(() => {
     if (parentLevel?.[myPosition]?.data) {
       let BigToNumber = parseInt(parentLevel?.[myPosition]?.data);
@@ -230,19 +230,19 @@ const Page = ({ params }: any) => {
         setSecondLevelChild2(userAddress);
       };
       myFunc();
-      const secondFunc = async () => {
-        const { data } = await fetchId2(BigToNumber, 2);
+      // const secondFunc = async () => {
+      //   const { data } = await fetchId2(BigToNumber, 2);
 
-        for (let i = 1; i <= 4; i++) {
-          const myData = parseInt(data);
-          const userAddress = await fetchId(myData, i);
+      //   for (let i = 1; i <= 4; i++) {
+      //     const myData = parseInt(data);
+      //     const userAddress = await fetchId(myData, i);
 
-          setThirdLevelChildSecond((prev) => [...prev, { userAddress }]);
-        }
-      };
-      secondFunc();
+      //     setThirdLevelChildSecond((prev) => [...prev, { userAddress }]);
+      //   }
+      // };
+      // secondFunc();
     }
-  }, [parentLevel, myPosition, thirdLeveLChildSecond]);
+  }, [parentLevel, myPosition]);
   useEffect(() => {
     if (parentLevel?.[myPosition]?.data) {
       let BigToNumber = parseInt(parentLevel?.[myPosition]?.data);
@@ -251,19 +251,19 @@ const Page = ({ params }: any) => {
         setSecondLevelChild3(userAddress);
       };
       myFunc();
-      const secondFunc = async () => {
-        const { data } = await fetchId2(BigToNumber, 3);
+      // const secondFunc = async () => {
+      //   const { data } = await fetchId2(BigToNumber, 3);
 
-        for (let i = 1; i <= 4; i++) {
-          const myData = parseInt(data);
-          const userAddress = await fetchId(myData, i);
+      //   for (let i = 1; i <= 4; i++) {
+      //     const myData = parseInt(data);
+      //     const userAddress = await fetchId(myData, i);
 
-          setThirdLevelChildThird((prev) => [...prev, { userAddress }]);
-        }
-      };
-      secondFunc();
+      //     setThirdLevelChildThird((prev) => [...prev, { userAddress }]);
+      //   }
+      // };
+      // secondFunc();
     }
-  }, [parentLevel, myPosition, thirdLeveLChildThird]);
+  }, [parentLevel, myPosition]);
   useEffect(() => {
     if (parentLevel?.[myPosition]?.data) {
       let BigToNumber = parseInt(parentLevel?.[myPosition]?.data);
@@ -272,19 +272,19 @@ const Page = ({ params }: any) => {
         setSecondLevelChild4(userAddress);
       };
       myFunc();
-      const secondFunc = async () => {
-        const { data } = await fetchId2(BigToNumber, 4);
+      // const secondFunc = async () => {
+      //   const { data } = await fetchId2(BigToNumber, 4);
 
-        for (let i = 1; i <= 4; i++) {
-          const myData = parseInt(data);
-          const userAddress = await fetchId(myData, i);
+      //   for (let i = 1; i <= 4; i++) {
+      //     const myData = parseInt(data);
+      //     const userAddress = await fetchId(myData, i);
 
-          setThirdLevelChildFourth((prev) => [...prev, { userAddress }]);
-        }
-      };
-      secondFunc();
+      //     setThirdLevelChildFourth((prev) => [...prev, { userAddress }]);
+      //   }
+      // };
+      // secondFunc();
     }
-  }, [parentLevel, myPosition, thirdLeveLChildFourth]);
+  }, [parentLevel, myPosition]);
 
   const nextNumber = Number(params.id) + 1 === 9 ? 1 : Number(params.id) + 1;
   const previousNumber =
@@ -320,8 +320,8 @@ const Page = ({ params }: any) => {
           </Link>
 
           <div className="z-10 mx-auto w-[70%] rounded-lg bg-[#9168bf] p-5 sm:w-[340px] xl:w-[440px]">
-            <div className="flex justify-between">
-              {parentLevel?.[1]?.userAddress !== undefined ? (
+            <div className="flex justify-center">
+              {/* {parentLevel?.[1]?.userAddress !== undefined ? (
                 <a className="ml-[-5px] flex h-[21px] w-[21px] cursor-pointer items-center justify-center rounded-full border bg-[#9168bf] text-white sm:h-[70px] sm:w-[70px] xl:h-[80px] xl:w-[80px]">
                   <UserId2
                     userAddress={parentLevel?.[myPosition]?.userAddress}
@@ -329,11 +329,10 @@ const Page = ({ params }: any) => {
                 </a>
               ) : (
                 <a className="ml-[-5px] mt-[16px] flex h-[21px] w-[21px] cursor-pointer items-center justify-center rounded-full border text-white sm:h-[70px] sm:w-[70px] xl:h-[80px] xl:w-[80px]"></a>
-              )}
-              <h1 className="text-white md:text-[25px]">{Number(params.id)}</h1>
-              <a href="#" className="font-bold text-white md:text-[25px]">
+              )} */}
+              <h1 className="text-white md:text-[25px]">
                 ID {UseFormatNumber(user?.[0])}
-              </a>
+              </h1>
             </div>
             <div className="mt-3 flex flex-col items-end">
               <h1 className="font-bold text-white md:text-[20px]">
@@ -356,12 +355,8 @@ const Page = ({ params }: any) => {
               {/* <div className=" h-[15px] w-2 border-l border-dashed border-purple-500  sm:h-[65px]"></div> */}
             </div>
             <div className="flex justify-between">
-              <button
-                onClick={backHandler}
-                className="rounded-full p-3 border h-14"
-              >
+              <button onClick={backHandler} className="">
                 {" "}
-                Prev
               </button>
               <div className="flex justify-center  sm:mt-[-10px] sm:justify-center">
                 {parentLevel?.[1]?.userAddress !== undefined ? (
@@ -390,12 +385,7 @@ const Page = ({ params }: any) => {
                   </div>
                 )}
               </div>
-              <button
-                onClick={nextHandler}
-                className="rounded-full p-3 border h-14"
-              >
-                Next
-              </button>
+              <button onClick={nextHandler} className=""></button>
             </div>
 
             <div className="flex justify-center  sm:justify-center ">
@@ -403,7 +393,8 @@ const Page = ({ params }: any) => {
                 {secondLeveLChild1 !== undefined ? (
                   <div className="flex flex-col items-center">
                     <a className="ml-[-5px] flex h-[21px] w-[21px] cursor-pointer items-center justify-center rounded-full border bg-purple-500 text-white sm:h-[50px] sm:w-[50px]">
-                      <UserId2 userAddress={secondLeveLChild1} />
+                      {/* <UserId2 userAddress={secondLeveLChild1} /> */}
+                      <UserId2 userAddress={parentLevel?.[1]?.userAddress} />
                     </a>
                     <div className="  flex justify-center gap-x-[2px] sm:gap-x-[20px]  ">
                       <div className="h-[20px] w-2 rotate-[50deg] transform border-l border-dashed  border-purple-500 sm:mt-[-5px] sm:h-[60px]"></div>
@@ -411,7 +402,7 @@ const Page = ({ params }: any) => {
                       <div className="ml-[-2px] mt-[-5px] h-[20px] w-2 rotate-[-30deg] transform  border-l border-dashed border-purple-500  sm:ml-[-3px] sm:mt-[-10px] sm:h-[60px]"></div>
                       <div className="ml-[-2px] mt-[-5px] h-[20px] w-2 rotate-[-50deg] transform  border-l border-dashed border-purple-500  sm:ml-[-3px] sm:mt-[-10px] sm:h-[60px]"></div>
                     </div>
-                    <div className="mt-[-10px] flex gap-x-2 sm:mt-[-12px] sm:gap-x-3">
+                    {/* <div className="mt-[-10px] flex gap-x-2 sm:mt-[-12px] sm:gap-x-3">
                       {thirdLeveLChildFirst?.slice(-1)[0]?.userAddress !==
                       undefined ? (
                         <a className="ml-[-5px] flex h-[21px] w-[21px] cursor-pointer items-center justify-center rounded-full border bg-purple-500 text-white sm:h-[40px] sm:w-[40px]">
@@ -460,6 +451,36 @@ const Page = ({ params }: any) => {
                       ) : (
                         <a className="ml-[-5px]  h-[21px] w-[21px] cursor-pointer rounded-full border sm:h-[40px] sm:w-[40px] "></a>
                       )}
+                    </div> */}
+                    <div className="mt-[-10px] flex gap-x-2 sm:mt-[-12px] sm:gap-x-3">
+                      {secondLeveLChild1 !== undefined ? (
+                        <a className="ml-[-5px] flex h-[21px] w-[21px] cursor-pointer items-center justify-center rounded-full border bg-purple-500 text-white sm:h-[40px] sm:w-[40px]">
+                          <UserId2 userAddress={secondLeveLChild1} />
+                        </a>
+                      ) : (
+                        <a className="ml-[-5px]  h-[21px] w-[21px] cursor-pointer rounded-full border sm:h-[40px] sm:w-[40px] "></a>
+                      )}
+                      {secondLeveLChild2 !== undefined ? (
+                        <a className="ml-[-5px] flex h-[21px] w-[21px] cursor-pointer items-center justify-center rounded-full border bg-purple-500 text-white sm:h-[40px] sm:w-[40px]">
+                          <UserId2 userAddress={secondLeveLChild2} />
+                        </a>
+                      ) : (
+                        <a className="ml-[-5px]  h-[21px] w-[21px] cursor-pointer rounded-full border sm:h-[40px] sm:w-[40px] "></a>
+                      )}
+                      {secondLeveLChild3 !== undefined ? (
+                        <a className="ml-[-5px] flex h-[21px] w-[21px] cursor-pointer items-center justify-center rounded-full border bg-purple-500 text-white sm:h-[40px] sm:w-[40px]">
+                          <UserId2 userAddress={secondLeveLChild3} />
+                        </a>
+                      ) : (
+                        <a className="ml-[-5px]  h-[21px] w-[21px] cursor-pointer rounded-full border sm:h-[40px] sm:w-[40px] "></a>
+                      )}
+                      {secondLeveLChild4 !== undefined ? (
+                        <a className="ml-[-5px] flex h-[21px] w-[21px] cursor-pointer items-center justify-center rounded-full border bg-purple-500 text-white sm:h-[40px] sm:w-[40px]">
+                          <UserId2 userAddress={secondLeveLChild4} />
+                        </a>
+                      ) : (
+                        <a className="ml-[-5px]  h-[21px] w-[21px] cursor-pointer rounded-full border sm:h-[40px] sm:w-[40px] "></a>
+                      )}
                     </div>
                   </div>
                 ) : (
@@ -471,42 +492,13 @@ const Page = ({ params }: any) => {
                       <div className="ml-[-2px] mt-[-5px] h-[20px] w-2 rotate-[-30deg] transform  border-l border-dashed border-purple-500  sm:ml-[-3px] sm:mt-[-10px] sm:h-[60px]"></div>
                       <div className="ml-[-2px] mt-[-5px] h-[20px] w-2 rotate-[-50deg] transform  border-l border-dashed border-purple-500  sm:ml-[-3px] sm:mt-[-10px] sm:h-[60px]"></div>
                     </div>
-                    {/* <div className="mt-[-10px] flex gap-x-2 sm:mt-[-12px] sm:gap-x-3">
-                      {parseInt(results?.[0]?.data) !== undefined ? (
-                        <a className="ml-[-5px] flex h-[21px] w-[21px] cursor-pointer items-center justify-center rounded-full border bg-purple-500 text-white sm:h-[40px] sm:w-[40px]">
-                          <UserId2 userAddress={parseInt(results?.[0]?.data)} />
-                        </a>
-                      ) : (
-                        <a className="ml-[-5px]  h-[21px] w-[21px] cursor-pointer rounded-full border sm:h-[40px] sm:w-[40px] "></a>
-                      )}
-                      {parseInt(results?.[0]?.data) !== undefined ? (
-                        <a className="ml-[-5px] flex h-[21px] w-[21px] cursor-pointer items-center justify-center rounded-full border bg-purple-500 text-white sm:h-[40px] sm:w-[40px]">
-                          <UserId2 userAddress={parseInt(results?.[0]?.data)} />
-                        </a>
-                      ) : (
-                        <a className="ml-[-5px]  h-[21px] w-[21px] cursor-pointer rounded-full border sm:h-[40px] sm:w-[40px] "></a>
-                      )}
-                      {parseInt(results?.[0]?.data) !== undefined ? (
-                        <a className="ml-[-5px] flex h-[21px] w-[21px] cursor-pointer items-center justify-center rounded-full border bg-purple-500 text-white sm:h-[40px] sm:w-[40px]">
-                          <UserId2 userAddress={parseInt(results?.[0]?.data)} />
-                        </a>
-                      ) : (
-                        <a className="ml-[-5px]  h-[21px] w-[21px] cursor-pointer rounded-full border sm:h-[40px] sm:w-[40px] "></a>
-                      )}
-                      {parseInt(results?.[0]?.data) !== undefined ? (
-                        <a className="ml-[-5px] flex h-[21px] w-[21px] cursor-pointer items-center justify-center rounded-full border bg-purple-500 text-white sm:h-[40px] sm:w-[40px]">
-                          <UserId2 userAddress={parseInt(results?.[0]?.data)} />
-                        </a>
-                      ) : (
-                        <a className="ml-[-5px]  h-[21px] w-[21px] cursor-pointer rounded-full border sm:h-[40px] sm:w-[40px] "></a>
-                      )}
-                    </div> */}
                   </div>
                 )}
                 {secondLeveLChild2 !== undefined ? (
                   <div className="flex flex-col items-center">
                     <a className="ml-[-5px] flex h-[21px] w-[21px] cursor-pointer items-center justify-center rounded-full border bg-purple-500 text-white sm:h-[50px] sm:w-[50px]">
-                      <UserId2 userAddress={secondLeveLChild2} />
+                      {/* <UserId2 userAddress={secondLeveLChild2} /> */}
+                      <UserId2 userAddress={parentLevel?.[2]?.userAddress} />
                     </a>
                     <div className="  flex justify-center gap-x-[2px] sm:gap-x-[20px]  ">
                       <div className="h-[20px] w-2 rotate-[50deg] transform border-l border-dashed  border-purple-500 sm:mt-[-5px] sm:h-[60px]"></div>
@@ -574,42 +566,13 @@ const Page = ({ params }: any) => {
                       <div className="ml-[-2px] mt-[-5px] h-[20px] w-2 rotate-[-30deg] transform  border-l border-dashed border-purple-500  sm:ml-[-3px] sm:mt-[-10px] sm:h-[60px]"></div>
                       <div className="ml-[-2px] mt-[-5px] h-[20px] w-2 rotate-[-50deg] transform  border-l border-dashed border-purple-500  sm:ml-[-3px] sm:mt-[-10px] sm:h-[60px]"></div>
                     </div>
-                    {/* <div className="mt-[-10px] flex gap-x-2 sm:mt-[-12px] sm:gap-x-3">
-                      {parseInt(results?.[0]?.data) !== undefined ? (
-                        <a className="ml-[-5px] flex h-[21px] w-[21px] cursor-pointer items-center justify-center rounded-full border bg-purple-500 text-white sm:h-[40px] sm:w-[40px]">
-                          <UserId2 userAddress={parseInt(results?.[0]?.data)} />
-                        </a>
-                      ) : (
-                        <a className="ml-[-5px]  h-[21px] w-[21px] cursor-pointer rounded-full border sm:h-[40px] sm:w-[40px] "></a>
-                      )}
-                      {parseInt(results?.[0]?.data) !== undefined ? (
-                        <a className="ml-[-5px] flex h-[21px] w-[21px] cursor-pointer items-center justify-center rounded-full border bg-purple-500 text-white sm:h-[40px] sm:w-[40px]">
-                          <UserId2 userAddress={parseInt(results?.[0]?.data)} />
-                        </a>
-                      ) : (
-                        <a className="ml-[-5px]  h-[21px] w-[21px] cursor-pointer rounded-full border sm:h-[40px] sm:w-[40px] "></a>
-                      )}
-                      {parseInt(results?.[0]?.data) !== undefined ? (
-                        <a className="ml-[-5px] flex h-[21px] w-[21px] cursor-pointer items-center justify-center rounded-full border bg-purple-500 text-white sm:h-[40px] sm:w-[40px]">
-                          <UserId2 userAddress={parseInt(results?.[0]?.data)} />
-                        </a>
-                      ) : (
-                        <a className="ml-[-5px]  h-[21px] w-[21px] cursor-pointer rounded-full border sm:h-[40px] sm:w-[40px] "></a>
-                      )}
-                      {parseInt(results?.[0]?.data) !== undefined ? (
-                        <a className="ml-[-5px] flex h-[21px] w-[21px] cursor-pointer items-center justify-center rounded-full border bg-purple-500 text-white sm:h-[40px] sm:w-[40px]">
-                          <UserId2 userAddress={parseInt(results?.[0]?.data)} />
-                        </a>
-                      ) : (
-                        <a className="ml-[-5px]  h-[21px] w-[21px] cursor-pointer rounded-full border sm:h-[40px] sm:w-[40px] "></a>
-                      )}
-                    </div> */}
                   </div>
                 )}
                 {secondLeveLChild3 !== undefined ? (
                   <div className="flex flex-col items-center">
                     <a className="ml-[-5px] flex h-[21px] w-[21px] cursor-pointer items-center justify-center rounded-full border bg-purple-500 text-white sm:h-[50px] sm:w-[50px]">
-                      <UserId2 userAddress={secondLeveLChild3} />
+                      {/* <UserId2 userAddress={secondLeveLChild3} /> */}
+                      <UserId2 userAddress={parentLevel?.[3]?.userAddress} />
                     </a>
                     <div className="  flex justify-center gap-x-[2px] sm:gap-x-[20px]  ">
                       <div className="h-[20px] w-2 rotate-[50deg] transform border-l border-dashed  border-purple-500 sm:mt-[-5px] sm:h-[60px]"></div>
@@ -677,42 +640,13 @@ const Page = ({ params }: any) => {
                       <div className="ml-[-2px] mt-[-5px] h-[20px] w-2 rotate-[-30deg] transform  border-l border-dashed border-purple-500  sm:ml-[-3px] sm:mt-[-10px] sm:h-[60px]"></div>
                       <div className="ml-[-2px] mt-[-5px] h-[20px] w-2 rotate-[-50deg] transform  border-l border-dashed border-purple-500  sm:ml-[-3px] sm:mt-[-10px] sm:h-[60px]"></div>
                     </div>
-                    {/* <div className="mt-[-10px] flex gap-x-2 sm:mt-[-12px] sm:gap-x-3">
-                      {parseInt(results?.[0]?.data) !== undefined ? (
-                        <a className="ml-[-5px] flex h-[21px] w-[21px] cursor-pointer items-center justify-center rounded-full border bg-purple-500 text-white sm:h-[40px] sm:w-[40px]">
-                          <UserId2 userAddress={parseInt(results?.[0]?.data)} />
-                        </a>
-                      ) : (
-                        <a className="ml-[-5px]  h-[21px] w-[21px] cursor-pointer rounded-full border sm:h-[40px] sm:w-[40px] "></a>
-                      )}
-                      {parseInt(results?.[0]?.data) !== undefined ? (
-                        <a className="ml-[-5px] flex h-[21px] w-[21px] cursor-pointer items-center justify-center rounded-full border bg-purple-500 text-white sm:h-[40px] sm:w-[40px]">
-                          <UserId2 userAddress={parseInt(results?.[0]?.data)} />
-                        </a>
-                      ) : (
-                        <a className="ml-[-5px]  h-[21px] w-[21px] cursor-pointer rounded-full border sm:h-[40px] sm:w-[40px] "></a>
-                      )}
-                      {parseInt(results?.[0]?.data) !== undefined ? (
-                        <a className="ml-[-5px] flex h-[21px] w-[21px] cursor-pointer items-center justify-center rounded-full border bg-purple-500 text-white sm:h-[40px] sm:w-[40px]">
-                          <UserId2 userAddress={parseInt(results?.[0]?.data)} />
-                        </a>
-                      ) : (
-                        <a className="ml-[-5px]  h-[21px] w-[21px] cursor-pointer rounded-full border sm:h-[40px] sm:w-[40px] "></a>
-                      )}
-                      {parseInt(results?.[0]?.data) !== undefined ? (
-                        <a className="ml-[-5px] flex h-[21px] w-[21px] cursor-pointer items-center justify-center rounded-full border bg-purple-500 text-white sm:h-[40px] sm:w-[40px]">
-                          <UserId2 userAddress={parseInt(results?.[0]?.data)} />
-                        </a>
-                      ) : (
-                        <a className="ml-[-5px]  h-[21px] w-[21px] cursor-pointer rounded-full border sm:h-[40px] sm:w-[40px] "></a>
-                      )}
-                    </div> */}
                   </div>
                 )}
                 {secondLeveLChild4 !== undefined ? (
                   <div className="flex flex-col items-center">
                     <a className="ml-[-5px] flex h-[21px] w-[21px] cursor-pointer items-center justify-center rounded-full border bg-purple-500 text-white sm:h-[50px] sm:w-[50px]">
-                      <UserId2 userAddress={secondLeveLChild4} />
+                      {/* <UserId2 userAddress={secondLeveLChild4} /> */}
+                      <UserId2 userAddress={parentLevel?.[4]?.userAddress} />
                     </a>
                     <div className="  flex justify-center gap-x-[2px] sm:gap-x-[20px]  ">
                       <div className="h-[20px] w-2 rotate-[50deg] transform border-l border-dashed  border-purple-500 sm:mt-[-5px] sm:h-[60px]"></div>
@@ -780,36 +714,6 @@ const Page = ({ params }: any) => {
                       <div className="ml-[-2px] mt-[-5px] h-[20px] w-2 rotate-[-30deg] transform  border-l border-dashed border-purple-500  sm:ml-[-3px] sm:mt-[-10px] sm:h-[60px]"></div>
                       <div className="ml-[-2px] mt-[-5px] h-[20px] w-2 rotate-[-50deg] transform  border-l border-dashed border-purple-500  sm:ml-[-3px] sm:mt-[-10px] sm:h-[60px]"></div>
                     </div>
-                    {/* <div className="mt-[-10px] flex gap-x-2 sm:mt-[-12px] sm:gap-x-3">
-                      {parseInt(results?.[0]?.data) !== undefined ? (
-                        <a className="ml-[-5px] flex h-[21px] w-[21px] cursor-pointer items-center justify-center rounded-full border bg-purple-500 text-white sm:h-[40px] sm:w-[40px]">
-                          <UserId2 userAddress={parseInt(results?.[0]?.data)} />
-                        </a>
-                      ) : (
-                        <a className="ml-[-5px]  h-[21px] w-[21px] cursor-pointer rounded-full border sm:h-[40px] sm:w-[40px] "></a>
-                      )}
-                      {parseInt(results?.[0]?.data) !== undefined ? (
-                        <a className="ml-[-5px] flex h-[21px] w-[21px] cursor-pointer items-center justify-center rounded-full border bg-purple-500 text-white sm:h-[40px] sm:w-[40px]">
-                          <UserId2 userAddress={parseInt(results?.[0]?.data)} />
-                        </a>
-                      ) : (
-                        <a className="ml-[-5px]  h-[21px] w-[21px] cursor-pointer rounded-full border sm:h-[40px] sm:w-[40px] "></a>
-                      )}
-                      {parseInt(results?.[0]?.data) !== undefined ? (
-                        <a className="ml-[-5px] flex h-[21px] w-[21px] cursor-pointer items-center justify-center rounded-full border bg-purple-500 text-white sm:h-[40px] sm:w-[40px]">
-                          <UserId2 userAddress={parseInt(results?.[0]?.data)} />
-                        </a>
-                      ) : (
-                        <a className="ml-[-5px]  h-[21px] w-[21px] cursor-pointer rounded-full border sm:h-[40px] sm:w-[40px] "></a>
-                      )}
-                      {parseInt(results?.[0]?.data) !== undefined ? (
-                        <a className="ml-[-5px] flex h-[21px] w-[21px] cursor-pointer items-center justify-center rounded-full border bg-purple-500 text-white sm:h-[40px] sm:w-[40px]">
-                          <UserId2 userAddress={parseInt(results?.[0]?.data)} />
-                        </a>
-                      ) : (
-                        <a className="ml-[-5px]  h-[21px] w-[21px] cursor-pointer rounded-full border sm:h-[40px] sm:w-[40px] "></a>
-                      )}
-                    </div> */}
                   </div>
                 )}
               </div>

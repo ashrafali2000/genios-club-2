@@ -91,7 +91,11 @@ const RefSecondLevelCircle = ({
   const [results2, setResults2] = useState<any[]>([]);
   const [results3, setResults3] = useState<any[]>([]);
   const [results4, setResults4] = useState<any[]>([]);
-
+  // console.log("position----2------>", position);
+  // console.log("position0----2------>", parseInt(position[0]?.data));
+  // console.log("position1----2------>", parseInt(position[1]?.data));
+  // console.log("position2----2------>", parseInt(position[2]?.data));
+  // console.log("position3-----2----->", parseInt(position[3]?.data));
   const { contract } = useContract(GeniosClubAddress2);
   useEffect(() => {
     const fetchData = async () => {
@@ -145,12 +149,11 @@ const RefSecondLevelCircle = ({
 
     fetchData();
   }, [MatrixLevel]);
-  // console.log("mainResult---------->", mainResult);
-  // console.log("mainResult1---------->", parseInt(mainResult[0]?.data));
-  // console.log("mainResult2---------->", parseInt(mainResult[1]?.data));
-  // console.log("mainResult3---------->", parseInt(mainResult[2]?.data));
-  // console.log("mainResult4---------->", parseInt(mainResult[3]?.data));
-
+  console.log("mainResult----2------>", mainResult);
+  console.log("mainResult1---2------->", parseInt(mainResult[0]?.data));
+  console.log("mainResult2---2------->", parseInt(mainResult[1]?.data));
+  console.log("mainResult3---2------->", parseInt(mainResult[2]?.data));
+  console.log("mainResult4---2------->", parseInt(mainResult[3]?.data));
   useEffect(() => {
     const fetchData = async () => {
       if (!contract) return;
@@ -386,7 +389,7 @@ const RefSecondLevelCircle = ({
                       RefFirstLevel={mainResult[0].data}
                       userAddress={mainResult[0].userAddress}
                     />
-                    <div className="  flex justify-center gap-x-[2px] mt-[-4px]">
+                    <div className="  flex justify-center gap-x-[2px]">
                       <div className=" h-[20px] w-2 rotate-[50deg] transform border-l border-dashed border-purple-500"></div>
                       <div className="  h-[15px] w-2 border-l border-dashed border-purple-500"></div>
                       <div className="ml-[-2px] mt-[-5px] h-[20px] w-2 rotate-[-40deg] transform border-l border-dashed border-purple-500"></div>
@@ -420,10 +423,10 @@ const RefSecondLevelCircle = ({
                     </div>
                   </div>
                 ) : (
-                  <div className="flex flex-col items-center">
-                    <a className="ml-[-5px] h-[21px] w-[21px] cursor-pointer rounded-full border"></a>
-                    <div className="  flex justify-center gap-x-[2px]">
-                      <div className="h-[20px] w-2 rotate-[50deg] transform order-l border-dashed border-purple-500"></div>
+                  <div className="flex flex-col items-center  ">
+                    <a className="ml-[-5px]  h-[21px] w-[21px] cursor-pointer rounded-full  border "></a>
+                    <div className="  flex justify-center gap-x-[2px]  ">
+                      <div className="h-[20px] w-2 rotate-[50deg] transform   border-l border-dashed border-purple-500"></div>
                       <div className="  h-[15px] w-2   border-l border-dashed border-purple-500"></div>
                       <div className="ml-[-2px] mt-[-5px] h-[20px] w-2 rotate-[-40deg] transform border-l border-dashed border-purple-500"></div>
                       <div className="ml-[-2px] mt-[-5px] h-[20px] w-2 rotate-[-60deg] transform border-l border-dashed border-purple-500"></div>
@@ -484,29 +487,29 @@ const RefSecondLevelCircle = ({
               </>
             )}
           </div>
-          <div className="flex justify-between gap-10  xl:gap-20 -ml-[60px] xl:-ml-[50px]">
-            <div className="ml-5">
+          <div className="flex justify-between gap-10 mt-[5px] xl:gap-20 -ml-[60px] xl:-ml-[50px]">
+            <div className="lg:ml-6 xl:ml-3">
               <RefFirstLevelCircle2
                 activeLevel={activeLevel}
                 address={results1.slice(0, 4)}
                 position2={results1.slice(0, 4)}
               />
             </div>
-            <div className=" -ml-2 lg:-ml-5">
+            <div className=" -ml-2">
               <RefFirstLevelCircle2
                 activeLevel={activeLevel}
                 address={results2.slice(0, 4)}
                 position2={results2.slice(0, 4)}
               />
             </div>
-            <div className=" -ml-3">
+            <div className="lg:-ml-1 xl:-ml-3">
               <RefFirstLevelCircle2
                 activeLevel={activeLevel}
                 address={results3.slice(0, 4)}
                 position2={results3.slice(0, 4)}
               />
             </div>
-            <div className="-ml-4 lg:-ml-3">
+            <div className="ml-1 xl:-ml-3">
               <RefFirstLevelCircle2
                 activeLevel={activeLevel}
                 address={results4.slice(0, 4)}

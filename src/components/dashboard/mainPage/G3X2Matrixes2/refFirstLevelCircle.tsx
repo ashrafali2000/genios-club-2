@@ -143,11 +143,11 @@ const RefFirstLevelCircle = ({
 
     fetchData();
   }, [MatrixLevel]);
-  console.log("position---------->", position);
-  console.log("position0---------->", parseInt(position[0]?.data));
-  console.log("position1---------->", parseInt(position[1]?.data));
-  console.log("position2---------->", parseInt(position[2]?.data));
-  console.log("position3---------->", parseInt(position[3]?.data));
+  console.log("position----1------>", position);
+  console.log("position0----1------>", parseInt(position[0]?.data));
+  console.log("position1----1------>", parseInt(position[1]?.data));
+  console.log("position2----1------>", parseInt(position[2]?.data));
+  console.log("position3-----1----->", parseInt(position[3]?.data));
   useEffect(() => {
     const fetchData = async () => {
       if (!contract) return;
@@ -272,12 +272,12 @@ const RefFirstLevelCircle = ({
             {RefFirstLevel && (
               <>
                 {parseInt(position[0].data) > 0 ? (
-                  <div className="flex flex-col items-center  ">
+                  <div className="flex flex-col items-center">
                     <PopOver2
                       RefFirstLevel={position[0].data}
                       userAddress={position[0].userAddress}
                     />
-                    <div className="  flex justify-center gap-x-[2px] mt-[-4px]">
+                    <div className="flex justify-center gap-x-[2px]">
                       <div className=" h-[20px] w-2 rotate-[50deg] transform border-l border-dashed border-purple-500"></div>
                       <div className="  h-[15px] w-2 border-l border-dashed border-purple-500"></div>
                       <div className="ml-[-2px] mt-[-5px] h-[20px] w-2 rotate-[-40deg] transform border-l border-dashed border-purple-500"></div>
@@ -297,13 +297,13 @@ const RefFirstLevelCircle = ({
                 )}
 
                 {parseInt(position[1].data) > 0 ? (
-                  <div className="flex flex-col items-center  ">
+                  <div className="flex flex-col items-center">
                     <PopOver2
                       RefFirstLevel={position[1].data}
                       userAddress={position[1].userAddress}
                     />
 
-                    <div className="  flex justify-center gap-x-[2px]  ">
+                    <div className="  flex justify-center gap-x-[2px]">
                       <div className="h-[20px] w-2 rotate-[50deg] transform   border-l border-dashed border-purple-500"></div>
                       <div className="  h-[15px] w-2   border-l border-dashed border-purple-500"></div>
                       <div className="ml-[-2px] mt-[-5px] h-[20px] w-2 rotate-[-40deg] transform border-l border-dashed border-purple-500"></div>
@@ -323,13 +323,13 @@ const RefFirstLevelCircle = ({
                 )}
 
                 {parseInt(position[2]?.data) > 0 ? (
-                  <div className="flex flex-col items-center  ">
+                  <div className="flex flex-col items-center ">
                     <PopOver2
                       RefFirstLevel={position[2].data}
                       userAddress={position[2].userAddress}
                     />
 
-                    <div className="  flex justify-center gap-x-[2px]  ">
+                    <div className="  flex justify-center gap-x-[2px] ">
                       <div className="h-[20px] w-2 rotate-[50deg] transform   border-l border-dashed border-purple-500"></div>
                       <div className="  h-[15px] w-2   border-l border-dashed border-purple-500"></div>
                       <div className="ml-[-2px] mt-[-5px] h-[20px] w-2 rotate-[-40deg] transform border-l border-dashed border-purple-500"></div>
@@ -337,7 +337,7 @@ const RefFirstLevelCircle = ({
                     </div>
                   </div>
                 ) : (
-                  <div className="flex flex-col items-center  ">
+                  <div className="flex flex-col items-center">
                     <a className="ml-[-5px]  h-[21px] w-[21px] cursor-pointer  rounded-full border"></a>
                     <div className="  flex justify-center gap-x-[2px]  ">
                       <div className="h-[20px] w-2 rotate-[50deg] transform   border-l border-dashed border-purple-500"></div>
@@ -348,13 +348,13 @@ const RefFirstLevelCircle = ({
                   </div>
                 )}
                 {parseInt(position[3]?.data) > 0 ? (
-                  <div className="flex flex-col items-center  ">
+                  <div className="flex flex-col items-center">
                     <PopOver2
                       RefFirstLevel={position[3].data}
                       userAddress={position[3].userAddress}
                     />
 
-                    <div className="  flex justify-center gap-x-[2px]  ">
+                    <div className="  flex justify-center gap-x-[2px] ">
                       <div className="h-[20px] w-2 rotate-[50deg] transform   border-l border-dashed border-purple-500"></div>
                       <div className="  h-[15px] w-2   border-l border-dashed border-purple-500"></div>
                       <div className="ml-[-2px] mt-[-5px] h-[20px] w-2 rotate-[-40deg] transform border-l border-dashed border-purple-500"></div>
@@ -362,7 +362,7 @@ const RefFirstLevelCircle = ({
                     </div>
                   </div>
                 ) : (
-                  <div className="flex flex-col items-center  ">
+                  <div className="flex flex-col items-center ">
                     <a className="ml-[-5px]  h-[21px] w-[21px] cursor-pointer  rounded-full border"></a>
                     <div className="  flex justify-center gap-x-[2px]  ">
                       <div className="h-[20px] w-2 rotate-[50deg] transform   border-l border-dashed border-purple-500"></div>
@@ -378,29 +378,29 @@ const RefFirstLevelCircle = ({
               </>
             )}
           </div>
-          <div className="flex justify-between gap-10  xl:gap-20 -ml-[60px] xl:-ml-[50px]">
-            <div className="ml-5">
+          <div className="flex justify-between gap-10 mt-[3px] xl:gap-20 -ml-[60px] xl:-ml-[50px]">
+            <div className="lg:ml-8 xl:ml-4">
               <RefFirstLevelCircle2
                 activeLevel={activeLevel}
                 address={[address1, address2, address3, address4]}
                 position2={results1.slice(0, 4)}
               />
             </div>
-            <div className="-ml-2 lg:-ml-5">
+            <div className="">
               <RefFirstLevelCircle2
                 activeLevel={activeLevel}
                 address={[address1, address2, address3, address4]}
                 position2={results2.slice(0, 4)}
               />
             </div>
-            <div className="-ml-3">
+            <div className="lg:ml-2 xl:ml-0">
               <RefFirstLevelCircle2
                 activeLevel={activeLevel}
                 address={[address1, address2, address3, address4]}
                 position2={results3.slice(0, 4)}
               />
             </div>
-            <div className="-ml-4 lg:-ml-3">
+            <div className="lg:ml-2 xl:-ml-1">
               <RefFirstLevelCircle2
                 activeLevel={activeLevel}
                 address={[address1, address2, address3, address4]}
@@ -572,7 +572,7 @@ const RefFirstLevelCircle2 = ({
   console.log("position2-----myTest@------>", position2);
   return (
     <>
-      <div className="ml-[6px] mt-[-6px] flex gap-x-4">
+      <div className="ml-[6px] mt-[-6px] flex gap-x-3">
         <div className="flex flex-col gap-3">
           {position2[0]?.data !== 0 && parseInt(position2[0]?.data) > 0 ? (
             <div className="ml-[-6px] flex flex-col items-center">
