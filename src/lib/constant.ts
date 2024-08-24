@@ -11,7 +11,7 @@ export const PoolAddress = "0x456c66b4ea2246166d81772bC9Cc3e9F1D28ee06";
 // Mainnet
 export const GeniosClubAddress = "0x18642729d5770b18c108D0B991903e857f04497E";
 // MLM new
-export const GeniosClubAddress2 = "0xA9160c2a32eB650398d3Bde8d9E56059B82AE211";
+export const GeniosClubAddress2 = "0xaF7AC4529E85b54E898381d130986bA3cd64980E";
 
 export const MTKAbi = [
   {
