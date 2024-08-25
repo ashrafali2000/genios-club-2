@@ -187,7 +187,8 @@ const Page = ({ params }: any) => {
       const data = await contract1?.call("postionToId", [
         address,
         cycleNo,
-        +params.id,
+        // +params.id,
+        2,
         index,
       ]);
       const userAddress = await contract1?.call("IdToAddress", [
