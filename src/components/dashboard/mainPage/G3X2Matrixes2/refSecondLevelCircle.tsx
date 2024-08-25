@@ -113,6 +113,7 @@ const RefSecondLevelCircle = ({
             address,
             cycleNo,
             +MatrixLevel,
+            +MatrixLevel,
             index,
           ]);
           const userAddress = await contract.call("IdToAddress", [
@@ -166,8 +167,8 @@ const RefSecondLevelCircle = ({
         try {
           let data = await contract.call("postionToId", [
             address,
-            cycleNo,
             +MatrixLevel,
+            cycleNo,
             index,
           ]);
           const userAddress = await contract.call("IdToAddress", [
@@ -221,8 +222,8 @@ const RefSecondLevelCircle = ({
         try {
           let data = await contract.call("postionToId", [
             address,
-            cycleNo,
             +MatrixLevel,
+            cycleNo,
             index,
           ]);
           const userAddress = await contract.call("IdToAddress", [
@@ -278,8 +279,8 @@ const RefSecondLevelCircle = ({
         try {
           const data = await contract.call("postionToId", [
             address,
-            2,
             +MatrixLevel,
+            cycleNo,
             index,
           ]);
           const userAddress = await contract.call("IdToAddress", [
