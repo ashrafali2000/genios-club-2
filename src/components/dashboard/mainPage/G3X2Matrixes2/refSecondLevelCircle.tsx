@@ -334,8 +334,8 @@ const RefSecondLevelCircle = ({
         try {
           const data = await contract.call("postionToId", [
             address,
-            cycleNo,
             +MatrixLevel,
+            cycleNo,
             index,
           ]);
           const userAddress = await contract.call("IdToAddress", [
