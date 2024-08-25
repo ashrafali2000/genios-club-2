@@ -231,8 +231,10 @@ const RefSecondLevelCircle = ({
           const userAddress = await contract.call("IdToAddress", [
             parseInt(data),
           ]);
-
-          return { index, data, userAddress };
+           if(data != 0 ){
+              return { index, data, userAddress };
+          }
+          return { index, userAddress };
         } catch (error) {
           return { index, error };
         }
@@ -288,7 +290,10 @@ const RefSecondLevelCircle = ({
           const userAddress = await contract.call("IdToAddress", [
             parseInt(data),
           ]);
-          return { index, data, userAddress };
+           if(data != 0 ){
+              return { index, data, userAddress };
+          }
+          return { index,  userAddress };
         } catch (error) {
           return { index, error };
         }
