@@ -123,7 +123,8 @@ const RefFirstLevelCircle = ({
         if (parseInt(position[1]?.data) > 0) {
           promises.push(fetchPositionData(i, parseInt(position[1]?.data)));
         } else {
-          let data = 0;
+          // let data = 0;
+          let data ;
           return { data, userAddress };
         }
       }
