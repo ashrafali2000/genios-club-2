@@ -74,7 +74,7 @@ const RefFirstLevelCircle = ({
       const tempErrors: any = [];
 
       results.forEach((result) => {
-        if (result.data) {
+        if (result.data > 0 ) {
           tempResults.push(result);
         } else if (result.error) {
           tempErrors.push(result);
@@ -108,12 +108,7 @@ const RefFirstLevelCircle = ({
           const userAddress = await contract.call("IdToAddress", [
             parseInt(data),
           ]);
-           if(data != 0 ){
-              return { index, data, userAddress };
-          }else if(data == 0){
-              return { index, Null, userAddress };
-             
-         }
+          return { index, data, userAddress }; 
           // return { index, userAddress };
         } catch (error) {
           return { index, error };
