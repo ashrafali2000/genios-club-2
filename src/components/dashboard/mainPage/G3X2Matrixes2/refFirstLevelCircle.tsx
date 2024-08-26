@@ -63,7 +63,7 @@ const RefFirstLevelCircle = ({
         if (parseInt(position[0]?.data) > 0) {
           promises.push(fetchPositionData(i, parseInt(position[0]?.data)));
         } else {
-          let data = 0;
+          // let data = 0;
           return { data, userAddress };
         }
       }
@@ -122,7 +122,7 @@ const RefFirstLevelCircle = ({
           promises.push(fetchPositionData(i, parseInt(position[1]?.data)));
         } else {
           // let data = 0;
-          let data ;
+          // let data ;
           return { data, userAddress };
         }
       }
@@ -183,7 +183,7 @@ const RefFirstLevelCircle = ({
         if (parseInt(position[2]?.data) > 0) {
           promises.push(fetchPositionData(i, parseInt(position[2]?.data)));
         } else {
-          let data = 0;
+          // let data = 0;
           return { data, userAddress };
         }
       }
@@ -241,7 +241,7 @@ const RefFirstLevelCircle = ({
         if (parseInt(position[3]?.data) > 0) {
           promises.push(fetchPositionData(i, parseInt(position[3]?.data)));
         } else {
-          let data = 0;
+          // let data = 0;
           return { data, userAddress };
         }
       }
