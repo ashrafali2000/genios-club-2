@@ -109,12 +109,18 @@ const RefSecondLevelCircle = ({
         ]);
 
         try {
-          let data = await contract.call("postionToId", [
-            address,
-            +MatrixLevel,
-            cycleNo,
-            index,
+          let data = null;
+          let newId = await contract.call("AddressToId", [
+            address
           ]);
+          if(newId != 0){
+            data = await contract.call("postionToId", [
+              address,
+              +MatrixLevel,
+              cycleNo,
+              index,
+            ]);
+          }  
           const userAddress = await contract.call("IdToAddress", [
             parseInt(data),
           ]);
@@ -164,12 +170,24 @@ const RefSecondLevelCircle = ({
           Number(MatrixLevel),
         ]);
         try {
-          let data = await contract.call("postionToId", [
-            address,
-            +MatrixLevel,
-            cycleNo,
-            index,
+          let data = null;
+          let newId = await contract.call("AddressToId", [
+            address
           ]);
+          if(newId != 0){
+            data = await contract.call("postionToId", [
+              address,
+              +MatrixLevel,
+              cycleNo,
+              index,
+            ]);
+          }  
+          // let data = await contract.call("postionToId", [
+          //   address,
+          //   +MatrixLevel,
+          //   cycleNo,
+          //   index,
+          // ]);
           const userAddress = await contract.call("IdToAddress", [
             parseInt(data),
           ]);
@@ -222,12 +240,24 @@ const RefSecondLevelCircle = ({
         ]);
 
         try {
-          let data = await contract.call("postionToId", [
-            address,
-            +MatrixLevel,
-            cycleNo,
-            index,
+          let data = null;
+          let newId = await contract.call("AddressToId", [
+            address
           ]);
+          if(newId != 0){
+            data = await contract.call("postionToId", [
+              address,
+              +MatrixLevel,
+              cycleNo,
+              index,
+            ]);
+          }  
+          // let data = await contract.call("postionToId", [
+          //   address,
+          //   +MatrixLevel,
+          //   cycleNo,
+          //   index,
+          // ]);
           const userAddress = await contract.call("IdToAddress", [
             parseInt(data),
           ]);
@@ -281,12 +311,24 @@ const RefSecondLevelCircle = ({
         ]);
         // console.log("cycleNo----------> ", cycleNo);
         try {
-          const data = await contract.call("postionToId", [
-            address,
-            +MatrixLevel,
-            cycleNo,
-            index,
+          let data = null;
+          let newId = await contract.call("AddressToId", [
+            address
           ]);
+          if(newId != 0){
+            data = await contract.call("postionToId", [
+              address,
+              +MatrixLevel,
+              cycleNo,
+              index,
+            ]);
+          }  
+          // const data = await contract.call("postionToId", [
+          //   address,
+          //   +MatrixLevel,
+          //   cycleNo,
+          //   index,
+          // ]);
           const userAddress = await contract.call("IdToAddress", [
             parseInt(data),
           ]);
