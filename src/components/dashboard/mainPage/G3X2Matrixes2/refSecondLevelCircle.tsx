@@ -113,7 +113,7 @@ const RefSecondLevelCircle = ({
           let newId = await contract.call("AddressToId", [
             address
           ]);
-          if(newId != 0){
+          if(newId > 0){
             data = await contract.call("postionToId", [
               address,
               +MatrixLevel,
@@ -174,7 +174,7 @@ const RefSecondLevelCircle = ({
           let newId = await contract.call("AddressToId", [
             address
           ]);
-          if(newId != 0){
+          if(newId > 0){
             data = await contract.call("postionToId", [
               address,
               +MatrixLevel,
@@ -191,7 +191,7 @@ const RefSecondLevelCircle = ({
           const userAddress = await contract.call("IdToAddress", [
             parseInt(data),
           ]);
-           if(data != 0 ){
+           if(data > 0 ){
               return { index, data, userAddress };
           }
           return { index, userAddress };
@@ -244,7 +244,7 @@ const RefSecondLevelCircle = ({
           let newId = await contract.call("AddressToId", [
             address
           ]);
-          if(newId != 0){
+          if(newId > 0){
             data = await contract.call("postionToId", [
               address,
               +MatrixLevel,
@@ -261,7 +261,7 @@ const RefSecondLevelCircle = ({
           const userAddress = await contract.call("IdToAddress", [
             parseInt(data),
           ]);
-           if(data != 0 ){
+           if(data > 0 ){
               return { index, data, userAddress };
           }
           return { index, userAddress };
@@ -315,7 +315,7 @@ const RefSecondLevelCircle = ({
           let newId = await contract.call("AddressToId", [
             address
           ]);
-          if(newId != 0){
+          if(newId > 0){
             data = await contract.call("postionToId", [
               address,
               +MatrixLevel,
@@ -332,7 +332,7 @@ const RefSecondLevelCircle = ({
           const userAddress = await contract.call("IdToAddress", [
             parseInt(data),
           ]);
-           if(data != 0 ){
+           if(data > 0 ){
               return { index, data, userAddress };
           }
           return { index,  userAddress };
