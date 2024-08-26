@@ -114,7 +114,7 @@ const RefFirstLevelCircle = ({
               return { index, Null, userAddress };
              
          }
-          return { index, userAddress };
+          // return { index, userAddress };
         } catch (error) {
           return { index, error };
         }
