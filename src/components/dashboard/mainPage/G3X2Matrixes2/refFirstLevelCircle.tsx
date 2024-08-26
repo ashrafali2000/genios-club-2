@@ -133,7 +133,7 @@ const RefFirstLevelCircle = ({
       const tempErrors: any = [];
 
       results.forEach((result) => {
-        if (result.data) {
+        if (result.data > 0 ) {
           tempResults.push(result);
         } else if (result.error) {
           tempErrors.push(result);
@@ -194,7 +194,7 @@ const RefFirstLevelCircle = ({
       const tempErrors: any = [];
 
       results.forEach((result) => {
-        if (result.data) {
+        if (result.data > 0 ) {
           tempResults.push(result);
         } else if (result.error) {
           tempErrors.push(result);
@@ -252,7 +252,7 @@ const RefFirstLevelCircle = ({
       const tempErrors: any = [];
 
       results.forEach((result) => {
-        if (result.data) {
+        if (result.data > 0 ) {
           tempResults.push(result);
         } else if (result.error) {
           tempErrors.push(result);
