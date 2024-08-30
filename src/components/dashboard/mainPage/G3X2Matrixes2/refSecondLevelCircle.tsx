@@ -110,17 +110,15 @@ const RefSecondLevelCircle = ({
 
         try {
           let data = null;
-          let newId = await contract.call("AddressToId", [
-            address
-          ]);
-          if(newId > 0){
+          let newId = await contract.call("AddressToId", [address]);
+          if (newId > 0) {
             data = await contract.call("postionToId", [
               address,
               +MatrixLevel,
               cycleNo,
-              index
+              index,
             ]);
-          }  
+          }
           const userAddress = await contract.call("IdToAddress", [
             parseInt(data),
           ]);
@@ -171,17 +169,15 @@ const RefSecondLevelCircle = ({
         ]);
         try {
           let data = null;
-          let newId = await contract.call("AddressToId", [
-            address
-          ]);
-          if(newId > 0){
+          let newId = await contract.call("AddressToId", [address]);
+          if (newId > 0) {
             data = await contract.call("postionToId", [
               address,
               +MatrixLevel,
               cycleNo,
-              index
+              index,
             ]);
-          }  
+          }
           // let data = await contract.call("postionToId", [
           //   address,
           //   +MatrixLevel,
@@ -191,8 +187,8 @@ const RefSecondLevelCircle = ({
           const userAddress = await contract.call("IdToAddress", [
             parseInt(data),
           ]);
-           if(data > 0 ){
-              return { index, data, userAddress };
+          if (data > 0) {
+            return { index, data, userAddress };
           }
           return { index, userAddress };
           // return { index, data, userAddress };
@@ -202,7 +198,13 @@ const RefSecondLevelCircle = ({
       };
       const promises = [];
       for (let i = 1; i <= 4; i++) {
-        promises.push(fetchPositionData(i, 2));
+        // promises.push(fetchPositionData(i, 2));
+        if (parseInt(position[0]?.data) > 0) {
+          promises.push(fetchPositionData(i, parseInt(position[0]?.data)));
+        } else {
+          let data = 0;
+          return { data, userAddress };
+        }
       }
 
       const results = await Promise.all(promises);
@@ -241,17 +243,15 @@ const RefSecondLevelCircle = ({
 
         try {
           let data = null;
-          let newId = await contract.call("AddressToId", [
-            address
-          ]);
-          if(newId > 0){
+          let newId = await contract.call("AddressToId", [address]);
+          if (newId > 0) {
             data = await contract.call("postionToId", [
               address,
               +MatrixLevel,
               cycleNo,
-              index
+              index,
             ]);
-          }  
+          }
           // let data = await contract.call("postionToId", [
           //   address,
           //   +MatrixLevel,
@@ -261,8 +261,8 @@ const RefSecondLevelCircle = ({
           const userAddress = await contract.call("IdToAddress", [
             parseInt(data),
           ]);
-           if(data > 0 ){
-              return { index, data, userAddress };
+          if (data > 0) {
+            return { index, data, userAddress };
           }
           return { index, userAddress };
         } catch (error) {
@@ -272,12 +272,18 @@ const RefSecondLevelCircle = ({
 
       const promises = [];
       for (let i = 1; i <= 4; i++) {
-        promises.push(
-          fetchPositionData(
-            i,
-            parseInt(mainResult[1]?.data) ? parseInt(mainResult[1]?.data) : 0
-          )
-        );
+        // promises.push(
+        //   fetchPositionData(
+        //     i,
+        //     parseInt(mainResult[1]?.data) ? parseInt(mainResult[1]?.data) : 0
+        //   )
+        // );
+        if (parseInt(position[1]?.data) > 0) {
+          promises.push(fetchPositionData(i, parseInt(position[1]?.data)));
+        } else {
+          let data = 0;
+          return { data, userAddress };
+        }
       }
 
       const results = await Promise.all(promises);
@@ -312,17 +318,15 @@ const RefSecondLevelCircle = ({
         // console.log("cycleNo----------> ", cycleNo);
         try {
           let data = null;
-          let newId = await contract.call("AddressToId", [
-            address
-          ]);
-          if(newId > 0){
+          let newId = await contract.call("AddressToId", [address]);
+          if (newId > 0) {
             data = await contract.call("postionToId", [
               address,
               +MatrixLevel,
               cycleNo,
-              index
+              index,
             ]);
-          }  
+          }
           // const data = await contract.call("postionToId", [
           //   address,
           //   +MatrixLevel,
@@ -332,10 +336,10 @@ const RefSecondLevelCircle = ({
           const userAddress = await contract.call("IdToAddress", [
             parseInt(data),
           ]);
-           if(data > 0 ){
-              return { index, data, userAddress };
+          if (data > 0) {
+            return { index, data, userAddress };
           }
-          return { index,  userAddress };
+          return { index, userAddress };
         } catch (error) {
           return { index, error };
         }
@@ -343,12 +347,18 @@ const RefSecondLevelCircle = ({
 
       const promises = [];
       for (let i = 1; i <= 4; i++) {
-        promises.push(
-          fetchPositionData(
-            i,
-            parseInt(mainResult[2]?.data) ? parseInt(mainResult[2]?.data) : 0
-          )
-        );
+        // promises.push(
+        //   fetchPositionData(
+        //     i,
+        //     parseInt(mainResult[2]?.data) ? parseInt(mainResult[2]?.data) : 0
+        //   )
+        // );
+        if (parseInt(position[2]?.data) > 0) {
+          promises.push(fetchPositionData(i, parseInt(position[2]?.data)));
+        } else {
+          let data = 0;
+          return { data, userAddress };
+        }
       }
 
       const results = await Promise.all(promises);
@@ -386,7 +396,7 @@ const RefSecondLevelCircle = ({
             address,
             +MatrixLevel,
             cycleNo,
-            index
+            index,
           ]);
           const userAddress = await contract.call("IdToAddress", [
             parseInt(data),
@@ -399,12 +409,18 @@ const RefSecondLevelCircle = ({
 
       const promises = [];
       for (let i = 1; i <= 4; i++) {
-        promises.push(
-          fetchPositionData(
-            i,
-            parseInt(mainResult[3]?.data) ? parseInt(mainResult[3]?.data) : 0
-          )
-        );
+        // promises.push(
+        //   fetchPositionData(
+        //     i,
+        //     parseInt(mainResult[3]?.data) ? parseInt(mainResult[3]?.data) : 0
+        //   )
+        // );
+        if (parseInt(position[3]?.data) > 0) {
+          promises.push(fetchPositionData(i, parseInt(position[3]?.data)));
+        } else {
+          let data = 0;
+          return { data, userAddress };
+        }
       }
 
       const results = await Promise.all(promises);
@@ -433,11 +449,11 @@ const RefSecondLevelCircle = ({
           <div className="flex justify-between flex-wrap md:flex-nowrap">
             {RefFirstLevel && (
               <>
-                {parseInt(mainResult[0]?.data) > 0 ? (
+                {parseInt(position[0]?.data) > 0 ? (
                   <div className="flex flex-col items-center  ">
                     <PopOver2
-                      RefFirstLevel={mainResult[0].data}
-                      userAddress={mainResult[0].userAddress}
+                      RefFirstLevel={position[0].data}
+                      userAddress={position[0].userAddress}
                     />
                     <div className="  flex justify-center gap-x-[2px]">
                       <div className=" h-[20px] w-2 rotate-[50deg] transform border-l border-dashed border-purple-500"></div>
@@ -458,11 +474,11 @@ const RefSecondLevelCircle = ({
                   </div>
                 )}
 
-                {parseInt(mainResult[1]?.data) > 0 ? (
+                {parseInt(position[1]?.data) > 0 ? (
                   <div className="flex flex-col items-center  ">
                     <PopOver2
-                      RefFirstLevel={mainResult[1].data}
-                      userAddress={mainResult[1].userAddress}
+                      RefFirstLevel={position[1].data}
+                      userAddress={position[1].userAddress}
                     />
 
                     <div className="  flex justify-center gap-x-[2px]  ">
@@ -484,11 +500,11 @@ const RefSecondLevelCircle = ({
                   </div>
                 )}
 
-                {parseInt(mainResult[2]?.data) > 0 ? (
+                {parseInt(position[2]?.data) > 0 ? (
                   <div className="flex flex-col items-center  ">
                     <PopOver2
-                      RefFirstLevel={mainResult[2].data}
-                      userAddress={mainResult[2].userAddress}
+                      RefFirstLevel={position[2].data}
+                      userAddress={position[2].userAddress}
                     />
 
                     <div className="  flex justify-center gap-x-[2px]  ">
@@ -509,11 +525,11 @@ const RefSecondLevelCircle = ({
                     </div>
                   </div>
                 )}
-                {parseInt(mainResult[3]?.data) > 0 ? (
+                {parseInt(position[3]?.data) > 0 ? (
                   <div className="flex flex-col items-center  ">
                     <PopOver2
-                      RefFirstLevel={mainResult[3].data}
-                      userAddress={mainResult[3].userAddress}
+                      RefFirstLevel={position[3].data}
+                      userAddress={position[3].userAddress}
                     />
 
                     <div className="  flex justify-center gap-x-[2px]  ">

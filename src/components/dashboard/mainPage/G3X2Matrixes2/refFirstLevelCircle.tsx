@@ -63,7 +63,7 @@ const RefFirstLevelCircle = ({
         if (parseInt(position[0]?.data) > 0) {
           promises.push(fetchPositionData(i, parseInt(position[0]?.data)));
         } else {
-          // let data = 0;
+          let data = 0;
           return { data, userAddress };
         }
       }
@@ -74,7 +74,7 @@ const RefFirstLevelCircle = ({
       const tempErrors: any = [];
 
       results.forEach((result) => {
-        if (result.data > 0 ) {
+        if (result.data > 0) {
           tempResults.push(result);
         } else if (result.error) {
           tempErrors.push(result);
@@ -86,7 +86,7 @@ const RefFirstLevelCircle = ({
 
     fetchData();
   }, [MatrixLevel]);
-  console.log("results1---------mytest0101-----<", results1);
+  // console.log("results1---------mytest0101-----<", results1);
   useEffect(() => {
     const fetchData = async () => {
       if (!contract) return;
@@ -108,7 +108,7 @@ const RefFirstLevelCircle = ({
           const userAddress = await contract.call("IdToAddress", [
             parseInt(data),
           ]);
-          return { index, data, userAddress }; 
+          return { index, data, userAddress };
           // return { index, userAddress };
         } catch (error) {
           return { index, error };
@@ -121,7 +121,7 @@ const RefFirstLevelCircle = ({
         if (parseInt(position[1]?.data) > 0) {
           promises.push(fetchPositionData(i, parseInt(position[1]?.data)));
         } else {
-          // let data = 0;
+          let data = 0;
           // let data ;
           return { data, userAddress };
         }
@@ -133,7 +133,7 @@ const RefFirstLevelCircle = ({
       const tempErrors: any = [];
 
       results.forEach((result) => {
-        if (result.data > 0 ) {
+        if (result.data > 0) {
           tempResults.push(result);
         } else if (result.error) {
           tempErrors.push(result);
@@ -145,11 +145,11 @@ const RefFirstLevelCircle = ({
 
     fetchData();
   }, [MatrixLevel]);
-  console.log("position----1------>", position);
-  console.log("position0----1------>", parseInt(position[0]?.data));
-  console.log("position1----1------>", parseInt(position[1]?.data));
-  console.log("position2----1------>", parseInt(position[2]?.data));
-  console.log("position3-----1----->", parseInt(position[3]?.data));
+  // console.log("position----1------>", position);
+  // console.log("position0----1------>", parseInt(position[0]?.data));
+  // console.log("position1----1------>", parseInt(position[1]?.data));
+  // console.log("position2----1------>", parseInt(position[2]?.data));
+  // console.log("position3-----1----->", parseInt(position[3]?.data));
   useEffect(() => {
     const fetchData = async () => {
       if (!contract) return;
@@ -183,7 +183,7 @@ const RefFirstLevelCircle = ({
         if (parseInt(position[2]?.data) > 0) {
           promises.push(fetchPositionData(i, parseInt(position[2]?.data)));
         } else {
-          // let data = 0;
+          let data = 0;
           return { data, userAddress };
         }
       }
@@ -194,7 +194,7 @@ const RefFirstLevelCircle = ({
       const tempErrors: any = [];
 
       results.forEach((result) => {
-        if (result.data > 0 ) {
+        if (result.data > 0) {
           tempResults.push(result);
         } else if (result.error) {
           tempErrors.push(result);
@@ -241,7 +241,7 @@ const RefFirstLevelCircle = ({
         if (parseInt(position[3]?.data) > 0) {
           promises.push(fetchPositionData(i, parseInt(position[3]?.data)));
         } else {
-          // let data = 0;
+          let data = 0;
           return { data, userAddress };
         }
       }
@@ -252,7 +252,7 @@ const RefFirstLevelCircle = ({
       const tempErrors: any = [];
 
       results.forEach((result) => {
-        if (result.data > 0 ) {
+        if (result.data > 0) {
           tempResults.push(result);
         } else if (result.error) {
           tempErrors.push(result);

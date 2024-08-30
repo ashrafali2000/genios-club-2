@@ -48,18 +48,18 @@ const Matrix = ({
             address,
             Number(MatrixLevel),
           ]);
-          // console.log("cycleNo----myTest@----->", parseInt(cycleNo));
+          console.log("cycleNo----myTest@---1-->", parseInt(cycleNo));
           const data = await contract.call("postionToId", [
             address,
-            cycleNo,
             +MatrixLevel,
+            cycleNo,
             index,
           ]);
-          // console.log("data----myTest@----->", data);
+          console.log("data----myTest@--1--->", parseInt(data));
           const userAddress = await contract.call("IdToAddress", [
             parseInt(data),
           ]);
-          // console.log("userAddress----myTest@----->", userAddress);
+          console.log("userAddress----myTest@--1--->", userAddress);
           return { index, data, userAddress };
         } catch (error) {
           return { index, error };
@@ -68,7 +68,7 @@ const Matrix = ({
 
       const promises = [];
       for (let i = 1; i <= 4; i++) {
-        let dataTest: any = await fetchPositionData(i);
+        // let dataTest: any = await fetchPositionData(i);
         promises.push(fetchPositionData(i));
         // if (parseInt(dataTest?.data) > 0) {
         //   console.log("myTest__________> data", parseInt(dataTest?.data));
@@ -166,7 +166,7 @@ const Matrix = ({
                   <RefSecondLevelCircle
                     key={index}
                     RefFirstLevel={i}
-                    position={results[0]}
+                    position={results}
                     userAddress={i}
                     MatrixLevel={MatrixLevel}
                     activeLevel={activeLevel}
