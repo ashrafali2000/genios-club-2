@@ -1,5 +1,5 @@
 "use client";
-import Statistics from "@/components/dashboard/office/Statistics";
+import Statistics from "@/components/dashboard/office/statistics";
 import { GeniosClubAbi, GeniosClubAddress } from "@/lib/constant";
 import { useContract, useContractRead } from "@thirdweb-dev/react";
 import { useSearchParams } from "next/navigation";

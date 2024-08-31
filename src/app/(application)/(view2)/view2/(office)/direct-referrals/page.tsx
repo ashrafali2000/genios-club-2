@@ -1,6 +1,6 @@
 "use client";
 
-import DirectReferrals from "@/components/dashboard/office/directReferrals";
+import DirectReferrals from "@/components/dashboard/office/direct-referrals";
 import { useContract, useContractRead } from "@thirdweb-dev/react";
 import { GeniosClubAddress, GeniosClubAbi } from "@/lib/constant";
 import { useSearchParams } from "next/navigation";

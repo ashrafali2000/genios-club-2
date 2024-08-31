@@ -3,7 +3,6 @@ import { useEffect, useState } from "react";
 // import Upgrade from "./upgrade";
 import { TableLoader } from "@/lib/utils/tableLoader";
 // import Registration from "./registration";
-import NewUserPlace from "./newUserPlace";
 // import Reinvest from "./reinvest";
 // import MissedTokenReceive from "./missedTokenReceive";
 // import SentExtraTokenDividends from "./sentExtraTokenDividends";
@@ -12,6 +11,7 @@ import NewUserPlace from "./newUserPlace";
 // import G3X7AcademyUpdated from "./G3X7AcademyUpdated";
 // import RankEarners from "./rankEarners";
 import axios from "axios";
+import NewUserPlace from "./newUserPlace";
 // import Pagination from "@/lib/utils/pagination";
 
 // import { defineChain } from "thirdweb/chains";

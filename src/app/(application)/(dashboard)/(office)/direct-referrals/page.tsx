@@ -1,6 +1,6 @@
 "use client";
 
-import DirectReferrals from "@/components/dashboard/office/directReferrals";
+import DirectReferrals from "@/components/dashboard/office/direct-referrals";
 import { useAddress } from "@thirdweb-dev/react";
 
 const Page = () => {
