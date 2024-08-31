@@ -69,6 +69,7 @@
 import PopOver2 from "@/components/popover2";
 import PopOver3 from "@/components/popover3";
 import PopOver4 from "@/components/popover4";
+import PopOver5 from "@/components/popover5";
 import { GeniosClubAbi2, GeniosClubAddress2 } from "@/lib/constant";
 import { useContract, useContractRead } from "@thirdweb-dev/react";
 import React, { useEffect, useState } from "react";
@@ -153,11 +154,11 @@ const RefSecondLevelCircle = ({
 
     fetchData();
   }, [MatrixLevel]);
-  console.log("mainResult----2------>", mainResult);
-  console.log("mainResult1---2------->", parseInt(mainResult[0]?.data));
-  console.log("mainResult2---2------->", parseInt(mainResult[1]?.data));
-  console.log("mainResult3---2------->", parseInt(mainResult[2]?.data));
-  console.log("mainResult4---2------->", parseInt(mainResult[3]?.data));
+  // console.log("mainResult----2------>", mainResult);
+  // console.log("mainResult1---2------->", parseInt(mainResult[0]?.data));
+  // console.log("mainResult2---2------->", parseInt(mainResult[1]?.data));
+  // console.log("mainResult3---2------->", parseInt(mainResult[2]?.data));
+  // console.log("mainResult4---2------->", parseInt(mainResult[3]?.data));
   useEffect(() => {
     const fetchData = async () => {
       if (!contract) return;
@@ -225,11 +226,12 @@ const RefSecondLevelCircle = ({
 
     fetchData();
   }, [MatrixLevel]);
-  // console.log("results1---------->", results1);
-  // console.log("mainResult1---------->", parseInt(results1[0]?.data));
-  // console.log("mainResult2---------->", parseInt(results1[1]?.data));
-  // console.log("mainResult3---------->", parseInt(results1[2]?.data));
-  // console.log("mainResult4---------->", parseInt(results1[3]?.data));
+  console.log("results1-----2----->", results1);
+  console.log("mainResult1---2------->", parseInt(results1[0]?.data));
+  console.log("mainResult1---2----userAddress--->", results1[0]?.userAddress);
+  console.log("mainResult2---2------>", parseInt(results1[1]?.data));
+  console.log("mainResult3----2----->", parseInt(results1[2]?.data));
+  console.log("mainResult4----2------>", parseInt(results1[3]?.data));
   useEffect(() => {
     const fetchData = async () => {
       if (!contract) return;
@@ -608,9 +610,9 @@ const RefFirstLevelCircle2 = ({
         <div className="flex flex-col gap-3">
           {parseInt(position2[0]?.data) > 0 ? (
             <div className="ml-[-6px] flex flex-col items-center">
-              <PopOver4
-                userAddress={position2[0].userAddress}
-                RefFirstLevel={position2[0].data}
+              <PopOver5
+                userAddress={position2[0]?.userAddress}
+                RefFirstLevel={position2[0]?.data}
               />
             </div>
           ) : (
@@ -620,7 +622,7 @@ const RefFirstLevelCircle2 = ({
         <div className="flex flex-col gap-3">
           {parseInt(position2[1]?.data) > 0 ? (
             <div className="flex flex-col items-center">
-              <PopOver4
+              <PopOver5
                 userAddress={position2[1].userAddress}
                 RefFirstLevel={position2[1].data}
               />
@@ -633,7 +635,7 @@ const RefFirstLevelCircle2 = ({
         <div className="flex flex-col gap-3">
           {parseInt(position2[2]?.data) > 0 ? (
             <div className="flex flex-col items-center">
-              <PopOver4
+              <PopOver5
                 userAddress={position2[2].userAddress}
                 RefFirstLevel={position2[2].data}
               />
@@ -645,7 +647,7 @@ const RefFirstLevelCircle2 = ({
         <div className="flex flex-col gap-3">
           {parseInt(position2[3]?.data) > 0 ? (
             <div className="flex flex-col items-center">
-              <PopOver4
+              <PopOver5
                 userAddress={position2[3].userAddress}
                 RefFirstLevel={position2[3].data}
               />
