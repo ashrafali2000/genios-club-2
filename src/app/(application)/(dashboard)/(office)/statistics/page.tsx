@@ -1,6 +1,6 @@
 "use client";
 
-import Statistics from "@/components/dashboard/office/statistics";
+import Statistics from "@/components/dashboard/office/statistic";
 import { useAddress } from "@thirdweb-dev/react";
 
 const Page = () => {
