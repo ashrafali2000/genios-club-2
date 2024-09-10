@@ -8,22 +8,23 @@ interface UpgradeProps {
 }
 
 export default function Upgrade({ event, index }: UpgradeProps) {
-  const { user } = event;
-  console.log("myData----test----->", user);
-  const [date, setDate] = useState<any>(null);
-  const blockHash = event.blockHash;
-  const blockNumber = event.blockNumber;
+  const { user, newMatrix, sponcerId, time, amount } = event;
+  // console.log("myData----test----->", user);
+  let date: any = new Date(Number(time.slice(1, -1)) * 1000);
+  // const [date, setDate] = useState<any>(null);
+  // const blockHash = event.blockHash;
+  // const blockNumber = event.blockNumber;
 
-  useMemo(async () => {
-    const fetchDate = async () => {
-      const result = await timeStamp(blockNumber);
-      if (result !== null) {
-        setDate(result);
-      }
-    };
+  // useMemo(async () => {
+  //   const fetchDate = async () => {
+  //     const result = await timeStamp(blockNumber);
+  //     if (result !== null) {
+  //       setDate(result);
+  //     }
+  //   };
 
-    fetchDate();
-  }, [event.blockHash]);
+  //   fetchDate();
+  // }, [event.blockHash]);
 
   return (
     <tr key={index} className=" border-b bg-[#ae7ddd12]">
@@ -46,9 +47,7 @@ export default function Upgrade({ event, index }: UpgradeProps) {
           />
         </svg>
       </td>
-      <td className="px-6 py-2">
-        <UserId userAddress={user} />
-      </td>
+      <td className="px-6 py-2">{user.slice(1, -1)}</td>
 
       {/* {matrix === 1 ? (
         <td className="max-w-[150px] truncate px-6 py-2">G3X2</td>
@@ -57,13 +56,12 @@ export default function Upgrade({ event, index }: UpgradeProps) {
       ) : null} */}
 
       {/* <td className="px-6 py-2">{level}</td> */}
-      <td className="px-6 py-2">{10 * 4}</td>
+      <td className="px-6 py-2">{sponcerId.slice(1, -1)}</td>
       <td className="px-6 py-2">
-        {blockHash.slice(0, 5)}...
-        {blockHash.slice(-5)}
+        {Number(amount.slice(1, -1) / 1000000000000000000)}
       </td>
       <td className="whitespace-nowrap px-6 py-2">
-        {date || "00-00-0000 00:00"}
+        {date.toUTCString() || "00-00-0000 00:00"}
       </td>
     </tr>
   );

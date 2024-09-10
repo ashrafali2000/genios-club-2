@@ -67,8 +67,19 @@ const Statistics = ({ address }: any) => {
     setCurrentPage(1); // Reset to the first page
     setItemsPerPage(newItemsPerPage);
   };
-
+  const upgradeData = EventsArray2?.map((event: any, index: any) => {
+    return <Upgrade key={index} event={event} index={index} />;
+  });
+  const newUserData = EventsArray2?.map((event: any, index: any) => {
+    return <NewUserPlace key={index} event={event} index={index} />;
+  });
   //
+  const bothData = [0].map((data) => (
+    <div>
+      {upgradeData}
+      {newUserData}
+    </div>
+  ));
 
   // create the client with your clientId, or secretKey if in a server environment
 
@@ -173,10 +184,7 @@ const Statistics = ({ address }: any) => {
                       </tr>
                     );
                   })
-                : EventsArray2 &&
-                  EventsArray2.map((event: any, index: any) => {
-                    return <Upgrade key={index} event={event} index={index} />;
-                  })}
+                : EventsArray && EventsArray2 && bothData}
             </tbody>
           </table>
           {!isLoading && EventsArray && EventsArray.length === 0 ? (
@@ -197,5 +205,4 @@ const Statistics = ({ address }: any) => {
     </div>
   );
 };
-
 export default Statistics;
