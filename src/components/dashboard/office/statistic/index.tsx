@@ -74,8 +74,8 @@ const Statistics = ({ address }: any) => {
     return <NewUserPlace key={index} event={event} index={index} />;
   });
   //
-  const bothData = [0].map((data) => (
-    <div>
+  const bothData = [0].map((data, index) => (
+    <div key={index}>
       {upgradeData}
       {newUserData}
     </div>
