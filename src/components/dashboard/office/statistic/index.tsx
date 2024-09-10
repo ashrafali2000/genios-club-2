@@ -75,7 +75,7 @@ const Statistics = ({ address }: any) => {
   });
   //
   const bothData = [0].map((data, index) => (
-    <tr key={index} className="w-full">
+    <tr key={index}>
       {upgradeData}
       {newUserData}
     </tr>
@@ -184,7 +184,7 @@ const Statistics = ({ address }: any) => {
                       </tr>
                     );
                   })
-                : EventsArray && EventsArray2 && bothData}
+                : EventsArray && EventsArray2 && <tr>{bothData}</tr>}
             </tbody>
           </table>
           {!isLoading && EventsArray && EventsArray.length === 0 ? (
