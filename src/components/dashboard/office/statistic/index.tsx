@@ -75,10 +75,10 @@ const Statistics = ({ address }: any) => {
   });
   //
   const bothData = [0].map((data, index) => (
-    <div key={index} className="w-full">
+    <tr key={index} className="w-full">
       {upgradeData}
       {newUserData}
-    </div>
+    </tr>
   ));
 
   // create the client with your clientId, or secretKey if in a server environment
