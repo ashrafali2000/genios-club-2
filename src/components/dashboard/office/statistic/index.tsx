@@ -70,7 +70,7 @@ const Statistics = ({ address }: any) => {
   const upgradeData = EventsArray2?.map((event: any, index: any) => {
     return <Upgrade key={index} event={event} index={index} />;
   });
-  const newUserData = EventsArray2?.map((event: any, index: any) => {
+  const newUserData = EventsArray?.map((event: any, index: any) => {
     return <NewUserPlace key={index} event={event} index={index} />;
   });
   //
