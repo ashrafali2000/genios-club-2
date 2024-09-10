@@ -156,35 +156,40 @@ const Statistics = ({ address }: any) => {
               </tr>
             </thead>
             <tbody>
-              {isLoading
-                ? [1, 2, 3, 4, 5, 6, 7, 8].map((index: any) => {
-                    return (
-                      <tr key={index} className="border-b bg-[#ae7ddd12]">
-                        <td>
-                          <TableLoader />
-                        </td>
-                        <td>
-                          <TableLoader />
-                        </td>
-                        <td>
-                          <TableLoader />
-                        </td>
-                        <td>
-                          <TableLoader />
-                        </td>
-                        <td>
-                          <TableLoader />
-                        </td>
-                        <td>
-                          <TableLoader />
-                        </td>
-                        <td>
-                          <TableLoader />
-                        </td>
-                      </tr>
-                    );
-                  })
-                : EventsArray && EventsArray2 && <tr>{bothData}</tr>}
+              {isLoading ? (
+                [1, 2, 3, 4, 5, 6, 7, 8].map((index: any) => {
+                  return (
+                    <tr key={index} className="border-b bg-[#ae7ddd12]">
+                      <td>
+                        <TableLoader />
+                      </td>
+                      <td>
+                        <TableLoader />
+                      </td>
+                      <td>
+                        <TableLoader />
+                      </td>
+                      <td>
+                        <TableLoader />
+                      </td>
+                      <td>
+                        <TableLoader />
+                      </td>
+                      <td>
+                        <TableLoader />
+                      </td>
+                      <td>
+                        <TableLoader />
+                      </td>
+                    </tr>
+                  );
+                })
+              ) : (
+                <>
+                  <>{upgradeData}</>
+                  <>{newUserData}</>
+                </>
+              )}
             </tbody>
           </table>
           {!isLoading && EventsArray && EventsArray.length === 0 ? (
