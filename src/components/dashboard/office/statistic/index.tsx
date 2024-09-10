@@ -74,12 +74,6 @@ const Statistics = ({ address }: any) => {
     return <NewUserPlace key={index} event={event} index={index} />;
   });
   //
-  const bothData = [0].map((data, index) => (
-    <tr key={index}>
-      {upgradeData}
-      {newUserData}
-    </tr>
-  ));
 
   // create the client with your clientId, or secretKey if in a server environment
 
@@ -192,7 +186,10 @@ const Statistics = ({ address }: any) => {
               )}
             </tbody>
           </table>
-          {!isLoading && EventsArray && EventsArray.length === 0 ? (
+          {!isLoading &&
+          EventsArray2 &&
+          EventsArray &&
+          EventsArray.length === 0 ? (
             <div>
               <h1 className="m-5 text-white">Data not found</h1>
             </div>
