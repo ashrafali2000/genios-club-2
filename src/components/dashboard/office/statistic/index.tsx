@@ -75,7 +75,7 @@ const Statistics = ({ address }: any) => {
   });
   //
   const bothData = [0].map((data, index) => (
-    <div key={index}>
+    <div key={index} className="w-full">
       {upgradeData}
       {newUserData}
     </div>
