@@ -12,23 +12,41 @@ import { TableLoader } from "@/lib/utils/tableLoader";
 // import RankEarners from "./rankEarners";
 import axios from "axios";
 import NewUserPlace from "./newUserPlace";
+import Upgrade from "./upgrade";
 // import Pagination from "@/lib/utils/pagination";
 
 // import { defineChain } from "thirdweb/chains";
 const Statistics = ({ address }: any) => {
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [EventsArray, setEventsArray] = useState<any[]>();
+  const [EventsArray2, setEventsArray2] = useState<any[]>();
   const [isLoading, setIsLoading] = useState(true);
   const [itemsPerPage, setItemsPerPage] = useState<any>(10);
   const [filters, setFilters] = useState({
     addr: "",
   });
   // const [totalPages, setTotalPages] = useState<number | null>(null);
+  const fetchData2 = async () => {
+    setIsLoading(true);
+    try {
+      const response = await axios.get(
+        `https://genios-club-2-backend.vercel.app/api/upgradedata`
+      );
+      const eventsData = response.data;
+      console.log("eventsData-----upgrade123------->", eventsData);
+      // setTotalPages(eventsData.pagination.totalPages);
+      setEventsArray2(eventsData);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
   const fetchData = async () => {
     setIsLoading(true);
     try {
       const response = await axios.get(
-        `https://genios-club-2-backend.vercel.app/newusers`
+        `https://genios-club-2-backend.vercel.app/api/newusersdata`
       );
       const eventsData = response.data;
       console.log("eventsData------------>", eventsData);
@@ -41,7 +59,7 @@ const Statistics = ({ address }: any) => {
     }
   };
   useEffect(() => {
-    fetchData();
+    fetchData(), fetchData2();
   }, [address, currentPage, itemsPerPage]);
 
   const handleItemsPerPageChange = (e: any) => {
@@ -155,11 +173,9 @@ const Statistics = ({ address }: any) => {
                       </tr>
                     );
                   })
-                : EventsArray &&
-                  EventsArray.map((event: any, index: any) => {
-                    return (
-                      <NewUserPlace key={index} event={event} index={index} />
-                    );
+                : EventsArray2 &&
+                  EventsArray2.map((event: any, index: any) => {
+                    return <Upgrade key={index} event={event} index={index} />;
                   })}
             </tbody>
           </table>

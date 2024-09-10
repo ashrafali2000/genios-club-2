@@ -1,6 +1,6 @@
-import { useMemo, useState } from 'react';
-import { timeStamp } from '@/lib/blockTimeStamp';
-import UserId from '@/lib/utils/userId';
+import { useMemo, useState } from "react";
+import { timeStamp } from "@/lib/blockTimeStamp";
+import UserId from "@/lib/utils/userId";
 
 interface UpgradeProps {
   event: any;
@@ -8,7 +8,8 @@ interface UpgradeProps {
 }
 
 export default function Upgrade({ event, index }: UpgradeProps) {
-  const { user, matrix, level } = JSON.parse(event.data);
+  const { user } = event;
+  console.log("myData----test----->", user);
   const [date, setDate] = useState<any>(null);
   const blockHash = event.blockHash;
   const blockNumber = event.blockNumber;
@@ -49,20 +50,20 @@ export default function Upgrade({ event, index }: UpgradeProps) {
         <UserId userAddress={user} />
       </td>
 
-      {matrix === 1 ? (
+      {/* {matrix === 1 ? (
         <td className="max-w-[150px] truncate px-6 py-2">G3X2</td>
       ) : matrix === 2 ? (
         <td className="max-w-[150px] truncate px-6 py-2">G3X5</td>
-      ) : null}
+      ) : null} */}
 
-      <td className="px-6 py-2">{level}</td>
+      {/* <td className="px-6 py-2">{level}</td> */}
       <td className="px-6 py-2">{10 * 4}</td>
       <td className="px-6 py-2">
         {blockHash.slice(0, 5)}...
         {blockHash.slice(-5)}
       </td>
       <td className="whitespace-nowrap px-6 py-2">
-        {date || '00-00-0000 00:00'}
+        {date || "00-00-0000 00:00"}
       </td>
     </tr>
   );
